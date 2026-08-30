@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visionary Express - स्वदेशी बाज़ार</title>
+  <title>Visionary Express - Heritage Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,15 +40,14 @@
 </head>
 <body class="text-stone-900 min-h-screen flex flex-col doodle-pattern">
 
-  <!-- Royal Header -->
+  <!-- Royal Saffron Header -->
   <header class="bg-gradient-to-r from-amber-950 via-amber-900 to-orange-950 text-amber-50 shadow-xl sticky top-0 z-40 border-b-2 border-amber-600/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
       
-      <!-- Brand Logo & Folk Motifs -->
+      <!-- Brand Logo -->
       <div class="flex items-center gap-3 cursor-pointer group" onclick="showView('store')">
         <div class="w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 p-[2px] shadow-md group-hover:rotate-6 transition">
           <div class="w-full h-full bg-amber-950 rounded-full flex items-center justify-center text-amber-300 text-lg border border-amber-300/40">
-            <!-- Folk Peacock / Sun Doodle Icon -->
             <svg class="w-6 h-6 fill-amber-300" viewBox="0 0 24 24">
               <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V19a1 1 0 0 1-2 0v-2.07A6 6 0 0 1 6.07 13H4a1 1 0 0 1 0-2h2.07A6 6 0 0 1 11 6.07V4a1 1 0 0 1 2 0v2.07A6 6 0 0 1 17.93 11H20a1 1 0 0 1 0 2h-2.07A6 6 0 0 1 13 16.93zM12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"/>
             </svg>
@@ -57,7 +56,7 @@
         <div>
           <h1 class="text-2xl font-brand tracking-wider text-amber-200 font-bold leading-none">Visionary Express</h1>
           <p class="text-[10px] tracking-widest uppercase text-amber-300/80 font-heritage font-medium mt-1">
-            विज़नरी एक्सप्रेस • Bharat Heritage
+            Artisanal Goods & Regional Heritage
           </p>
         </div>
       </div>
@@ -65,7 +64,7 @@
       <!-- Action Controls -->
       <div class="flex items-center gap-3 sm:gap-5">
         <button onclick="requestAdminAccess()" class="text-xs bg-amber-950/80 hover:bg-black border border-amber-500/50 text-amber-200 px-3.5 py-1.5 rounded-full font-medium flex items-center gap-1.5 transition shadow-sm">
-          <i class="fa-solid fa-lock text-amber-400"></i> Admin Kaksh
+          <i class="fa-solid fa-lock text-amber-400"></i> Admin Panel
         </button>
 
         <button onclick="showView('cart')" class="relative p-2 text-amber-200 hover:text-amber-100 transition">
@@ -78,68 +77,67 @@
     </div>
   </header>
 
-  <!-- Cultural Folk Animals & Heritage Ribbon -->
+  <!-- State Cultural Animal Totems Ribbon -->
   <section class="bg-gradient-to-r from-amber-100/90 via-orange-50/90 to-amber-100/90 border-b border-amber-300/70 py-3 shadow-inner overflow-x-auto hide-scrollbar">
     <div class="max-w-7xl mx-auto px-4 flex items-center gap-6 min-w-max">
       <div class="flex items-center gap-2 border-r border-amber-300/80 pr-4">
         <span class="text-amber-900 font-heritage text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
-          <i class="fa-solid fa-feather-pointed text-amber-700"></i> Sanskritik Totems:
+          <i class="fa-solid fa-feather-pointed text-amber-700"></i> Cultural Heritage Totems:
         </span>
       </div>
 
-      <!-- Rajasthan Peacock Doodle -->
+      <!-- Rajasthan Peacock -->
       <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1.5 rounded-full border border-amber-200/80 shadow-sm">
         <svg class="w-5 h-5 text-amber-700 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
           <path d="M12 3c-2 3-5 5-8 5 3 2 4 6 4 9 2-1 3-3 4-5 1 2 2 4 4 5 0-3 1-7 4-9-3 0-6-2-8-5z"/>
           <circle cx="12" cy="7" r="1" fill="currentColor"/>
         </svg>
-        <span><strong>Mayura (Peacock)</strong> • Rajasthan (Pichwai)</span>
+        <span><strong>Mayura (Peacock)</strong> • Rajasthan (Pichwai Folk Art)</span>
       </div>
 
-      <!-- Kerala Temple Elephant Doodle -->
+      <!-- Kerala Temple Elephant -->
       <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1.5 rounded-full border border-amber-200/80 shadow-sm">
         <svg class="w-5 h-5 text-amber-800 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
           <path d="M19 10c0-3.5-3-6-7-6S5 6.5 5 10c0 4 2 7 2 10h4v-5h2v5h4v-7c1 0 2-1.5 2-3z"/>
           <path d="M5 11c-2 0-3 2-3 4s2 3 3 1"/>
         </svg>
-        <span><strong>Gaja (Elephant)</strong> • Kerala & Karnataka</span>
+        <span><strong>Gaja (Elephant)</strong> • Kerala & Karnataka (Temple Line Art)</span>
       </div>
 
-      <!-- Bengal/MP Tiger Doodle -->
+      <!-- Bengal/MP Tiger -->
       <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1.5 rounded-full border border-amber-200/80 shadow-sm">
         <svg class="w-5 h-5 text-orange-800 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
           <path d="M4 8l3-3 3 2 2-2 2 2 3-2 3 3c0 7-6 11-8 11S4 15 4 8z"/>
           <path d="M9 10v2m6-2v2m-5 4h4"/>
         </svg>
-        <span><strong>Vyaghra (Tiger)</strong> • Bengal & MP (Madhubani)</span>
+        <span><strong>Vyaghra (Tiger)</strong> • Bengal & Madhya Pradesh (Madhubani Style)</span>
       </div>
 
-      <!-- Assam Rhino Doodle -->
+      <!-- Assam Rhino -->
       <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1.5 rounded-full border border-amber-200/80 shadow-sm">
         <svg class="w-5 h-5 text-stone-700 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
           <path d="M3 13c1-4 4-6 9-6h6l3-2v5c-1 3-3 6-7 7l-2 3H8l-1-3c-3 0-4-2-4-4z"/>
           <path d="M18 7l2-3"/>
         </svg>
-        <span><strong>Ganda (One-Horned Rhino)</strong> • Assam</span>
+        <span><strong>Ganda (One-Horned Rhino)</strong> • Assam (Kaziranga Motif)</span>
       </div>
 
-      <!-- Pan-India Kamadhenu Cow -->
+      <!-- Surabhi Cow -->
       <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1.5 rounded-full border border-amber-200/80 shadow-sm">
         <svg class="w-5 h-5 text-amber-700 stroke-current fill-none stroke-2" viewBox="0 0 24 24">
           <path d="M5 8c0-3 3-5 7-5s7 2 7 5c0 4-3 8-7 11C8 16 5 12 5 8z"/>
           <path d="M3 6l3 2m15-2l-3 2"/>
         </svg>
-        <span><strong>Kamadhenu (Surabhi)</strong> • Vedic Folk Traditions</span>
+        <span><strong>Kamadhenu (Sacred Cow)</strong> • Vedic Folk Tradition</span>
       </div>
     </div>
   </section>
 
-  <!-- Main Container -->
+  <!-- Main Content Area -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
 
-    <!-- 1. Mandatory Admin Login Screen (Locks on Every Departure) -->
+    <!-- 1. Mandatory Admin Login Screen (Always Forces Password) -->
     <section id="adminLoginView" class="hidden max-w-md mx-auto my-10 bg-[#FFFDF8] p-8 rounded-3xl shadow-terracotta border-2 border-amber-700/20 relative overflow-hidden">
-      <!-- Decorative Corner Motif -->
       <div class="absolute -top-6 -right-6 w-20 h-20 bg-amber-100 rounded-full flex items-end justify-start p-2 text-amber-700/20">
         <i class="fa-solid fa-feather text-4xl"></i>
       </div>
@@ -149,20 +147,20 @@
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         <h2 class="text-2xl font-heritage font-bold text-amber-950">Visionary Express Admin</h2>
-        <p class="text-xs text-stone-600">Enter your secure passcode. Every single visit requires verification.</p>
+        <p class="text-xs text-stone-600">Enter your secure passcode. Authentication is required on every visit.</p>
       </div>
 
       <form onsubmit="handleAdminLogin(event)" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-amber-900 mb-1">Gupt Chabi (Admin Password)</label>
+          <label class="block text-xs font-bold uppercase tracking-wider text-amber-900 mb-1">Admin Password</label>
           <input type="password" id="adminPortalPass" required class="w-full p-3 bg-amber-50/50 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent font-mono" placeholder="••••••••" autocomplete="off" />
         </div>
         <button type="submit" class="w-full bg-gradient-to-r from-amber-800 to-orange-800 hover:from-amber-900 hover:to-orange-900 text-amber-50 font-semibold py-3 rounded-xl text-sm transition shadow-md">
-          Verify & Enter Admin Kaksh
+          Verify & Enter Admin Panel
         </button>
       </form>
       <div class="text-center mt-5">
-        <button onclick="showView('store')" class="text-xs text-amber-800 hover:underline">Cancel and Return to Bazaar</button>
+        <button onclick="showView('store')" class="text-xs text-amber-800 hover:underline">Cancel and Return to Store</button>
       </div>
     </section>
 
@@ -170,27 +168,27 @@
     <section id="authView" class="hidden max-w-lg mx-auto bg-[#FFFDF8] p-8 rounded-3xl shadow-terracotta border-2 border-amber-700/20">
       <div class="text-center mb-6">
         <div class="inline-flex items-center gap-2 bg-amber-100 px-3 py-1 rounded-full text-amber-900 text-xs font-bold mb-2">
-          <i class="fa-solid fa-hand-holding-heart"></i> Namaste
+          <i class="fa-solid fa-hand-holding-heart"></i> Welcome
         </div>
-        <h2 id="authTitle" class="text-2xl font-heritage font-bold text-amber-950">Grahak Panjikaran</h2>
-        <p class="text-xs text-stone-600 mt-1">Please enter your contact and delivery address for Visionary Express</p>
+        <h2 id="authTitle" class="text-2xl font-heritage font-bold text-amber-950">Customer Registration</h2>
+        <p class="text-xs text-stone-600 mt-1">Please enter your delivery and contact details below.</p>
       </div>
       
       <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Pura Naam (Full Name)</label>
-          <input type="text" id="authName" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. Aditi Rao" />
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Full Name</label>
+          <input type="text" id="authName" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. John Doe" />
         </div>
         <div>
-          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Sampark Sutra (Phone Number)</label>
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Phone Number</label>
           <input type="tel" id="authPhone" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. 9876543210" />
         </div>
         <div>
-          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Ghar ka Pata (Delivery Address)</label>
-          <textarea id="authAddress" rows="3" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="House/Flat No., Street, Landmark, Pin Code"></textarea>
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Delivery Address</label>
+          <textarea id="authAddress" rows="3" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="House/Flat number, landmark, street, postal code"></textarea>
         </div>
         <button type="submit" class="w-full bg-gradient-to-r from-amber-800 to-orange-800 hover:from-amber-900 hover:to-orange-900 text-amber-50 font-semibold py-3 rounded-xl transition shadow-md">
-          Surakshit Karein (Save & Continue)
+          Save & Continue
         </button>
       </form>
     </section>
@@ -204,59 +202,59 @@
               Visionary Express Catalog
             </span>
           </div>
-          <h2 class="text-3xl font-heritage font-bold text-amber-950 mt-1">Shuddh Sanskritik Utpad (Curated Items)</h2>
+          <h2 class="text-3xl font-heritage font-bold text-amber-950 mt-1">Featured Regional Products</h2>
         </div>
-        <p class="text-xs text-stone-600 italic">Authentic craftsmanship with nationwide express delivery.</p>
+        <p class="text-xs text-stone-600 italic">Authentic craftsmanship with reliable nationwide express delivery.</p>
       </div>
       <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </section>
 
     <!-- 4. Cart & Checkout View -->
     <section id="cartView" class="hidden space-y-6">
-      <h2 class="text-3xl font-heritage font-bold text-amber-950 border-b border-amber-900/15 pb-3">Aapki Thali (Your Cart)</h2>
+      <h2 class="text-3xl font-heritage font-bold text-amber-950 border-b border-amber-900/15 pb-3">Your Shopping Cart</h2>
       <div id="cartContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2 space-y-4" id="cartItemList"></div>
 
         <!-- Bill Details -->
         <div class="bg-[#FFFDF8] p-6 rounded-3xl shadow-terracotta border-2 border-amber-700/20 h-fit space-y-4">
-          <h3 class="text-lg font-heritage font-bold border-b border-amber-200 pb-2 text-amber-950">Kharidari Vivaran (Bill Details)</h3>
+          <h3 class="text-lg font-heritage font-bold border-b border-amber-200 pb-2 text-amber-950">Order Summary</h3>
           <div class="space-y-2 text-sm text-stone-700">
             <div class="flex justify-between"><span>Subtotal:</span> <span id="summarySubtotal" class="font-bold text-stone-900">₹0</span></div>
-            <div class="flex justify-between"><span>Visionary Express Delivery:</span> <span id="summaryDelivery" class="font-bold text-stone-900">₹0</span></div>
-            <div class="flex justify-between"><span>Packaging / Nirman:</span> <span id="summaryPackaging" class="font-bold text-stone-900">₹0</span></div>
+            <div class="flex justify-between"><span>Delivery Charges:</span> <span id="summaryDelivery" class="font-bold text-stone-900">₹0</span></div>
+            <div class="flex justify-between"><span>Handling & Packaging:</span> <span id="summaryPackaging" class="font-bold text-stone-900">₹0</span></div>
             <hr class="border-amber-200 my-2" />
-            <div class="flex justify-between text-base font-bold text-amber-950"><span>Kul Rashi (Total):</span> <span id="summaryTotal" class="text-orange-700 text-lg">₹0</span></div>
+            <div class="flex justify-between text-base font-bold text-amber-950"><span>Total Payable:</span> <span id="summaryTotal" class="text-orange-700 text-lg">₹0</span></div>
           </div>
 
           <div class="pt-4 border-t border-amber-200 space-y-3">
-            <h4 class="font-semibold text-xs uppercase tracking-wider text-amber-950">Bhugtan Vidhi (Payment Option)</h4>
+            <h4 class="font-semibold text-xs uppercase tracking-wider text-amber-950">Payment Method</h4>
             <div class="space-y-2">
               <label class="flex items-center gap-2 cursor-pointer p-2.5 rounded-xl hover:bg-amber-50 border border-transparent hover:border-amber-200 transition">
                 <input type="radio" name="payMethod" value="COD" checked onchange="toggleQRDisplay()" class="text-amber-800 focus:ring-amber-600">
-                <span class="text-sm font-medium text-stone-800">Haath par Bhugtan (Cash on Delivery)</span>
+                <span class="text-sm font-medium text-stone-800">Cash on Delivery (COD)</span>
               </label>
               <label class="flex items-center gap-2 cursor-pointer p-2.5 rounded-xl hover:bg-amber-50 border border-transparent hover:border-amber-200 transition">
                 <input type="radio" name="payMethod" value="QR" onchange="toggleQRDisplay()" class="text-amber-800 focus:ring-amber-600">
-                <span class="text-sm font-medium text-stone-800">QR Code / UPI Dwara Bhugtan</span>
+                <span class="text-sm font-medium text-stone-800">Pay via QR Code / UPI</span>
               </label>
             </div>
 
             <!-- Dynamic QR Code Container -->
             <div id="qrCodeContainer" class="hidden p-4 bg-amber-50/80 border-2 border-dashed border-amber-300 rounded-2xl text-center space-y-3">
-              <p class="text-xs font-semibold text-amber-950">GPay, PhonePe, Paytm ya UPI App se Scan Karein:</p>
+              <p class="text-xs font-semibold text-amber-950">Scan using Google Pay, PhonePe, Paytm, or any UPI App:</p>
               <div class="bg-white p-2.5 border-2 border-amber-300 rounded-2xl inline-block shadow-sm">
                 <img id="adminQrImage" src="" alt="Merchant QR Code" class="w-48 h-48 object-contain mx-auto" />
               </div>
-              <p class="text-xs text-red-700 font-bold">Kripya Pura Shulk Pay Karein: <span id="qrPayableAmount">₹0</span></p>
+              <p class="text-xs text-red-700 font-bold">Please pay the exact amount: <span id="qrPayableAmount">₹0</span></p>
               
               <div class="text-left space-y-1 pt-2 border-t border-amber-200">
-                <label class="block text-[11px] font-bold uppercase text-amber-950">12-Digit UPI Ref / UTR / Txn Number (Anivarya):</label>
+                <label class="block text-[11px] font-bold uppercase text-amber-950">12-Digit UPI Reference / UTR Number (Required):</label>
                 <input type="text" id="upiTxnId" placeholder="e.g. 4082XXXXXXXX" class="w-full text-xs p-2.5 border border-amber-300 rounded-lg bg-white outline-none focus:ring-1 focus:ring-amber-600 font-mono" />
               </div>
             </div>
 
             <button onclick="placeOrder()" class="w-full bg-gradient-to-r from-emerald-700 to-teal-800 hover:from-emerald-800 hover:to-teal-900 text-amber-50 font-semibold py-3.5 rounded-xl shadow-terracotta transition">
-              Aadesh Darj Karein (Confirm & Place Order)
+              Confirm & Place Order
             </button>
           </div>
         </div>
@@ -267,8 +265,8 @@
     <section id="adminDashboardView" class="hidden space-y-10">
       <div class="flex flex-wrap justify-between items-center border-b border-amber-900/15 pb-4 gap-4">
         <div>
-          <span class="text-xs text-amber-700 font-bold uppercase tracking-widest">Surakshit Portal</span>
-          <h2 class="text-2xl font-heritage font-bold text-amber-950">Visionary Express • Admin Niyantran Kaksh</h2>
+          <span class="text-xs text-amber-700 font-bold uppercase tracking-widest">Control Center</span>
+          <h2 class="text-2xl font-heritage font-bold text-amber-950">Visionary Express • Admin Dashboard</h2>
         </div>
         <div class="flex items-center gap-3">
           <button onclick="exitAdminImmediately()" class="bg-stone-800 hover:bg-black text-amber-100 text-xs px-4 py-2.5 rounded-full font-semibold transition flex items-center gap-1.5 shadow">
@@ -280,7 +278,7 @@
       <!-- Live Orders Section -->
       <div class="space-y-4">
         <h3 class="text-xl font-heritage font-bold text-amber-950 flex items-center gap-2">
-          <i class="fa-solid fa-scroll text-amber-700"></i> Aaye Hue Aadesh (Orders Board)
+          <i class="fa-solid fa-scroll text-amber-700"></i> Incoming Customer Orders
           <span id="orderCountBadge" class="bg-amber-100 text-amber-900 border border-amber-300 text-xs px-2.5 py-0.5 rounded-full font-bold">0</span>
         </h3>
         <div id="ordersBoard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
@@ -292,29 +290,29 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Add/Edit Product -->
         <div class="bg-[#FFFDF8] p-6 rounded-3xl shadow-terracotta border-2 border-amber-700/20 space-y-4">
-          <h3 class="text-lg font-heritage font-bold text-amber-950" id="formActionTitle">Naya Utpad Jodein (Add Product)</h3>
+          <h3 class="text-lg font-heritage font-bold text-amber-950" id="formActionTitle">Add / Edit Product</h3>
           <form id="productForm" onsubmit="saveProduct(event)" class="space-y-3">
             <input type="hidden" id="editProductId" />
             <div>
-              <label class="block text-xs font-bold text-amber-900">Utpad ka Naam (Product Name)</label>
+              <label class="block text-xs font-bold text-amber-900">Product Name</label>
               <input type="text" id="prodName" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="e.g. Pure Kashmiri Saffron" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-amber-900">Moolya (Price in ₹)</label>
+              <label class="block text-xs font-bold text-amber-900">Price (₹)</label>
               <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="e.g. 599" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-amber-900">Tasveer (Image Upload or URL)</label>
+              <label class="block text-xs font-bold text-amber-900">Product Image (File Upload or URL)</label>
               <input type="file" id="prodImageFile" accept="image/*" onchange="handleProductImageUpload(event)" class="w-full mt-1 text-xs text-stone-500" />
-              <input type="url" id="prodImageUrl" class="w-full mt-1.5 p-2 bg-amber-50/40 border border-amber-300 rounded-lg text-xs" placeholder="Ya image URL paste karein" />
+              <input type="url" id="prodImageUrl" class="w-full mt-1.5 p-2 bg-amber-50/40 border border-amber-300 rounded-lg text-xs" placeholder="Or enter image URL" />
               <input type="hidden" id="finalProdImage" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-amber-900">Vivaran (Description)</label>
-              <textarea id="prodDesc" rows="3" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="Swad, shuddhata aur visheshata..."></textarea>
+              <label class="block text-xs font-bold text-amber-900">Description</label>
+              <textarea id="prodDesc" rows="3" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="Quality, specifications, and details..."></textarea>
             </div>
             <div class="flex gap-2 pt-2">
-              <button type="submit" class="flex-1 bg-amber-800 hover:bg-amber-900 text-amber-50 text-sm font-semibold py-2.5 rounded-lg transition">Save to Static Memory</button>
+              <button type="submit" class="flex-1 bg-amber-800 hover:bg-amber-900 text-amber-50 text-sm font-semibold py-2.5 rounded-lg transition">Save Product</button>
               <button type="button" onclick="resetProductForm()" class="bg-stone-200 hover:bg-stone-300 text-stone-700 text-sm font-semibold px-4 py-2.5 rounded-lg">Clear</button>
             </div>
           </form>
@@ -330,8 +328,8 @@
             <table class="w-full text-left text-sm text-stone-700">
               <thead class="bg-amber-100/60 text-amber-950 font-semibold uppercase text-xs">
                 <tr>
-                  <th class="p-3">Utpad</th>
-                  <th class="p-3">Moolya</th>
+                  <th class="p-3">Product</th>
+                  <th class="p-3">Price</th>
                   <th class="p-3 text-right">Actions</th>
                 </tr>
               </thead>
@@ -345,37 +343,37 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Fees & Merchant QR -->
         <div class="bg-[#FFFDF8] p-6 rounded-3xl shadow-terracotta border-2 border-amber-700/20 space-y-4">
-          <h3 class="text-lg font-heritage font-bold text-amber-950">Store Fees & Merchant QR</h3>
+          <h3 class="text-lg font-heritage font-bold text-amber-950">Store Fees & Merchant QR Code</h3>
           <form onsubmit="saveSettings(event)" class="space-y-3">
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-amber-900">Delivery Shulk (₹)</label>
+                <label class="block text-xs font-bold text-amber-900">Delivery Fee (₹)</label>
                 <input type="number" id="settingDelivery" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" />
               </div>
               <div>
-                <label class="block text-xs font-bold text-amber-900">Packaging Shulk (₹)</label>
+                <label class="block text-xs font-bold text-amber-900">Packaging Fee (₹)</label>
                 <input type="number" id="settingPackaging" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" />
               </div>
             </div>
             <div>
-              <label class="block text-xs font-bold text-amber-900">Apna QR Code Upload Karein</label>
+              <label class="block text-xs font-bold text-amber-900">Upload Your Own QR Code Image</label>
               <input type="file" id="qrFileInput" accept="image/*" onchange="handleQRUpload(event)" class="w-full mt-1 text-xs text-stone-500" />
-              <input type="url" id="settingQR" class="w-full mt-1.5 p-2 bg-amber-50/40 border border-amber-300 rounded-lg text-xs" placeholder="Ya QR Image URL" />
+              <input type="url" id="settingQR" class="w-full mt-1.5 p-2 bg-amber-50/40 border border-amber-300 rounded-lg text-xs" placeholder="Or enter QR image URL" />
               <input type="hidden" id="finalQRImage" />
             </div>
-            <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-amber-50 text-sm font-semibold py-2.5 rounded-lg transition">Update Store Config</button>
+            <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-amber-50 text-sm font-semibold py-2.5 rounded-lg transition">Save Store Settings</button>
           </form>
         </div>
 
         <!-- Password Change -->
         <div class="bg-[#FFFDF8] p-6 rounded-3xl shadow-terracotta border-2 border-amber-700/20 space-y-4">
-          <h3 class="text-lg font-heritage font-bold text-amber-950">Gupt Chabi Badlein (Change Password)</h3>
+          <h3 class="text-lg font-heritage font-bold text-amber-950">Change Admin Password</h3>
           <form onsubmit="changeAdminPassword(event)" class="space-y-3">
             <div>
-              <label class="block text-xs font-bold text-amber-900">Naya Gupt Passcode</label>
+              <label class="block text-xs font-bold text-amber-900">New Admin Password</label>
               <input type="password" id="newAdminPassword" required minlength="4" class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none font-mono" placeholder="Enter new password" />
             </div>
-            <button type="submit" class="w-full bg-stone-800 hover:bg-black text-amber-100 text-sm font-semibold py-2.5 rounded-lg transition">Surakshit Karein (Update Password)</button>
+            <button type="submit" class="w-full bg-stone-800 hover:bg-black text-amber-100 text-sm font-semibold py-2.5 rounded-lg transition">Update Password</button>
           </form>
         </div>
       </div>
@@ -394,7 +392,7 @@
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // =======================================================
-    // 1. FIREBASE CONFIG (Paste your keys here)
+    // 1. FIREBASE CONFIG
     // =======================================================
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
@@ -412,24 +410,24 @@
     const defaultStaticProducts = [
       {
         id: "p_1",
-        name: "A2 Gir Cow Vedic Bilona Ghee (500ml)",
+        name: "Vedic Bilona Cow Ghee (500ml)",
         price: 750,
         image: "https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?w=500&q=80",
-        description: "Traditionally cultured butter churned in earthen pots. Pure goodness from Gujarat & Rajasthan pastures."
+        description: "Cultured butter ghee made using the traditional hand-churned method in earthen pots."
       },
       {
         id: "p_2",
-        name: "Handcrafted Terracotta Chai Kulhads (Set of 6)",
+        name: "Terracotta Tea Cups (Set of 6)",
         price: 299,
         image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&q=80",
-        description: "Natural organic earthen clay cups infused with the aroma of Indian village potteries."
+        description: "Organic, handcrafted earthen clay cups reflecting traditional Indian pottery craft."
       },
       {
         id: "p_3",
-        name: "Pure Kashmiri Mongra Saffron / Kesar (1g)",
+        name: "Pure Kashmiri Saffron Threads (1g)",
         price: 499,
         image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500&q=80",
-        description: "Grade A1 hand-harvested deep crimson saffron stigmas from the valleys of Pampore, Kashmir."
+        description: "Grade A1 hand-harvested deep crimson saffron stigmas from Pampore, Kashmir."
       }
     ];
 
@@ -440,7 +438,7 @@
     let orders = [];
     let settings = { deliveryFee: 40, packagingFee: 20, qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi" };
     let adminPass = "ABC123";
-    let isAdminUnlocked = false; // Strictly in-memory flag; resets on every departure
+    let isAdminUnlocked = false; // In-memory flag; resets on every departure
     let currentUser = JSON.parse(localStorage.getItem("qs_active_user")) || null;
     let cart = JSON.parse(localStorage.getItem("qs_cart")) || [];
 
@@ -517,21 +515,20 @@
       const entered = document.getElementById("adminPortalPass").value;
       if (entered === adminPass) {
         isAdminUnlocked = true;
-        showToast("Swagatam! Visionary Express Admin Kaksh khul chuka hai.");
+        showToast("Welcome! Admin Panel unlocked.");
         showView('adminDashboard');
       } else {
-        alert("Galat Passcode! Kripya sahi Gupt Passcode dalein.");
+        alert("Incorrect passcode! Please enter the correct admin password.");
         document.getElementById("adminPortalPass").value = "";
       }
     };
 
     window.exitAdminImmediately = function() {
       isAdminUnlocked = false;
-      showToast("Admin Kaksh surakshit band ho gaya.");
+      showToast("Admin Panel securely closed and locked.");
       showView('store');
     };
 
-    // Password Update with Modal Confirmation
     window.changeAdminPassword = async function(e) {
       e.preventDefault();
       const newP = document.getElementById("newAdminPassword").value.trim();
@@ -542,7 +539,7 @@
         adminPass = newP;
         document.getElementById("newAdminPassword").value = "";
         
-        alert("✅ Success!\n\nGupt Passcode safalta-purvak badla gaya!\n(Admin Password Updated Successfully!)\n\nSuraksha hetu aapko dobara login karna hoga.");
+        alert("Success! Admin password updated successfully. You will now be redirected to log in with your new credentials.");
         
         isAdminUnlocked = false;
         showView('adminLogin');
@@ -571,7 +568,7 @@
       currentUser = userData;
       localStorage.setItem("qs_active_user", JSON.stringify(currentUser));
       renderNav();
-      showToast(`Namaste ${name} ji! Visionary Express par swagat hai.`);
+      showToast(`Welcome, ${name}! Your details have been saved.`);
 
       if (cart.length > 0) showView('cart');
       else showView('store');
@@ -587,7 +584,7 @@
       currentUser = null;
       localStorage.removeItem("qs_active_user");
       renderNav();
-      showToast("Grahak account logout ho gaya");
+      showToast("You have been logged out.");
       showView('store');
     };
 
@@ -607,7 +604,7 @@
       } else {
         container.innerHTML = `
           <button onclick="showView('auth')" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-950 font-bold px-3.5 py-1.5 rounded-full transition shadow-sm">
-            Panjikaran (Login)
+            Sign In / Register
           </button>
         `;
       }
@@ -615,12 +612,12 @@
 
     function populateAuthForm() {
       if (currentUser) {
-        document.getElementById('authTitle').innerText = "Grahak Jankari Badlein";
+        document.getElementById('authTitle').innerText = "Edit Profile Details";
         document.getElementById('authName').value = currentUser.name || '';
         document.getElementById('authPhone').value = currentUser.phone || '';
         document.getElementById('authAddress').value = currentUser.address || '';
       } else {
-        document.getElementById('authTitle').innerText = "Grahak Panjikaran";
+        document.getElementById('authTitle').innerText = "Customer Registration";
         document.getElementById('authForm').reset();
       }
     }
@@ -635,7 +632,7 @@
         reader.onload = (e) => {
           document.getElementById('finalProdImage').value = e.target.result;
           document.getElementById('prodImageUrl').value = "";
-          showToast("Utpad tasveer tayar hai.");
+          showToast("Product image ready.");
         };
         reader.readAsDataURL(file);
       }
@@ -658,10 +655,10 @@
       const existingIndex = products.findIndex(p => p.id === id);
       if (existingIndex > -1) {
         products[existingIndex] = prodData;
-        showToast("Utpad update ho gaya!");
+        showToast("Product updated successfully!");
       } else {
         products.push(prodData);
-        showToast("Naya utpad static catalog mein shamil hua!");
+        showToast("New product added to static catalog!");
       }
 
       saveProductsToStaticMemory();
@@ -679,18 +676,18 @@
       document.getElementById('prodImageUrl').value = p.image.startsWith('data:') ? '' : p.image;
       document.getElementById('finalProdImage').value = p.image;
       document.getElementById('prodDesc').value = p.description;
-      document.getElementById('formActionTitle').innerText = "Utpad Sudharein (Edit)";
+      document.getElementById('formActionTitle').innerText = "Edit Product";
     };
 
     window.resetProductForm = function() {
       document.getElementById('editProductId').value = '';
       document.getElementById('finalProdImage').value = '';
       document.getElementById('productForm').reset();
-      document.getElementById('formActionTitle').innerText = "Naya Utpad Jodein (Add Product)";
+      document.getElementById('formActionTitle').innerText = "Add / Edit Product";
     };
 
     window.deleteProduct = function(id) {
-      if (confirm("Kya aap is utpad ko catalog se hatana chahte hain?")) {
+      if (confirm("Are you sure you want to remove this product from the catalog?")) {
         products = products.filter(p => p.id !== id);
         cart = cart.filter(p => p.id !== id);
         saveProductsToStaticMemory();
@@ -698,7 +695,7 @@
         renderAdminProductTable();
         renderStore();
         updateCartCount();
-        showToast("Utpad hata diya gaya.");
+        showToast("Product removed.");
       }
     };
 
@@ -730,7 +727,7 @@
         reader.onload = (e) => {
           document.getElementById('finalQRImage').value = e.target.result;
           document.getElementById('settingQR').value = "";
-          showToast("Naya QR code chuna gaya.");
+          showToast("New QR code image loaded.");
         };
         reader.readAsDataURL(file);
       }
@@ -749,7 +746,7 @@
 
       try {
         await setDoc(doc(db, "config", "storeSettings"), newSettings);
-        showToast("Visionary Express niyam aur QR update ho gaye!");
+        showToast("Store fees and QR code updated!");
       } catch (err) {
         alert("Error saving settings: " + err.message);
       }
@@ -770,7 +767,7 @@
       document.getElementById("orderCountBadge").innerText = orders.length;
 
       if (orders.length === 0) {
-        board.innerHTML = `<div class="col-span-3 bg-[#FFFDF8] p-8 rounded-3xl border border-amber-900/15 text-center text-stone-400">Abhi tak koi naya aadesh nahi mila hai.</div>`;
+        board.innerHTML = `<div class="col-span-3 bg-[#FFFDF8] p-8 rounded-3xl border border-amber-900/15 text-center text-stone-400">No customer orders received yet.</div>`;
         return;
       }
 
@@ -783,8 +780,8 @@
             <div class="space-y-3">
               <div class="flex justify-between items-start border-b border-amber-100 pb-2">
                 <div>
-                  <span class="text-[10px] font-mono tracking-wider text-stone-400">AADESH #${ord.id.slice(-6).toUpperCase()}</span>
-                  <h4 class="font-heritage font-bold text-amber-950 text-base">${ord.customer?.name || 'Grahak'}</h4>
+                  <span class="text-[10px] font-mono tracking-wider text-stone-400">ORDER #${ord.id.slice(-6).toUpperCase()}</span>
+                  <h4 class="font-heritage font-bold text-amber-950 text-base">${ord.customer?.name || 'Customer'}</h4>
                 </div>
                 <span class="text-xs font-bold px-2.5 py-0.5 rounded-full border ${ord.status === 'Delivered' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-amber-100 text-amber-900 border-amber-300'}">
                   ${ord.status}
@@ -794,19 +791,19 @@
               <!-- Customer Details -->
               <div class="text-xs text-stone-700 space-y-1 bg-amber-50/40 p-3 rounded-2xl border border-amber-200/60">
                 <p><i class="fa-solid fa-phone text-amber-700 mr-1"></i> <strong>Phone:</strong> ${ord.customer?.phone || 'N/A'}</p>
-                <p><i class="fa-solid fa-location-dot text-amber-700 mr-1"></i> <strong>Pata:</strong> ${ord.customer?.address || 'N/A'}</p>
-                <p><i class="fa-solid fa-indian-rupee-sign text-amber-700 mr-1"></i> <strong>Bhugtan:</strong> <span class="font-bold ${isQR ? 'text-amber-900' : 'text-stone-800'}">${isQR ? 'UPI / QR Code' : 'Cash on Delivery (COD)'}</span></p>
+                <p><i class="fa-solid fa-location-dot text-amber-700 mr-1"></i> <strong>Address:</strong> ${ord.customer?.address || 'N/A'}</p>
+                <p><i class="fa-solid fa-credit-card text-amber-700 mr-1"></i> <strong>Payment:</strong> <span class="font-bold ${isQR ? 'text-amber-900' : 'text-stone-800'}">${isQR ? 'UPI / QR Code' : 'Cash on Delivery (COD)'}</span></p>
                 ${isQR ? `
                   <div class="mt-2 pt-2 border-t border-amber-200 bg-amber-100/50 p-2.5 rounded-xl">
-                    <p class="font-bold text-amber-950">UPI Txn / UTR Number:</p>
+                    <p class="font-bold text-amber-950">UPI Ref / UTR / Txn Number:</p>
                     <p class="font-mono text-amber-900 text-xs font-bold">${ord.transactionId || 'Not provided'}</p>
-                    <p class="mt-1 text-[11px]">Sthiti: <strong class="${ord.paymentReceived ? 'text-emerald-700' : 'text-red-700'}">${ord.paymentReceived ? 'Paisa Prapt Hua (Verified)' : 'Paisa Aana Baki (Pending)'}</strong></p>
+                    <p class="mt-1 text-[11px]">Status: <strong class="${ord.paymentReceived ? 'text-emerald-700' : 'text-red-700'}">${ord.paymentReceived ? 'Payment Verified & Received' : 'Payment Pending Verification'}</strong></p>
                   </div>
                 ` : ''}
               </div>
 
               <div>
-                <p class="text-[11px] font-bold uppercase text-stone-500 mb-1">Chune Gaye Utpad:</p>
+                <p class="text-[11px] font-bold uppercase text-stone-500 mb-1">Ordered Items:</p>
                 <div class="flex flex-wrap">${itemsSummary}</div>
               </div>
             </div>
@@ -814,22 +811,22 @@
             <!-- Pricing & Status -->
             <div class="pt-3 border-t border-amber-100 space-y-2">
               <div class="flex justify-between items-center text-sm font-bold">
-                <span class="text-stone-600 font-medium">Kul Rashi:</span>
+                <span class="text-stone-600 font-medium">Total Bill:</span>
                 <span class="text-orange-800 font-heritage text-lg">₹${ord.pricing?.totalAmount || 0}</span>
               </div>
 
               ${isQR && !ord.paymentReceived ? `
                 <button onclick="confirmPaymentReceived('${ord.id}')" class="w-full bg-emerald-800 hover:bg-emerald-900 text-amber-100 text-xs font-bold py-2 rounded-xl transition shadow">
-                  <i class="fa-solid fa-circle-check"></i> Bhugtan Prapt Hua (Confirm ₹${ord.pricing?.totalAmount})
+                  <i class="fa-solid fa-circle-check"></i> Confirm Payment Received (₹${ord.pricing?.totalAmount})
                 </button>
               ` : ''}
 
               <div class="flex gap-2 items-center">
                 <select onchange="updateOrderStatus('${ord.id}', this.value)" class="text-xs border border-amber-300 rounded-xl p-2 flex-1 bg-white font-medium outline-none">
-                  <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Pending (Baki Hai)</option>
-                  <option value="Dispatched" ${ord.status === 'Dispatched' ? 'selected' : ''}>Dispatched (Raste Mein)</option>
-                  <option value="Delivered" ${ord.status === 'Delivered' ? 'selected' : ''}>Delivered (Pahunch Gaya)</option>
-                  <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Cancelled (Radd)</option>
+                  <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                  <option value="Dispatched" ${ord.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
+                  <option value="Delivered" ${ord.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                  <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
                 </select>
                 <button onclick="deleteOrder('${ord.id}')" title="Delete" class="text-red-700 hover:text-red-900 p-2 text-xs"><i class="fa-solid fa-trash"></i></button>
               </div>
@@ -840,24 +837,24 @@
     }
 
     window.confirmPaymentReceived = async function(orderId) {
-      if (confirm("Kya aapne bank account mein rashi check kar li hai?")) {
+      if (confirm("Confirm that payment has been received in your bank account?")) {
         await updateDoc(doc(db, "orders", orderId), { 
           paymentReceived: true,
           status: "Dispatched"
         });
-        showToast("Bhugtan verify ho gaya!");
+        showToast("Payment confirmed & order marked as Dispatched!");
       }
     };
 
     window.updateOrderStatus = async function(orderId, newStatus) {
       await updateDoc(doc(db, "orders", orderId), { status: newStatus });
-      showToast("Order status badla: " + newStatus);
+      showToast("Order status updated: " + newStatus);
     };
 
     window.deleteOrder = async function(orderId) {
-      if (confirm("Aadesh record hamesha ke liye mitayein?")) {
+      if (confirm("Permanently delete this order record?")) {
         await deleteDoc(doc(db, "orders", orderId));
-        showToast("Order record delete ho gaya.");
+        showToast("Order record deleted.");
       }
     };
 
@@ -867,7 +864,7 @@
     function renderStore() {
       const grid = document.getElementById("productGrid");
       if (products.length === 0) {
-        grid.innerHTML = `<p class="col-span-4 text-stone-500 text-center py-10">Bazaar catalog abhi khali hai. Admin Kaksh se utpad jodein.</p>`;
+        grid.innerHTML = `<p class="col-span-4 text-stone-500 text-center py-10">The catalog is currently empty. Add products via the Admin Panel.</p>`;
         return;
       }
       grid.innerHTML = products.map(p => `
@@ -886,7 +883,7 @@
             <div class="flex justify-between items-center pt-3 border-t border-amber-100">
               <span class="text-lg font-bold text-amber-900">₹${p.price}</span>
               <button onclick="addToCart('${p.id}')" class="bg-amber-800 hover:bg-amber-900 text-amber-100 text-xs font-semibold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition shadow-sm">
-                <i class="fa-solid fa-basket-shopping"></i> Thali Mein Dalein
+                <i class="fa-solid fa-basket-shopping"></i> Add to Cart
               </button>
             </div>
           </div>
@@ -902,7 +899,7 @@
       else cart.push({ id: prod.id, name: prod.name, price: prod.price, image: prod.image, qty: 1 });
       localStorage.setItem("qs_cart", JSON.stringify(cart));
       updateCartCount();
-      showToast(`${prod.name} thali mein jud gaya!`);
+      showToast(`${prod.name} added to your cart!`);
     };
 
     function updateCartCount() {
@@ -930,14 +927,14 @@
     function renderCart() {
       const list = document.getElementById("cartItemList");
       if (cart.length === 0) {
-        list.innerHTML = `<div class="bg-[#FFFDF8] p-8 text-center rounded-3xl border border-amber-900/10 shadow-terracotta"><p class="text-stone-500 mb-4">Aapki thali khali hai.</p><button onclick="showView('store')" class="bg-amber-800 text-amber-100 text-xs px-5 py-2.5 rounded-full font-semibold">Bazaar Dekhein</button></div>`;
+        list.innerHTML = `<div class="bg-[#FFFDF8] p-8 text-center rounded-3xl border border-amber-900/10 shadow-terracotta"><p class="text-stone-500 mb-4">Your shopping cart is empty.</p><button onclick="showView('store')" class="bg-amber-800 text-amber-100 text-xs px-5 py-2.5 rounded-full font-semibold">Explore Catalog</button></div>`;
       } else {
         list.innerHTML = cart.map(item => `
           <div class="flex items-center gap-4 bg-[#FFFDF8] p-4 rounded-2xl border border-amber-900/10 shadow-terracotta">
             <img src="${item.image}" class="w-16 h-16 object-cover rounded-xl border border-amber-200" />
             <div class="flex-1">
               <h4 class="font-heritage font-bold text-amber-950">${item.name}</h4>
-              <p class="text-xs text-amber-800 font-semibold">₹${item.price} pratyek</p>
+              <p class="text-xs text-amber-800 font-semibold">₹${item.price} each</p>
             </div>
             <div class="flex items-center gap-2">
               <button onclick="updateQty('${item.id}', -1)" class="w-7 h-7 bg-amber-100 hover:bg-amber-200 text-amber-950 rounded-lg font-bold">-</button>
@@ -970,12 +967,12 @@
 
     window.placeOrder = async function() {
       if (!currentUser) {
-        showToast("Kripya pehle apna pata darj karein.");
+        showToast("Please enter your delivery details first.");
         showView('auth');
         return;
       }
       if (cart.length === 0) {
-        showToast("Aapki thali khali hai!");
+        showToast("Your cart is empty!");
         return;
       }
 
@@ -983,7 +980,7 @@
       const txnId = document.getElementById("upiTxnId").value.trim();
 
       if (method === 'QR' && !txnId) {
-        alert("⚠️ Kripya QR code scan karke 12-digit ka UPI Ref / UTR number jarur bharein.");
+        alert("Please enter the 12-digit UPI Reference / UTR Number after scanning the QR code.");
         return;
       }
 
@@ -1008,7 +1005,7 @@
 
       try {
         const docRef = await addDoc(collection(db, "orders"), orderPayload);
-        alert(`Dhanyawad! Aapka Aadesh Visionary Express par darj hua.\n\nAadesh #${docRef.id.slice(-6).toUpperCase()}\nKul Rashi: ₹${total}\n\nDukaan sanchalak aapke order ko verify karenge.`);
+        alert(`Order Placed Successfully!\n\nOrder #${docRef.id.slice(-6).toUpperCase()}\nTotal Amount: ₹${total}\n\nThe store admin will verify your order!`);
         cart = [];
         localStorage.removeItem("qs_cart");
         document.getElementById("upiTxnId").value = "";

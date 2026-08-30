@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visionary Express - Indian Heritage Store</title>
+  <title>Visionary Express - Heritage Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,6 @@
     .shadow-terracotta {
       box-shadow: 0 12px 30px -6px rgba(180, 83, 9, 0.16), 0 8px 12px -6px rgba(180, 83, 9, 0.08);
     }
-    /* Traditional Indian Fort & Floral Murals Watermark */
     .heritage-border {
       border: 2px solid #D97706;
       position: relative;
@@ -38,6 +37,12 @@
       border: 1px dashed #B45309;
       pointer-events: none;
       opacity: 0.4;
+    }
+    /* Custom layout blending UI art exhibits with products */
+    .catalog-masonry {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
     }
   </style>
 </head>
@@ -82,53 +87,6 @@
 
   <!-- Main Content Area -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-8">
-
-    <!-- Cultural Heritage Banner with Animal Drawings (Tiger, Elephant, Forts) -->
-    <section class="bg-gradient-to-r from-amber-900 via-amber-800 to-orange-900 rounded-3xl p-6 sm:p-8 text-amber-100 shadow-terracotta heritage-border relative overflow-hidden">
-      <!-- Decorative Background Fort/Animal SVG Watermarks -->
-      <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none transform translate-x-10 translate-y-6">
-        <svg class="w-96 h-96 fill-amber-200" viewBox="0 0 200 200">
-          <!-- Royal Elephant & Fort Motif -->
-          <path d="M30 140c0-20 15-35 35-35h20c10 0 20 5 25 12l15-12c8-6 18-9 28-9h17c15 0 25 10 25 25v30H30v-11zM60 80c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18zm110 0c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18z"/>
-        </svg>
-      </div>
-
-      <div class="max-w-2xl space-y-3 relative z-10">
-        <span class="bg-amber-500/30 border border-amber-300/40 text-amber-200 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-          <i class="fa-solid fa-landmark text-amber-400 mr-1"></i> Pan-India Heritage Showcase
-        </span>
-        <h2 class="text-3xl sm:text-4xl font-heritage font-bold text-amber-100">
-          Celebrating India's State Artistry & Wildlife
-        </h2>
-        <p class="text-sm text-amber-200/90 leading-relaxed">
-          From the majestic Royal Tigers of Madhya Pradesh and Bengal, the ceremonial Temple Elephants of Kerala, to the royal Forts of Rajasthan and Warli murals of Maharashtra—discover authentic creations inspired by our timeless heritage.
-        </p>
-      </div>
-
-      <!-- State Animal & Art Badges Grid -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 relative z-10">
-        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
-          <i class="fa-solid fa-paw text-amber-400 text-lg mb-1"></i>
-          <h4 class="text-xs font-bold text-amber-100">Bengal Tiger</h4>
-          <p class="text-[10px] text-amber-300/80">Madhubani & Forest Motifs</p>
-        </div>
-        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
-          <i class="fa-solid fa-crown text-amber-400 text-lg mb-1"></i>
-          <h4 class="text-xs font-bold text-amber-100">Royal Elephant</h4>
-          <p class="text-[10px] text-amber-300/80">Kerala & Karnataka Craft</p>
-        </div>
-        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
-          <i class="fa-solid fa-feather text-amber-400 text-lg mb-1"></i>
-          <h4 class="text-xs font-bold text-amber-100">Peacock & Deer</h4>
-          <p class="text-[10px] text-amber-300/80">Rajasthan & Gond Tradition</p>
-        </div>
-        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
-          <i class="fa-solid fa-mountain-sun text-amber-400 text-lg mb-1"></i>
-          <h4 class="text-xs font-bold text-amber-100">Heritage Forts</h4>
-          <p class="text-[10px] text-amber-300/80">Architectural Lineage</p>
-        </div>
-      </div>
-    </section>
 
     <!-- 1. Mandatory Admin Login Screen -->
     <section id="adminLoginView" class="hidden max-w-md mx-auto my-10 bg-[#FFFDF8] p-8 rounded-3xl shadow-terracotta border-2 border-amber-700/20 relative">
@@ -183,18 +141,20 @@
       </form>
     </section>
 
-    <!-- 3. Store View -->
-    <section id="storeView" class="space-y-6">
+    <!-- 3. Store View (With Native Art & Dress Style UI Exhibits Blended in) -->
+    <section id="storeView" class="space-y-8">
       <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-amber-900/15 pb-4 gap-2">
         <div>
           <span class="text-xs font-bold uppercase tracking-widest text-amber-800 bg-amber-100/80 px-2.5 py-0.5 rounded-full border border-amber-300">
             Visionary Express Catalog
           </span>
-          <h2 class="text-3xl font-heritage font-bold text-amber-950 mt-1">Featured Regional Products</h2>
+          <h2 class="text-3xl font-heritage font-bold text-amber-950 mt-1">Available Products</h2>
         </div>
-        <p class="text-xs text-stone-600 italic">Authentic handcrafted goods with nationwide delivery.</p>
+        <p class="text-xs text-stone-600 italic">Authentic handcrafted goods & native art showcases.</p>
       </div>
-      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+
+      <!-- Combined Catalog Stream (Products + Cultural UI Art Cards Interspersed) -->
+      <div id="productGrid" class="catalog-masonry"></div>
     </section>
 
     <!-- 4. Cart & Checkout View -->
@@ -390,7 +350,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Initial sample products featuring Indian heritage art & wildlife
+    // Initial products
     const defaultStaticProducts = [
       {
         id: "p_1",
@@ -412,6 +372,31 @@
         price: 1250,
         image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80",
         description: "Rajasthani textile art featuring dancing peacocks and sacred lotus ponds with gold leaf details."
+      }
+    ];
+
+    // Cultural UI Display Exhibits (Native animals, dress styles, murals to intersperse into catalog stream)
+    const culturalArtExhibits = [
+      {
+        type: 'exhibit',
+        title: 'Royal Bengal Tiger (Madhubani Art)',
+        region: 'Madhya Pradesh & West Bengal',
+        image: 'https://images.unsplash.com/photo-1547721064-da6cfb31f254?w=500&q=80',
+        desc: 'Symbolizing unyielding power and natural majesty, the tiger appears in central Indian Gond and Mithila folk creations.'
+      },
+      {
+        type: 'exhibit',
+        title: 'Ceremonial Royal Elephant',
+        region: 'Kerala & Karnataka',
+        image: 'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=500&q=80',
+        desc: 'Adorned with gold-plated Nettipattam headgears, majestic elephants are revered icons of temple festivals and prosperity.'
+      },
+      {
+        type: 'exhibit',
+        title: 'Traditional Bandhani & Paithani Dress Styles',
+        region: 'Gujarat, Rajasthan & Maharashtra',
+        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
+        desc: 'Hand-tied tie-dye silks and zari-woven pallus displaying centuries of intricate textile engineering.'
       }
     ];
 
@@ -842,36 +827,64 @@
     };
 
     // =======================================================
-    // 9. STOREFRONT & CHECKOUT
+    // 9. STOREFRONT & CHECKOUT (Interspersed with UI Art Exhibits)
     // =======================================================
     function renderStore() {
       const grid = document.getElementById("productGrid");
-      if (products.length === 0) {
-        grid.innerHTML = `<p class="col-span-4 text-stone-500 text-center py-10">The catalog is currently empty. Add items from the Admin Panel.</p>`;
-        return;
-      }
-      grid.innerHTML = products.map(p => `
-        <div class="bg-[#FFFDF8] rounded-3xl shadow-terracotta border-2 border-amber-900/10 flex flex-col overflow-hidden transition hover:-translate-y-1">
-          <div class="relative h-48 w-full overflow-hidden bg-amber-50">
-            <img src="${p.image}" alt="${p.name}" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Visionary+Express'"/>
-            <div class="absolute top-2.5 right-2.5 bg-amber-950/80 backdrop-blur-sm text-amber-200 text-xs px-3 py-1 rounded-full font-bold shadow-sm">
-              ₹${p.price}
+      
+      let htmlCards = "";
+
+      // Interleave products and cultural UI art exhibits smoothly
+      products.forEach((p, idx) => {
+        // Inject a cultural exhibit card every 2 products for rich UI display
+        if (idx > 0 && idx % 2 === 1 && culturalArtExhibits[Math.floor(idx/2) % culturalArtExhibits.length]) {
+          const art = culturalArtExhibits[Math.floor(idx/2) % culturalArtExhibits.length];
+          htmlCards += `
+            <div class="bg-gradient-to-br from-amber-900 to-amber-950 text-amber-100 rounded-3xl shadow-terracotta border-2 border-amber-600/40 p-5 flex flex-col justify-between relative overflow-hidden">
+              <div class="absolute top-2 right-2 opacity-15 pointer-events-none">
+                <i class="fa-solid fa-palette text-6xl text-amber-200"></i>
+              </div>
+              <div class="relative h-44 w-full rounded-2xl overflow-hidden mb-3 border border-amber-500/30">
+                <img src="${art.image}" alt="${art.title}" class="w-full h-full object-cover" />
+                <span class="absolute bottom-2 left-2 bg-black/70 backdrop-blur-sm text-amber-300 text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                  ${art.region}
+                </span>
+              </div>
+              <div class="space-y-1.5 z-10">
+                <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest"><i class="fa-solid fa-feather mr-1"></i> Cultural UI Showcase</span>
+                <h3 class="font-heritage font-bold text-amber-100 text-base leading-snug">${art.title}</h3>
+                <p class="text-xs text-amber-200/80 leading-relaxed">${art.desc}</p>
+              </div>
+            </div>
+          `;
+        }
+
+        // Standard Product Card
+        htmlCards += `
+          <div class="bg-[#FFFDF8] rounded-3xl shadow-terracotta border-2 border-amber-900/10 flex flex-col overflow-hidden transition hover:-translate-y-1">
+            <div class="relative h-48 w-full overflow-hidden bg-amber-50">
+              <img src="${p.image}" alt="${p.name}" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Visionary+Express'"/>
+              <div class="absolute top-2.5 right-2.5 bg-amber-950/80 backdrop-blur-sm text-amber-200 text-xs px-3 py-1 rounded-full font-bold shadow-sm">
+                ₹${p.price}
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div>
+                <h3 class="font-heritage font-bold text-amber-950 text-base leading-snug">${p.name}</h3>
+                <p class="text-xs text-stone-600 line-clamp-2 mt-1 leading-relaxed">${p.description}</p>
+              </div>
+              <div class="flex justify-between items-center pt-3 border-t border-amber-100">
+                <span class="text-lg font-bold text-amber-900">₹${p.price}</span>
+                <button onclick="addToCart('${p.id}')" class="bg-amber-800 hover:bg-amber-900 text-amber-100 text-xs font-semibold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition shadow-sm">
+                  <i class="fa-solid fa-basket-shopping"></i> Add to Cart
+                </button>
+              </div>
             </div>
           </div>
-          <div class="p-5 flex-1 flex flex-col justify-between space-y-3">
-            <div>
-              <h3 class="font-heritage font-bold text-amber-950 text-base leading-snug">${p.name}</h3>
-              <p class="text-xs text-stone-600 line-clamp-2 mt-1 leading-relaxed">${p.description}</p>
-            </div>
-            <div class="flex justify-between items-center pt-3 border-t border-amber-100">
-              <span class="text-lg font-bold text-amber-900">₹${p.price}</span>
-              <button onclick="addToCart('${p.id}')" class="bg-amber-800 hover:bg-amber-900 text-amber-100 text-xs font-semibold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition shadow-sm">
-                <i class="fa-solid fa-basket-shopping"></i> Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join('');
+        `;
+      });
+
+      grid.innerHTML = htmlCards;
     }
 
     window.addToCart = function(productId) {

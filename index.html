@@ -3,28 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QuickShop Store</title>
+  <title>Swadeshi Bazaar & Rasoi</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #FBF8F2;
+      background-image: radial-gradient(#E8DFD0 0.8px, transparent 0.8px);
+      background-size: 18px 18px;
+    }
+    .font-heritage {
+      font-family: 'Marcellus', serif;
+    }
+    .border-ornament {
+      border-image: linear-gradient(to right, #B45309, #D97706, #B45309) 1;
+    }
+    .shadow-clay {
+      box-shadow: 0 10px 25px -5px rgba(180, 83, 9, 0.12), 0 8px 10px -6px rgba(180, 83, 9, 0.08);
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+<body class="text-stone-900 min-h-screen flex flex-col">
 
-  <!-- Navbar -->
-  <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-      <h1 class="text-2xl font-bold cursor-pointer flex items-center gap-2" onclick="showView('store')">
-        <i class="fa-solid fa-bag-shopping"></i> QuickShop
-      </h1>
+  <!-- Royal Saffron & Gold Header -->
+  <header class="bg-gradient-to-r from-amber-900 via-amber-800 to-orange-900 text-amber-50 shadow-lg sticky top-0 z-40 border-b-2 border-amber-600/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
       
-      <div class="flex items-center gap-4">
-        <!-- Admin Entry Channel Button -->
-        <button onclick="openAdminChannel()" class="text-xs bg-indigo-800 hover:bg-indigo-900 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-user-shield"></i> Admin Portal
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer group" onclick="showView('store')">
+        <div class="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-xl shadow-inner group-hover:scale-105 transition">
+          <i class="fa-solid fa-om"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl font-heritage tracking-wider text-amber-100 font-bold leading-tight">स्वदेशी बाज़ार</h1>
+          <p class="text-[10px] tracking-widest uppercase text-amber-300/80 font-medium">Authentic & Pure</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-3 sm:gap-5">
+        <!-- Admin Portal Trigger -->
+        <button onclick="requestAdminAccess()" class="text-xs bg-amber-950/80 hover:bg-amber-950 border border-amber-500/40 text-amber-200 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-key text-amber-400"></i> Admin Kaksh
         </button>
 
-        <button onclick="showView('cart')" class="relative text-white hover:text-indigo-200">
-          <i class="fa-solid fa-cart-shopping text-xl"></i>
-          <span id="cartCount" class="absolute -top-2 -right-2 bg-rose-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        <!-- Cart Button -->
+        <button onclick="showView('cart')" class="relative p-2 text-amber-200 hover:text-amber-100 transition">
+          <i class="fa-solid fa-basket-shopping text-xl"></i>
+          <span id="cartCount" class="absolute -top-1 -right-1 bg-red-700 text-amber-100 text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border border-amber-200">0</span>
         </button>
 
         <div id="userNavSection"></div>
@@ -32,231 +62,237 @@
     </div>
   </header>
 
-  <!-- Main View Container -->
-  <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
 
-    <!-- 1. Dedicated Admin Login Channel (Standalone Page) -->
-    <section id="adminLoginView" class="hidden max-w-sm mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-100 my-12">
+    <!-- 1. Mandatory Admin Login Channel (Zero Persistent Session) -->
+    <section id="adminLoginView" class="hidden max-w-md mx-auto my-12 bg-[#FFFDF7] p-8 rounded-2xl shadow-clay border border-amber-900/15">
       <div class="text-center space-y-2 mb-6">
-        <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-xl">
-          <i class="fa-solid fa-lock"></i>
+        <div class="w-14 h-14 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto text-2xl border-2 border-amber-300">
+          <i class="fa-solid fa-shield-halved"></i>
         </div>
-        <h2 class="text-2xl font-extrabold text-gray-900">Admin Portal</h2>
-        <p class="text-xs text-gray-500">Sign in to manage catalog, orders, and fees</p>
+        <h2 class="text-2xl font-heritage font-bold text-amber-950">प्रबंधक प्रवेश (Admin Login)</h2>
+        <p class="text-xs text-stone-600">Enter your passcode. Requires verification on every access.</p>
       </div>
 
       <form onsubmit="handleAdminLogin(event)" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Admin Password</label>
-          <input type="password" id="adminPortalPass" required class="w-full p-2.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-indigo-500" placeholder="••••••••" />
+          <label class="block text-xs font-bold uppercase tracking-wider text-amber-900 mb-1">Gupt Chabi (Admin Password)</label>
+          <input type="password" id="adminPortalPass" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" placeholder="••••••••" />
         </div>
-        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-md">
-          Authenticate & Enter
+        <button type="submit" class="w-full bg-gradient-to-r from-amber-700 to-orange-700 hover:from-amber-800 hover:to-orange-800 text-amber-50 font-semibold py-2.5 rounded-lg text-sm transition shadow-md">
+          Verify & Enter
         </button>
       </form>
-      <div class="text-center mt-4">
-        <button onclick="showView('store')" class="text-xs text-gray-500 hover:underline">Cancel and return to store</button>
+      <div class="text-center mt-5">
+        <button onclick="showView('store')" class="text-xs text-amber-800 hover:underline">Cancel and Return to Bazaar</button>
       </div>
     </section>
 
     <!-- 2. Customer Auth View -->
-    <section id="authView" class="hidden max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-      <h2 id="authTitle" class="text-2xl font-bold text-gray-800 mb-4 text-center">User Registration / Login</h2>
+    <section id="authView" class="hidden max-w-lg mx-auto bg-[#FFFDF7] p-8 rounded-2xl shadow-clay border border-amber-900/15">
+      <div class="text-center mb-6">
+        <span class="text-amber-700 text-sm font-semibold tracking-wider uppercase">नमस्ते</span>
+        <h2 id="authTitle" class="text-2xl font-heritage font-bold text-amber-950">Grahak Panjikaran (Details)</h2>
+        <p class="text-xs text-stone-600 mt-1">Please enter your delivery information</p>
+      </div>
+      
       <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Full Name</label>
-          <input type="text" id="authName" required class="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. John Doe" />
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Pura Naam (Full Name)</label>
+          <input type="text" id="authName" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. Ramesh Sharma" />
         </div>
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Phone Number</label>
-          <input type="tel" id="authPhone" required class="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. 9876543210" />
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Sampark Sutra (Phone Number)</label>
+          <input type="tel" id="authPhone" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. 9876543210" />
         </div>
         <div>
-          <label class="block text-sm font-semibold text-gray-700">Delivery Address</label>
-          <textarea id="authAddress" rows="3" required class="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Full house address, landmark, pin code"></textarea>
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Ghar ka Pata (Delivery Address)</label>
+          <textarea id="authAddress" rows="3" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="House/Flat No., Landmark, Street, Pin Code"></textarea>
         </div>
-        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">Save & Continue</button>
+        <button type="submit" class="w-full bg-gradient-to-r from-amber-700 to-orange-700 hover:from-amber-800 hover:to-orange-800 text-amber-50 font-semibold py-2.5 rounded-lg transition shadow-md">
+          Surakshit Karein (Save & Continue)
+        </button>
       </form>
     </section>
 
     <!-- 3. Store View -->
     <section id="storeView" class="space-y-6">
-      <div>
-        <h2 class="text-3xl font-extrabold text-gray-900">Featured Products</h2>
-        <p class="text-gray-500 text-sm mt-1">Browse catalog items and add to cart.</p>
+      <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-amber-900/10 pb-4 gap-2">
+        <div>
+          <span class="text-amber-700 font-semibold text-xs tracking-widest uppercase">Shuddh & Desi</span>
+          <h2 class="text-3xl font-heritage font-bold text-amber-950">Taaza Utpad (Fresh Catalog)</h2>
+        </div>
+        <p class="text-xs text-stone-500 italic">Handpicked traditional products packed with care.</p>
       </div>
       <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </section>
 
     <!-- 4. Cart & Checkout View -->
     <section id="cartView" class="hidden space-y-6">
-      <h2 class="text-3xl font-extrabold text-gray-900">Your Shopping Cart</h2>
+      <h2 class="text-3xl font-heritage font-bold text-amber-950 border-b border-amber-900/10 pb-3">Aapki Thali (Your Cart)</h2>
       <div id="cartContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2 space-y-4" id="cartItemList"></div>
 
-        <!-- Checkout Card -->
-        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 h-fit space-y-4">
-          <h3 class="text-xl font-bold border-b pb-3">Price Breakdown</h3>
-          <div class="space-y-2 text-sm text-gray-600">
-            <div class="flex justify-between"><span>Subtotal:</span> <span id="summarySubtotal" class="font-semibold text-gray-800">₹0</span></div>
-            <div class="flex justify-between"><span>Delivery Charges:</span> <span id="summaryDelivery" class="font-semibold text-gray-800">₹0</span></div>
-            <div class="flex justify-between"><span>Handling & Packaging:</span> <span id="summaryPackaging" class="font-semibold text-gray-800">₹0</span></div>
-            <hr class="my-2" />
-            <div class="flex justify-between text-base font-bold text-gray-900"><span>Total Payable:</span> <span id="summaryTotal" class="text-indigo-600">₹0</span></div>
+        <!-- Bill Details -->
+        <div class="bg-[#FFFDF7] p-6 rounded-2xl shadow-clay border border-amber-900/15 h-fit space-y-4">
+          <h3 class="text-lg font-heritage font-bold border-b border-amber-200 pb-2 text-amber-950">Kharidari Vivaran (Bill Details)</h3>
+          <div class="space-y-2 text-sm text-stone-700">
+            <div class="flex justify-between"><span>Subtotal:</span> <span id="summarySubtotal" class="font-bold text-stone-900">₹0</span></div>
+            <div class="flex justify-between"><span>Delivery Shulk (Delivery Fee):</span> <span id="summaryDelivery" class="font-bold text-stone-900">₹0</span></div>
+            <div class="flex justify-between"><span>Packaging / Nirman Shulk:</span> <span id="summaryPackaging" class="font-bold text-stone-900">₹0</span></div>
+            <hr class="border-amber-200 my-2" />
+            <div class="flex justify-between text-base font-bold text-amber-950"><span>Kul Rashi (Total Payable):</span> <span id="summaryTotal" class="text-orange-700 text-lg">₹0</span></div>
           </div>
 
-          <div class="pt-4 border-t space-y-3">
-            <h4 class="font-semibold text-sm text-gray-700">Payment Option</h4>
+          <div class="pt-4 border-t border-amber-200 space-y-3">
+            <h4 class="font-semibold text-xs uppercase tracking-wider text-amber-950">Bhugtan Vidhi (Payment Option)</h4>
             <div class="space-y-2">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="payMethod" value="COD" checked onchange="toggleQRDisplay()" class="text-indigo-600">
-                <span class="text-sm font-medium">Cash on Delivery (COD)</span>
+              <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-amber-50 border border-transparent hover:border-amber-200 transition">
+                <input type="radio" name="payMethod" value="COD" checked onchange="toggleQRDisplay()" class="text-amber-700 focus:ring-amber-600">
+                <span class="text-sm font-medium text-stone-800">Haath par Bhugtan (Cash on Delivery)</span>
               </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="payMethod" value="QR" onchange="toggleQRDisplay()" class="text-indigo-600">
-                <span class="text-sm font-medium">Pay via QR Code (UPI)</span>
+              <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-amber-50 border border-transparent hover:border-amber-200 transition">
+                <input type="radio" name="payMethod" value="QR" onchange="toggleQRDisplay()" class="text-amber-700 focus:ring-amber-600">
+                <span class="text-sm font-medium text-stone-800">QR Code / UPI Dwara Bhugtan</span>
               </label>
             </div>
 
             <!-- Dynamic QR Code Container -->
-            <div id="qrCodeContainer" class="hidden p-4 bg-indigo-50 border border-indigo-100 rounded-lg text-center space-y-3">
-              <p class="text-xs font-semibold text-indigo-900">Scan QR Code using PhonePe, GPay, Paytm, or BHIM:</p>
-              <div class="bg-white p-2 border rounded-lg inline-block shadow-sm">
-                <img id="adminQrImage" src="" alt="Payment QR" class="w-48 h-48 object-contain mx-auto" />
+            <div id="qrCodeContainer" class="hidden p-4 bg-amber-50/70 border border-amber-300 rounded-xl text-center space-y-3">
+              <p class="text-xs font-semibold text-amber-950">GPay, PhonePe, Paytm ya Kisi bhi UPI App se Scan Karein:</p>
+              <div class="bg-white p-2.5 border-2 border-amber-300 rounded-xl inline-block shadow-sm">
+                <img id="adminQrImage" src="" alt="Dukaan QR Code" class="w-48 h-48 object-contain mx-auto" />
               </div>
-              <p class="text-xs text-rose-600 font-bold">Please pay exact amount: <span id="qrPayableAmount">₹0</span></p>
+              <p class="text-xs text-red-700 font-bold">Kripya Pura Shulk Pay Karein: <span id="qrPayableAmount">₹0</span></p>
               
-              <div class="text-left space-y-1 pt-2">
-                <label class="block text-xs font-semibold text-gray-700">UPI Ref / UTR / Transaction ID (Required):</label>
-                <input type="text" id="upiTxnId" placeholder="12-digit UPI Reference Number" class="w-full text-xs p-2 border rounded bg-white outline-none focus:ring-1 focus:ring-indigo-500" />
+              <div class="text-left space-y-1 pt-2 border-t border-amber-200">
+                <label class="block text-[11px] font-bold uppercase text-amber-950">12-Digit UPI Ref / UTR / Txn Number (Anivarya):</label>
+                <input type="text" id="upiTxnId" placeholder="e.g. 4082XXXXXXXX" class="w-full text-xs p-2 border border-amber-300 rounded-md bg-white outline-none focus:ring-1 focus:ring-amber-600 font-mono" />
               </div>
             </div>
 
-            <button onclick="placeOrder()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-md transition">
-              Confirm & Place Order
+            <button onclick="placeOrder()" class="w-full bg-gradient-to-r from-emerald-700 to-teal-800 hover:from-emerald-800 hover:to-teal-900 text-amber-50 font-semibold py-3 rounded-xl shadow-clay transition">
+              Aadesh Darj Karein (Confirm & Place Order)
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5. Admin Dashboard (Protected Area) -->
+    <!-- 5. Admin Dashboard (Locked Instantly When Navigating Away) -->
     <section id="adminDashboardView" class="hidden space-y-10">
-      <div class="flex flex-wrap justify-between items-center border-b pb-4 gap-4">
+      <div class="flex flex-wrap justify-between items-center border-b border-amber-900/15 pb-4 gap-4">
         <div>
-          <h2 class="text-2xl font-bold text-gray-900">Admin Control Center</h2>
-          <p class="text-gray-500 text-sm">Review orders, verify payments, and manage store catalog.</p>
+          <span class="text-xs text-amber-700 font-bold uppercase tracking-widest">Surakshit Sthal</span>
+          <h2 class="text-2xl font-heritage font-bold text-amber-950">Admin Niyantran Kaksh (Dashboard)</h2>
         </div>
         <div class="flex items-center gap-3">
-          <button onclick="logoutAdmin()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-2 rounded-md font-semibold transition">
-            <i class="fa-solid fa-right-from-bracket"></i> Exit Admin
+          <button onclick="exitAdminImmediately()" class="bg-stone-800 hover:bg-stone-900 text-amber-100 text-xs px-3.5 py-2 rounded-full font-semibold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-lock"></i> Exit & Lock Admin
           </button>
-          <button onclick="showView('store')" class="text-indigo-600 font-semibold hover:underline text-sm"><i class="fa-solid fa-arrow-left"></i> View Store</button>
         </div>
       </div>
 
-      <!-- Orders Board -->
+      <!-- Live Orders Section -->
       <div class="space-y-4">
-        <div class="flex justify-between items-center">
-          <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <i class="fa-solid fa-clipboard-list text-indigo-600"></i> Incoming Customer Orders
-            <span id="orderCountBadge" class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full font-bold">0</span>
-          </h3>
-        </div>
+        <h3 class="text-xl font-heritage font-bold text-amber-950 flex items-center gap-2">
+          <i class="fa-solid fa-scroll text-amber-700"></i> Aaye Hue Aadesh (Orders Board)
+          <span id="orderCountBadge" class="bg-amber-100 text-amber-800 border border-amber-300 text-xs px-2.5 py-0.5 rounded-full font-bold">0</span>
+        </h3>
         <div id="ordersBoard" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
       </div>
 
-      <hr class="border-gray-200" />
+      <hr class="border-amber-900/10" />
 
-      <!-- Inventory & Static Memory Management -->
+      <!-- Inventory Management (Static Memory) -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
         <!-- Add/Edit Product -->
-        <div class="bg-white p-6 rounded-xl shadow-sm border space-y-4">
-          <h3 class="text-lg font-bold text-gray-800" id="formActionTitle">Add / Edit Product</h3>
+        <div class="bg-[#FFFDF7] p-6 rounded-2xl shadow-clay border border-amber-900/15 space-y-4">
+          <h3 class="text-lg font-heritage font-bold text-amber-950" id="formActionTitle">Naya Utpad Jodein (Add Product)</h3>
           <form id="productForm" onsubmit="saveProduct(event)" class="space-y-3">
             <input type="hidden" id="editProductId" />
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Product Name</label>
-              <input type="text" id="prodName" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. Leather Wallet" />
+              <label class="block text-xs font-bold text-amber-900">Utpad ka Naam (Product Name)</label>
+              <input type="text" id="prodName" required class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" placeholder="e.g. Desi Ghee / Masala Chai" />
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Price (₹)</label>
-              <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. 899" />
+              <label class="block text-xs font-bold text-amber-900">Moolya (Price in ₹)</label>
+              <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" placeholder="e.g. 450" />
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Product Image (File or URL)</label>
-              <input type="file" id="prodImageFile" accept="image/*" onchange="handleProductImageUpload(event)" class="w-full mt-1 text-xs text-gray-500" />
-              <input type="url" id="prodImageUrl" class="w-full mt-1.5 p-2 border rounded-md text-xs" placeholder="Or enter image URL" />
+              <label class="block text-xs font-bold text-amber-900">Tasveer (Image Upload or URL)</label>
+              <input type="file" id="prodImageFile" accept="image/*" onchange="handleProductImageUpload(event)" class="w-full mt-1 text-xs text-stone-500" />
+              <input type="url" id="prodImageUrl" class="w-full mt-1.5 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-xs" placeholder="Ya image URL daalein" />
               <input type="hidden" id="finalProdImage" />
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Description</label>
-              <textarea id="prodDesc" rows="3" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="Description..."></textarea>
+              <label class="block text-xs font-bold text-amber-900">Vivaran (Description)</label>
+              <textarea id="prodDesc" rows="3" required class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" placeholder="Swad, gunvatta aur shuddhata..."></textarea>
             </div>
             <div class="flex gap-2 pt-2">
-              <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 rounded-md">Save to Static Catalog</button>
-              <button type="button" onclick="resetProductForm()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold px-4 py-2 rounded-md">Clear</button>
+              <button type="submit" class="flex-1 bg-amber-800 hover:bg-amber-900 text-amber-50 text-sm font-semibold py-2 rounded-md transition">Save to Catalog</button>
+              <button type="button" onclick="resetProductForm()" class="bg-stone-200 hover:bg-stone-300 text-stone-700 text-sm font-semibold px-4 py-2 rounded-md">Clear</button>
             </div>
           </form>
         </div>
 
-        <!-- Inventory List Table (Static Memory View) -->
-        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border flex flex-col">
-          <div class="p-4 border-b font-bold text-gray-800 flex justify-between items-center">
-            <span>Static Memory Inventory</span>
-            <span id="productCountBadge" class="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-semibold">0 items</span>
+        <!-- Static Inventory Table -->
+        <div class="lg:col-span-2 bg-[#FFFDF7] rounded-2xl shadow-clay border border-amber-900/15 flex flex-col overflow-hidden">
+          <div class="p-4 border-b border-amber-200 font-heritage font-bold text-amber-950 flex justify-between items-center">
+            <span>Dukaan Catalog (Static Memory)</span>
+            <span id="productCountBadge" class="text-xs bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full font-semibold">0 items</span>
           </div>
           <div class="overflow-x-auto flex-1">
-            <table class="w-full text-left text-sm text-gray-600">
-              <thead class="bg-gray-50 text-gray-700 font-semibold uppercase text-xs">
+            <table class="w-full text-left text-sm text-stone-700">
+              <thead class="bg-amber-50 text-amber-950 font-semibold uppercase text-xs">
                 <tr>
-                  <th class="p-3">Product</th>
-                  <th class="p-3">Price</th>
-                  <th class="p-3 text-right">Actions</th>
+                  <th class="p-3">Utpad</th>
+                  <th class="p-3">Moolya</th>
+                  <th class="p-3 text-right">Karein</th>
                 </tr>
               </thead>
-              <tbody id="adminProductTable" class="divide-y"></tbody>
+              <tbody id="adminProductTable" class="divide-y divide-amber-100"></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- Fees, QR, and Password Management -->
+      <!-- Store Configuration & Password Update -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Fees & QR -->
-        <div class="bg-white p-6 rounded-xl shadow-sm border space-y-4">
-          <h3 class="text-lg font-bold text-gray-800">Store Fees & Payment QR</h3>
+        <!-- Fees & Merchant QR -->
+        <div class="bg-[#FFFDF7] p-6 rounded-2xl shadow-clay border border-amber-900/15 space-y-4">
+          <h3 class="text-lg font-heritage font-bold text-amber-950">Shulk aur Merchant QR Code</h3>
           <form onsubmit="saveSettings(event)" class="space-y-3">
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-gray-600">Delivery Fee (₹)</label>
-                <input type="number" id="settingDelivery" required class="w-full mt-1 p-2 border rounded-md text-sm" />
+                <label class="block text-xs font-bold text-amber-900">Delivery Shulk (₹)</label>
+                <input type="number" id="settingDelivery" required class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" />
               </div>
               <div>
-                <label class="block text-xs font-semibold text-gray-600">Packaging Fee (₹)</label>
-                <input type="number" id="settingPackaging" required class="w-full mt-1 p-2 border rounded-md text-sm" />
+                <label class="block text-xs font-bold text-amber-900">Packaging Shulk (₹)</label>
+                <input type="number" id="settingPackaging" required class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" />
               </div>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Upload QR Code Image</label>
-              <input type="file" id="qrFileInput" accept="image/*" onchange="handleQRUpload(event)" class="w-full mt-1 text-xs text-gray-500" />
-              <input type="url" id="settingQR" class="w-full mt-1.5 p-2 border rounded-md text-xs" placeholder="Or enter QR Image URL" />
+              <label class="block text-xs font-bold text-amber-900">Apna QR Code Upload Karein</label>
+              <input type="file" id="qrFileInput" accept="image/*" onchange="handleQRUpload(event)" class="w-full mt-1 text-xs text-stone-500" />
+              <input type="url" id="settingQR" class="w-full mt-1.5 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-xs" placeholder="Ya QR Image URL" />
               <input type="hidden" id="finalQRImage" />
             </div>
-            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2.5 rounded-md">Save Store Config</button>
+            <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-amber-50 text-sm font-semibold py-2.5 rounded-md transition">Update Store Config</button>
           </form>
         </div>
 
-        <!-- Password Change Form -->
-        <div class="bg-white p-6 rounded-xl shadow-sm border space-y-4">
-          <h3 class="text-lg font-bold text-gray-800">Change Admin Password</h3>
+        <!-- Password Change -->
+        <div class="bg-[#FFFDF7] p-6 rounded-2xl shadow-clay border border-amber-900/15 space-y-4">
+          <h3 class="text-lg font-heritage font-bold text-amber-950">Gupt Chabi Badlein (Change Password)</h3>
           <form onsubmit="changeAdminPassword(event)" class="space-y-3">
             <div>
-              <label class="block text-xs font-semibold text-gray-600">New Password</label>
-              <input type="password" id="newAdminPassword" required minlength="4" class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="Enter new password" />
+              <label class="block text-xs font-bold text-amber-900">Naya Gupt Passcode</label>
+              <input type="password" id="newAdminPassword" required minlength="4" class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" placeholder="Enter new password" />
             </div>
-            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded-md">Update Password</button>
+            <button type="submit" class="w-full bg-stone-800 hover:bg-stone-900 text-amber-100 text-sm font-semibold py-2.5 rounded-md transition">Surakshit Karein (Update)</button>
           </form>
         </div>
       </div>
@@ -264,7 +300,7 @@
     </section>
   </main>
 
-  <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-xl hidden transition-all duration-300 z-50"></div>
+  <div id="toast" class="fixed bottom-5 right-5 bg-amber-950 text-amber-100 border border-amber-600 px-5 py-3 rounded-xl shadow-2xl hidden transition-all duration-300 z-50 text-sm"></div>
 
   <!-- Application Logic -->
   <script type="module">
@@ -289,47 +325,50 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Initial static fallback products
+    // Initial traditional sample products
     const defaultStaticProducts = [
       {
         id: "p_1",
-        name: "Minimalist Leather Strap Watch",
-        price: 1899,
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80",
-        description: "Classic quartz wristwatch with genuine leather band."
+        name: "Shuddh Desi Bilona Ghee (500ml)",
+        price: 750,
+        image: "https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?w=500&q=80",
+        description: "Vedic A2 Gir Cow cultured butter ghee made by traditional hand churned method."
       },
       {
         id: "p_2",
-        name: "True Wireless Earbuds",
-        price: 2499,
-        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80",
-        description: "Noise cancelling Bluetooth earphones with charging case."
+        name: "Handcrafted Terracotta Chai Kulhad (Set of 6)",
+        price: 299,
+        image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&q=80",
+        description: "Natural organic earthen clay cups for the authentic aroma of Indian chai."
       }
     ];
 
     // =======================================================
-    // 2. STATE (Products in Static Memory / LocalStorage)
+    // 2. STATE (Static Catalog & Zero-Admin-Memory)
     // =======================================================
     let products = JSON.parse(localStorage.getItem("qs_static_products")) || defaultStaticProducts;
     let orders = [];
     let settings = { deliveryFee: 40, packagingFee: 20, qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi" };
     let adminPass = "ABC123";
-    let isAdminAuthenticated = sessionStorage.getItem("qs_admin_auth") === "true";
     let currentUser = JSON.parse(localStorage.getItem("qs_active_user")) || null;
     let cart = JSON.parse(localStorage.getItem("qs_cart")) || [];
 
+    // Save strictly to local static storage
     function saveProductsToStaticMemory() {
       localStorage.setItem("qs_static_products", JSON.stringify(products));
     }
 
     // =======================================================
-    // 3. CLOUD LISTENERS (Orders & Settings)
+    // 3. FIRESTORE LISTENERS
     // =======================================================
     onSnapshot(collection(db, "orders"), (snapshot) => {
       orders = [];
       snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
       orders.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-      if (isAdminAuthenticated) renderOrdersBoard();
+      // Only render if admin view is currently open on screen
+      if (!document.getElementById('adminDashboardView').classList.contains('hidden')) {
+        renderOrdersBoard();
+      }
     });
 
     onSnapshot(doc(db, "config", "storeSettings"), (docSnap) => {
@@ -347,9 +386,14 @@
     });
 
     // =======================================================
-    // 4. ROUTING & VIEWS
+    // 4. NAVIGATION & MANDATORY LOGIN ON EVERY ENTRY
     // =======================================================
     window.showView = function(view) {
+      // Whenever navigating away from admin, immediately lock and hide it
+      if (view !== 'adminDashboard') {
+        document.getElementById('adminDashboardView').classList.add('hidden');
+      }
+
       ['storeView', 'cartView', 'authView', 'adminLoginView', 'adminDashboardView'].forEach(id => document.getElementById(id).classList.add('hidden'));
 
       if (view === 'store') {
@@ -365,10 +409,6 @@
         document.getElementById('adminPortalPass').value = '';
         document.getElementById('adminLoginView').classList.remove('hidden');
       } else if (view === 'adminDashboard') {
-        if (!isAdminAuthenticated) {
-          showView('adminLogin');
-          return;
-        }
         populateSettingsForm(); 
         renderAdminProductTable(); 
         renderOrdersBoard();
@@ -376,31 +416,24 @@
       }
     };
 
-    window.openAdminChannel = function() {
-      if (isAdminAuthenticated) {
-        showView('adminDashboard');
-      } else {
-        showView('adminLogin');
-      }
+    // User clicked Admin Kaksh - Always force authentication screen
+    window.requestAdminAccess = function() {
+      showView('adminLogin');
     };
 
     window.handleAdminLogin = function(e) {
       e.preventDefault();
       const entered = document.getElementById("adminPortalPass").value;
       if (entered === adminPass) {
-        isAdminAuthenticated = true;
-        sessionStorage.setItem("qs_admin_auth", "true");
-        showToast("Admin session unlocked!");
+        showToast("Swagatam! Admin kaksh khul chuka hai.");
         showView('adminDashboard');
       } else {
-        alert("Invalid admin credentials.");
+        alert("Kripya sahi Gupt Passcode dalein.");
       }
     };
 
-    window.logoutAdmin = function() {
-      isAdminAuthenticated = false;
-      sessionStorage.removeItem("qs_admin_auth");
-      showToast("Signed out of Admin Portal");
+    window.exitAdminImmediately = function() {
+      showToast("Admin kaksh band ho gaya.");
       showView('store');
     };
 
@@ -411,7 +444,7 @@
         await setDoc(doc(db, "config", "security"), { password: newP }, { merge: true });
         adminPass = newP;
         document.getElementById("newAdminPassword").value = "";
-        showToast("Admin password updated!");
+        showToast("Gupt Passcode safalta-purvak badla gaya!");
       } catch (err) {
         alert("Error changing password: " + err.message);
       }
@@ -425,7 +458,7 @@
     };
 
     // =======================================================
-    // 5. CUSTOMER AUTH
+    // 5. CUSTOMER PROFILE (GRAHAK)
     // =======================================================
     window.handleAuth = async function(e) {
       e.preventDefault();
@@ -437,7 +470,7 @@
       currentUser = userData;
       localStorage.setItem("qs_active_user", JSON.stringify(currentUser));
       renderNav();
-      showToast(`Welcome, ${name}!`);
+      showToast(`Namaste ${name} ji! Details save ho gayi hain.`);
 
       if (cart.length > 0) showView('cart');
       else showView('store');
@@ -445,7 +478,7 @@
       try {
         await setDoc(doc(db, "users", phone), userData);
       } catch (err) {
-        console.warn("Cloud user sync notice:", err);
+        console.warn("User sync warning:", err);
       }
     };
 
@@ -453,7 +486,7 @@
       currentUser = null;
       localStorage.removeItem("qs_active_user");
       renderNav();
-      showToast("Logged out");
+      showToast("Grahak account logout kiya gaya");
       showView('store');
     };
 
@@ -462,18 +495,18 @@
       if (currentUser) {
         container.innerHTML = `
           <div class="flex items-center gap-2">
-            <button onclick="showView('auth')" class="text-xs bg-indigo-500 hover:bg-indigo-700 px-3 py-1.5 rounded-md font-medium text-white">
-              <i class="fa-solid fa-user"></i> ${currentUser.name.split(" ")[0]}
+            <button onclick="showView('auth')" class="text-xs bg-amber-950/60 hover:bg-amber-950 border border-amber-500/40 px-3 py-1.5 rounded-full font-medium text-amber-200">
+              <i class="fa-solid fa-user text-amber-400"></i> ${currentUser.name.split(" ")[0]}
             </button>
-            <button onclick="logout()" title="Logout" class="text-xs bg-rose-500 hover:bg-rose-600 px-2 py-1.5 rounded-md text-white">
-              <i class="fa-solid fa-right-from-bracket"></i>
+            <button onclick="logout()" title="Logout" class="text-xs bg-red-950 hover:bg-red-900 border border-red-500/30 px-2.5 py-1.5 rounded-full text-red-200">
+              <i class="fa-solid fa-power-off"></i>
             </button>
           </div>
         `;
       } else {
         container.innerHTML = `
-          <button onclick="showView('auth')" class="text-xs bg-white text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-md font-bold">
-            Login / Register
+          <button onclick="showView('auth')" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-950 font-bold px-3 py-1.5 rounded-full transition shadow-sm">
+            Panjikaran (Login)
           </button>
         `;
       }
@@ -481,18 +514,18 @@
 
     function populateAuthForm() {
       if (currentUser) {
-        document.getElementById('authTitle').innerText = "Edit Delivery Details";
+        document.getElementById('authTitle').innerText = "Grahak Jankari Badlein";
         document.getElementById('authName').value = currentUser.name || '';
         document.getElementById('authPhone').value = currentUser.phone || '';
         document.getElementById('authAddress').value = currentUser.address || '';
       } else {
-        document.getElementById('authTitle').innerText = "Login / Register";
+        document.getElementById('authTitle').innerText = "Grahak Panjikaran (Details)";
         document.getElementById('authForm').reset();
       }
     }
 
     // =======================================================
-    // 6. STATIC MEMORY PRODUCT OPERATIONS
+    // 6. STATIC MEMORY CATALOG (ADD / EDIT / DELETE)
     // =======================================================
     window.handleProductImageUpload = function(event) {
       const file = event.target.files[0];
@@ -501,7 +534,7 @@
         reader.onload = (e) => {
           document.getElementById('finalProdImage').value = e.target.result;
           document.getElementById('prodImageUrl').value = "";
-          showToast("Image ready");
+          showToast("Utpad ki tasveer tayar hai.");
         };
         reader.readAsDataURL(file);
       }
@@ -517,17 +550,17 @@
         id,
         name: document.getElementById('prodName').value.trim(),
         price: Number(document.getElementById('prodPrice').value),
-        image: uploadedImg || urlImg || 'https://via.placeholder.com/300?text=No+Image',
+        image: uploadedImg || urlImg || 'https://via.placeholder.com/300?text=Swadeshi+Product',
         description: document.getElementById('prodDesc').value.trim()
       };
 
       const existingIndex = products.findIndex(p => p.id === id);
       if (existingIndex > -1) {
         products[existingIndex] = prodData;
-        showToast("Product updated in static memory!");
+        showToast("Utpad update ho gaya!");
       } else {
         products.push(prodData);
-        showToast("Product added to static catalog!");
+        showToast("Naya utpad static catalog mein shamil hua!");
       }
 
       saveProductsToStaticMemory();
@@ -545,18 +578,18 @@
       document.getElementById('prodImageUrl').value = p.image.startsWith('data:') ? '' : p.image;
       document.getElementById('finalProdImage').value = p.image;
       document.getElementById('prodDesc').value = p.description;
-      document.getElementById('formActionTitle').innerText = "Edit Product";
+      document.getElementById('formActionTitle').innerText = "Utpad Sudharein (Edit)";
     };
 
     window.resetProductForm = function() {
       document.getElementById('editProductId').value = '';
       document.getElementById('finalProdImage').value = '';
       document.getElementById('productForm').reset();
-      document.getElementById('formActionTitle').innerText = "Add / Edit Product";
+      document.getElementById('formActionTitle').innerText = "Naya Utpad Jodein (Add Product)";
     };
 
     window.deleteProduct = function(id) {
-      if (confirm("Remove this product from static memory?")) {
+      if (confirm("Kya aap is utpad ko catalog se hatana chahte hain?")) {
         products = products.filter(p => p.id !== id);
         cart = cart.filter(p => p.id !== id);
         saveProductsToStaticMemory();
@@ -564,7 +597,7 @@
         renderAdminProductTable();
         renderStore();
         updateCartCount();
-        showToast("Product deleted.");
+        showToast("Utpad hata diya gaya.");
       }
     };
 
@@ -572,22 +605,22 @@
       const tbody = document.getElementById("adminProductTable");
       document.getElementById("productCountBadge").innerText = `${products.length} items`;
       tbody.innerHTML = products.map(p => `
-        <tr class="hover:bg-gray-50 border-t">
+        <tr class="hover:bg-amber-50/50 border-t border-amber-100">
           <td class="p-3 flex items-center gap-3">
-            <img src="${p.image}" class="w-10 h-10 rounded object-cover" onerror="this.src='https://via.placeholder.com/100'"/>
-            <span class="font-semibold text-gray-800">${p.name}</span>
+            <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover border border-amber-300" onerror="this.src='https://via.placeholder.com/100'"/>
+            <span class="font-semibold text-stone-800">${p.name}</span>
           </td>
-          <td class="p-3 font-medium">₹${p.price}</td>
+          <td class="p-3 font-bold text-amber-950">₹${p.price}</td>
           <td class="p-3 text-right space-x-2">
-            <button onclick="editProduct('${p.id}')" class="text-indigo-600 hover:text-indigo-800 text-xs font-semibold">Edit</button>
-            <button onclick="deleteProduct('${p.id}')" class="text-rose-600 hover:text-rose-800 text-xs font-semibold">Delete</button>
+            <button onclick="editProduct('${p.id}')" class="text-amber-800 hover:text-amber-950 text-xs font-bold underline">Edit</button>
+            <button onclick="deleteProduct('${p.id}')" class="text-red-700 hover:text-red-900 text-xs font-bold ml-2">Delete</button>
           </td>
         </tr>
       `).join('');
     }
 
     // =======================================================
-    // 7. SETTINGS & QR (Cloud Sync)
+    // 7. STORE SETTINGS & MERCHANT QR
     // =======================================================
     window.handleQRUpload = function(event) {
       const file = event.target.files[0];
@@ -596,7 +629,7 @@
         reader.onload = (e) => {
           document.getElementById('finalQRImage').value = e.target.result;
           document.getElementById('settingQR').value = "";
-          showToast("QR code image ready!");
+          showToast("Naya QR code chuna gaya.");
         };
         reader.readAsDataURL(file);
       }
@@ -615,7 +648,7 @@
 
       try {
         await setDoc(doc(db, "config", "storeSettings"), newSettings);
-        showToast("Store settings saved!");
+        showToast("Dukaan niyam aur QR update ho gaye!");
       } catch (err) {
         alert("Error saving settings: " + err.message);
       }
@@ -629,73 +662,75 @@
     }
 
     // =======================================================
-    // 8. ORDERS MANAGEMENT
+    // 8. ORDERS BOARD
     // =======================================================
     function renderOrdersBoard() {
       const board = document.getElementById("ordersBoard");
       document.getElementById("orderCountBadge").innerText = orders.length;
 
       if (orders.length === 0) {
-        board.innerHTML = `<div class="col-span-3 bg-white p-8 rounded-xl border text-center text-gray-400">No customer orders placed yet.</div>`;
+        board.innerHTML = `<div class="col-span-3 bg-[#FFFDF7] p-8 rounded-2xl border border-amber-900/15 text-center text-stone-400">Abhi tak koi naya aadesh nahi mila hai.</div>`;
         return;
       }
 
       board.innerHTML = orders.map(ord => {
         const isQR = ord.paymentMethod === 'QR';
-        const itemsSummary = ord.items ? ord.items.map(i => `<span class="inline-block bg-gray-100 px-2 py-0.5 rounded text-xs text-gray-700 mr-1 mb-1">${i.name} × ${i.qty}</span>`).join('') : '';
+        const itemsSummary = ord.items ? ord.items.map(i => `<span class="inline-block bg-amber-50 border border-amber-200 px-2 py-0.5 rounded text-xs text-amber-950 mr-1 mb-1 font-medium">${i.name} × ${i.qty}</span>`).join('') : '';
 
         return `
-          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 space-y-4 flex flex-col justify-between">
+          <div class="bg-[#FFFDF7] rounded-2xl shadow-clay border border-amber-900/15 p-5 space-y-4 flex flex-col justify-between">
             <div class="space-y-3">
-              <div class="flex justify-between items-start">
+              <div class="flex justify-between items-start border-b border-amber-100 pb-2">
                 <div>
-                  <span class="text-xs font-mono text-gray-400">#${ord.id.slice(-6).toUpperCase()}</span>
-                  <h4 class="font-bold text-gray-800 text-base">${ord.customer?.name || 'Customer'}</h4>
+                  <span class="text-[10px] font-mono tracking-wider text-stone-400">AADESH #${ord.id.slice(-6).toUpperCase()}</span>
+                  <h4 class="font-heritage font-bold text-amber-950 text-base">${ord.customer?.name || 'Grahak'}</h4>
                 </div>
-                <span class="text-xs font-bold px-2.5 py-1 rounded-full border ${ord.status === 'Delivered' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full border ${ord.status === 'Delivered' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-amber-100 text-amber-900 border-amber-300'}">
                   ${ord.status}
                 </span>
               </div>
 
-              <div class="text-xs text-gray-600 space-y-1 bg-gray-50 p-2.5 rounded-lg border">
-                <p><i class="fa-solid fa-phone text-gray-400 mr-1"></i> <strong>Phone:</strong> ${ord.customer?.phone || 'N/A'}</p>
-                <p><i class="fa-solid fa-location-dot text-gray-400 mr-1"></i> <strong>Address:</strong> ${ord.customer?.address || 'N/A'}</p>
-                <p><i class="fa-solid fa-credit-card text-gray-400 mr-1"></i> <strong>Method:</strong> <span class="font-bold ${isQR ? 'text-indigo-600' : 'text-gray-700'}">${isQR ? 'QR Code (UPI)' : 'Cash on Delivery'}</span></p>
+              <!-- Customer details -->
+              <div class="text-xs text-stone-700 space-y-1 bg-amber-50/40 p-3 rounded-xl border border-amber-200/60">
+                <p><i class="fa-solid fa-phone text-amber-700 mr-1"></i> <strong>Phone:</strong> ${ord.customer?.phone || 'N/A'}</p>
+                <p><i class="fa-solid fa-location-dot text-amber-700 mr-1"></i> <strong>Pata:</strong> ${ord.customer?.address || 'N/A'}</p>
+                <p><i class="fa-solid fa-indian-rupee-sign text-amber-700 mr-1"></i> <strong>Bhugtan:</strong> <span class="font-bold ${isQR ? 'text-amber-900' : 'text-stone-800'}">${isQR ? 'UPI / QR Code' : 'Cash on Delivery (COD)'}</span></p>
                 ${isQR ? `
-                  <div class="mt-2 pt-2 border-t border-indigo-100 bg-indigo-50/50 p-2 rounded">
-                    <p class="font-bold text-indigo-900">UPI Ref / Transaction ID:</p>
-                    <p class="font-mono text-indigo-700 text-xs">${ord.transactionId || 'Not provided'}</p>
-                    <p class="mt-1 text-gray-500 text-[11px]">Verification: <strong class="${ord.paymentReceived ? 'text-emerald-600' : 'text-rose-600'}">${ord.paymentReceived ? 'Payment Received' : 'Pending Verification'}</strong></p>
+                  <div class="mt-2 pt-2 border-t border-amber-200 bg-amber-100/50 p-2 rounded-lg">
+                    <p class="font-bold text-amber-950">UPI Txn / UTR Number:</p>
+                    <p class="font-mono text-amber-900 text-xs font-bold">${ord.transactionId || 'Not provided'}</p>
+                    <p class="mt-1 text-[11px]">Sthiti: <strong class="${ord.paymentReceived ? 'text-emerald-700' : 'text-red-700'}">${ord.paymentReceived ? 'Paisa Prapt Hua (Verified)' : 'Paisa Aana Baki (Pending)'}</strong></p>
                   </div>
                 ` : ''}
               </div>
 
               <div>
-                <p class="text-xs font-semibold text-gray-500 mb-1">Items Ordered:</p>
+                <p class="text-[11px] font-bold uppercase text-stone-500 mb-1">Chune Gaye Utpad:</p>
                 <div class="flex flex-wrap">${itemsSummary}</div>
               </div>
             </div>
 
-            <div class="pt-3 border-t space-y-2">
+            <!-- Pricing & Action -->
+            <div class="pt-3 border-t border-amber-100 space-y-2">
               <div class="flex justify-between items-center text-sm font-bold">
-                <span class="text-gray-500 font-medium">Total:</span>
-                <span class="text-indigo-600 text-base">₹${ord.pricing?.totalAmount || 0}</span>
+                <span class="text-stone-600 font-medium">Kul Rashi:</span>
+                <span class="text-orange-800 font-heritage text-lg">₹${ord.pricing?.totalAmount || 0}</span>
               </div>
 
               ${isQR && !ord.paymentReceived ? `
-                <button onclick="confirmPaymentReceived('${ord.id}')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-1.5 rounded transition">
-                  <i class="fa-solid fa-check-double"></i> Confirm Payment Received (₹${ord.pricing?.totalAmount})
+                <button onclick="confirmPaymentReceived('${ord.id}')" class="w-full bg-emerald-800 hover:bg-emerald-900 text-amber-100 text-xs font-bold py-2 rounded-lg transition shadow">
+                  <i class="fa-solid fa-circle-check"></i> Bhugtan Prapt Hua (Confirm ₹${ord.pricing?.totalAmount})
                 </button>
               ` : ''}
 
               <div class="flex gap-2 items-center">
-                <select onchange="updateOrderStatus('${ord.id}', this.value)" class="text-xs border rounded p-1.5 flex-1 bg-white font-medium">
-                  <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Pending</option>
-                  <option value="Dispatched" ${ord.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
-                  <option value="Delivered" ${ord.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
-                  <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                <select onchange="updateOrderStatus('${ord.id}', this.value)" class="text-xs border border-amber-300 rounded-lg p-1.5 flex-1 bg-white font-medium outline-none">
+                  <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Pending (Baki Hai)</option>
+                  <option value="Dispatched" ${ord.status === 'Dispatched' ? 'selected' : ''}>Dispatched (Raste Mein)</option>
+                  <option value="Delivered" ${ord.status === 'Delivered' ? 'selected' : ''}>Delivered (Pahunch Gaya)</option>
+                  <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Cancelled (Radd)</option>
                 </select>
-                <button onclick="deleteOrder('${ord.id}')" class="text-rose-500 hover:text-rose-700 p-1.5 text-xs"><i class="fa-solid fa-trash"></i></button>
+                <button onclick="deleteOrder('${ord.id}')" title="Delete" class="text-red-700 hover:text-red-900 p-1.5 text-xs"><i class="fa-solid fa-trash"></i></button>
               </div>
             </div>
           </div>
@@ -704,24 +739,24 @@
     }
 
     window.confirmPaymentReceived = async function(orderId) {
-      if (confirm("Confirm payment received for this order?")) {
+      if (confirm("Kya aapne bank account mein rashi check kar li hai?")) {
         await updateDoc(doc(db, "orders", orderId), { 
           paymentReceived: true,
           status: "Dispatched"
         });
-        showToast("Payment confirmed & order marked Dispatched!");
+        showToast("Bhugtan confirm ho gaya!");
       }
     };
 
     window.updateOrderStatus = async function(orderId, newStatus) {
       await updateDoc(doc(db, "orders", orderId), { status: newStatus });
-      showToast("Status: " + newStatus);
+      showToast("Order status badla gaya: " + newStatus);
     };
 
     window.deleteOrder = async function(orderId) {
-      if (confirm("Permanently delete this order?")) {
+      if (confirm("Aadesh record hamesha ke liye mitayein?")) {
         await deleteDoc(doc(db, "orders", orderId));
-        showToast("Order deleted.");
+        showToast("Order record delete ho gaya.");
       }
     };
 
@@ -731,21 +766,26 @@
     function renderStore() {
       const grid = document.getElementById("productGrid");
       if (products.length === 0) {
-        grid.innerHTML = `<p class="col-span-4 text-gray-500 text-center py-8">Static memory catalog is empty. Add products from the Admin Portal.</p>`;
+        grid.innerHTML = `<p class="col-span-4 text-stone-500 text-center py-10">Bazaar catalog abhi khali hai. Admin Kaksh se utpad jodein.</p>`;
         return;
       }
       grid.innerHTML = products.map(p => `
-        <div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col overflow-hidden transition">
-          <img src="${p.image}" alt="${p.name}" class="h-48 w-full object-cover bg-gray-100" onerror="this.src='https://via.placeholder.com/300?text=No+Image'"/>
+        <div class="bg-[#FFFDF7] rounded-2xl shadow-clay border border-amber-900/10 flex flex-col overflow-hidden transition hover:-translate-y-1">
+          <div class="relative h-48 w-full overflow-hidden bg-amber-50">
+            <img src="${p.image}" alt="${p.name}" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Desi+Utpad'"/>
+            <div class="absolute top-2 right-2 bg-amber-950/80 backdrop-blur-sm text-amber-200 text-xs px-2.5 py-0.5 rounded-full font-bold">
+              ₹${p.price}
+            </div>
+          </div>
           <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
             <div>
-              <h3 class="font-bold text-gray-800 text-lg leading-snug">${p.name}</h3>
-              <p class="text-xs text-gray-500 line-clamp-2 mt-1">${p.description}</p>
+              <h3 class="font-heritage font-bold text-amber-950 text-base leading-snug">${p.name}</h3>
+              <p class="text-xs text-stone-600 line-clamp-2 mt-1 leading-relaxed">${p.description}</p>
             </div>
-            <div class="flex justify-between items-center pt-2 border-t">
-              <span class="text-lg font-extrabold text-indigo-600">₹${p.price}</span>
-              <button onclick="addToCart('${p.id}')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
-                <i class="fa-solid fa-cart-plus"></i> Add
+            <div class="flex justify-between items-center pt-2 border-t border-amber-100">
+              <span class="text-lg font-bold text-amber-900">₹${p.price}</span>
+              <button onclick="addToCart('${p.id}')" class="bg-amber-800 hover:bg-amber-900 text-amber-100 text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 transition shadow-sm">
+                <i class="fa-solid fa-basket-shopping"></i> Thali Mein Dalein
               </button>
             </div>
           </div>
@@ -761,7 +801,7 @@
       else cart.push({ id: prod.id, name: prod.name, price: prod.price, image: prod.image, qty: 1 });
       localStorage.setItem("qs_cart", JSON.stringify(cart));
       updateCartCount();
-      showToast(`${prod.name} added to cart!`);
+      showToast(`${prod.name} thali mein jud gaya!`);
     };
 
     function updateCartCount() {
@@ -789,22 +829,22 @@
     function renderCart() {
       const list = document.getElementById("cartItemList");
       if (cart.length === 0) {
-        list.innerHTML = `<div class="bg-white p-8 text-center rounded-xl border"><p class="text-gray-500 mb-4">Your cart is empty.</p><button onclick="showView('store')" class="bg-indigo-600 text-white text-sm px-4 py-2 rounded-lg font-semibold">Browse Items</button></div>`;
+        list.innerHTML = `<div class="bg-[#FFFDF7] p-8 text-center rounded-2xl border border-amber-900/10 shadow-clay"><p class="text-stone-500 mb-4">Aapki thali khali hai.</p><button onclick="showView('store')" class="bg-amber-800 text-amber-100 text-xs px-4 py-2.5 rounded-full font-semibold">Bazaar Dekhein</button></div>`;
       } else {
         list.innerHTML = cart.map(item => `
-          <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-            <img src="${item.image}" class="w-16 h-16 object-cover rounded-md" />
+          <div class="flex items-center gap-4 bg-[#FFFDF7] p-4 rounded-2xl border border-amber-900/10 shadow-clay">
+            <img src="${item.image}" class="w-16 h-16 object-cover rounded-xl border border-amber-200" />
             <div class="flex-1">
-              <h4 class="font-bold text-gray-800">${item.name}</h4>
-              <p class="text-xs text-indigo-600 font-semibold">₹${item.price} each</p>
+              <h4 class="font-heritage font-bold text-amber-950">${item.name}</h4>
+              <p class="text-xs text-amber-800 font-semibold">₹${item.price} pratyek</p>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="updateQty('${item.id}', -1)" class="w-7 h-7 bg-gray-100 hover:bg-gray-200 rounded font-bold">-</button>
-              <span class="text-sm font-semibold px-1">${item.qty}</span>
-              <button onclick="updateQty('${item.id}', 1)" class="w-7 h-7 bg-gray-100 hover:bg-gray-200 rounded font-bold">+</button>
+              <button onclick="updateQty('${item.id}', -1)" class="w-7 h-7 bg-amber-100 hover:bg-amber-200 text-amber-950 rounded-lg font-bold">-</button>
+              <span class="text-sm font-semibold px-1 text-stone-800">${item.qty}</span>
+              <button onclick="updateQty('${item.id}', 1)" class="w-7 h-7 bg-amber-100 hover:bg-amber-200 text-amber-950 rounded-lg font-bold">+</button>
             </div>
-            <span class="font-bold text-gray-800 text-sm">₹${item.price * item.qty}</span>
-            <button onclick="removeFromCart('${item.id}')" class="text-rose-500 ml-2"><i class="fa-solid fa-trash"></i></button>
+            <span class="font-bold text-amber-950 text-sm">₹${item.price * item.qty}</span>
+            <button onclick="removeFromCart('${item.id}')" class="text-red-700 hover:text-red-900 ml-2"><i class="fa-solid fa-trash"></i></button>
           </div>
         `).join('');
       }
@@ -829,12 +869,12 @@
 
     window.placeOrder = async function() {
       if (!currentUser) {
-        showToast("Please save your contact details first.");
+        showToast("Kripya pehle apna pata darj karein.");
         showView('auth');
         return;
       }
       if (cart.length === 0) {
-        showToast("Cart is empty!");
+        showToast("Aapki thali khali hai!");
         return;
       }
 
@@ -842,7 +882,7 @@
       const txnId = document.getElementById("upiTxnId").value.trim();
 
       if (method === 'QR' && !txnId) {
-        alert("Please enter the 12-digit UPI Reference / UTR Number after scanning the QR code.");
+        alert("⚠️ Kripya QR code scan karke 12-digit ka UPI Ref / UTR number jarur bharein.");
         return;
       }
 
@@ -867,7 +907,7 @@
 
       try {
         const docRef = await addDoc(collection(db, "orders"), orderPayload);
-        alert(`Order placed successfully!\n\nOrder #${docRef.id.slice(-6).toUpperCase()}\nTotal: ₹${total}\n\nThe admin will verify your order.`);
+        alert(`Dhanyawad! Aapka Aadesh Darj Hua.\n\nAadesh #${docRef.id.slice(-6).toUpperCase()}\nKul Rashi: ₹${total}\n\nDukaan sanchalak aapke order ko verify karenge.`);
         cart = [];
         localStorage.removeItem("qs_cart");
         document.getElementById("upiTxnId").value = "";
@@ -878,7 +918,7 @@
       }
     };
 
-    // Initialize View
+    // App Init
     renderNav();
     updateCartCount();
     showView('store');

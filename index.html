@@ -29,7 +29,12 @@
           <i class="fa-solid fa-lock text-amber-500"></i> Admin Panel
         </button>
 
-        <button onclick="showView('cart')" class="relative text-stone-300 hover:text-white transition">
+        <button onclick="showView('wishlist')" class="relative text-stone-300 hover:text-white transition" title="Wishlist">
+          <i class="fa-solid fa-heart text-xl text-rose-500"></i>
+          <span id="wishlistCount" class="absolute -top-2 -right-2 bg-rose-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
+
+        <button onclick="showView('cart')" class="relative text-stone-300 hover:text-white transition" title="Cart">
           <i class="fa-solid fa-cart-shopping text-xl"></i>
           <span id="cartCount" class="absolute -top-2 -right-2 bg-amber-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
         </button>
@@ -66,16 +71,17 @@
       </div>
     </section>
 
-    <!-- Customer Auth View -->
+    <!-- Customer Sign-In / Registration View (Required fresh on every reload) -->
     <section id="authView" class="hidden max-w-md mx-auto bg-white p-6 rounded-2xl shadow-lg border border-stone-200">
-      <h2 id="authTitle" class="text-xl font-bold text-stone-900 mb-4 text-center">Customer Registration</h2>
+      <h2 id="authTitle" class="text-xl font-bold text-stone-900 mb-4 text-center">Customer Sign In</h2>
+      <p class="text-xs text-stone-500 text-center mb-4">Sign in with your phone number to access your account, wishlist, and past orders.</p>
       <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Full Name</label>
           <input type="text" id="authName" required class="w-full p-2.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-stone-900" placeholder="e.g. Alex Smith" />
         </div>
         <div>
-          <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Phone Number</label>
+          <label class="block text-xs font-semibold uppercase text-stone-600 mb-1">Phone Number (Account ID)</label>
           <input type="tel" id="authPhone" required class="w-full p-2.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-stone-900" placeholder="e.g. 9876543210" />
         </div>
         <div>
@@ -83,9 +89,44 @@
           <textarea id="authAddress" rows="3" required class="w-full p-2.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-stone-900" placeholder="House number, street, landmark, pincode"></textarea>
         </div>
         <button type="submit" class="w-full bg-stone-900 hover:bg-stone-800 text-white font-semibold py-2.5 rounded-lg transition text-sm">
-          Save & Continue
+          Sign In & Continue
         </button>
       </form>
+      <div class="text-center mt-4">
+        <button onclick="showView('store')" class="text-xs text-stone-500 hover:underline">Skip and browse store</button>
+      </div>
+    </section>
+
+    <!-- Previous Purchases & Profile View -->
+    <section id="profileView" class="hidden max-w-3xl mx-auto space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex justify-between items-center">
+        <div>
+          <h2 class="text-xl font-bold text-stone-900" id="profileNameDisplay">My Account</h2>
+          <p class="text-xs text-stone-500" id="profilePhoneDisplay"></p>
+        </div>
+        <button onclick="logout()" class="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-100 transition">
+          Sign Out
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-base font-bold text-stone-900 flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-stone-700"></i> My Previous Purchases
+        </h3>
+        <div id="userPurchasesList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- Wishlist View -->
+    <section id="wishlistView" class="hidden space-y-6">
+      <div class="flex justify-between items-center border-b border-stone-200 pb-3">
+        <div>
+          <h2 class="text-2xl font-bold text-stone-900">My Wishlist</h2>
+          <p class="text-xs text-stone-500 mt-0.5">Your saved items for later purchase.</p>
+        </div>
+        <button onclick="showView('store')" class="text-xs text-stone-700 underline font-semibold">Back to Store</button>
+      </div>
+      <div id="wishlistGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </section>
 
     <!-- Store View -->
@@ -93,7 +134,7 @@
       <div class="flex justify-between items-center border-b border-stone-200 pb-3">
         <div>
           <h2 class="text-2xl font-bold text-stone-900">Available Products</h2>
-          <p class="text-xs text-stone-500 mt-0.5">Browse items and add them to your cart.</p>
+          <p class="text-xs text-stone-500 mt-0.5">Browse items and add them to your cart or wishlist.</p>
         </div>
       </div>
       <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
@@ -331,8 +372,13 @@
     let settings = { deliveryFee: 50, packagingFee: 20, qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi" };
     let adminPass = "ABC123";
     let isAdminUnlocked = false;
-    let currentUser = JSON.parse(localStorage.getItem("qs_active_user")) || null;
+
+    // Strict Zero-Persistence: currentUser clears on page reload / close
+    let currentUser = null;
+    sessionStorage.removeItem("qs_active_user");
+
     let cart = JSON.parse(localStorage.getItem("qs_cart")) || [];
+    let wishlist = JSON.parse(localStorage.getItem("qs_wishlist")) || [];
 
     function saveProductsToStaticMemory() {
       localStorage.setItem("qs_static_products", JSON.stringify(products));
@@ -343,6 +389,7 @@
       snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
       orders.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
       if (isAdminUnlocked) renderOrdersBoard();
+      if (currentUser) renderUserPurchases();
     });
 
     onSnapshot(doc(db, "config", "storeSettings"), (docSnap) => {
@@ -365,7 +412,7 @@
         document.getElementById('adminDashboardView').classList.add('hidden');
       }
 
-      ['storeView', 'cartView', 'authView', 'adminLoginView', 'adminDashboardView'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      ['storeView', 'cartView', 'authView', 'adminLoginView', 'adminDashboardView', 'wishlistView', 'profileView'].forEach(id => document.getElementById(id).classList.add('hidden'));
 
       if (view === 'store') {
         renderStore();
@@ -376,6 +423,12 @@
       } else if (view === 'auth') {
         populateAuthForm();
         document.getElementById('authView').classList.remove('hidden');
+      } else if (view === 'wishlist') {
+        renderWishlist();
+        document.getElementById('wishlistView').classList.remove('hidden');
+      } else if (view === 'profile') {
+        renderUserPurchases();
+        document.getElementById('profileView').classList.remove('hidden');
       } else if (view === 'adminLogin') {
         document.getElementById('adminPortalPass').value = '';
         document.getElementById('adminLoginView').classList.remove('hidden');
@@ -447,9 +500,8 @@
 
       const userData = { phone, name, address, updatedAt: new Date().toISOString() };
       currentUser = userData;
-      localStorage.setItem("qs_active_user", JSON.stringify(currentUser));
       renderNav();
-      showToast(`Welcome, ${name}!`);
+      showToast(`Signed in as ${name}!`);
 
       if (cart.length > 0) showView('cart');
       else showView('store');
@@ -463,9 +515,8 @@
 
     window.logout = function() {
       currentUser = null;
-      localStorage.removeItem("qs_active_user");
       renderNav();
-      showToast("Logged out.");
+      showToast("Signed out successfully.");
       showView('store');
     };
 
@@ -474,33 +525,114 @@
       if (currentUser) {
         container.innerHTML = `
           <div class="flex items-center gap-2">
-            <button onclick="showView('auth')" class="text-xs bg-stone-800 text-stone-200 px-3 py-1.5 rounded-lg font-medium">
-              <i class="fa-solid fa-user"></i> ${currentUser.name.split(" ")[0]}
-            </button>
-            <button onclick="logout()" title="Logout" class="text-xs bg-red-800 text-white px-2.5 py-1.5 rounded-lg">
-              <i class="fa-solid fa-power-off"></i>
+            <button onclick="showView('profile')" class="text-xs bg-stone-800 text-stone-200 px-3.5 py-1.5 rounded-lg font-medium flex items-center gap-1.5">
+              <i class="fa-solid fa-user-check text-emerald-400"></i> ${currentUser.name.split(" ")[0]}
             </button>
           </div>
         `;
       } else {
         container.innerHTML = `
-          <button onclick="showView('auth')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-900 font-bold px-3 py-1.5 rounded-lg transition">
+          <button onclick="showView('auth')" class="text-xs bg-amber-600 hover:bg-amber-700 text-white font-bold px-3 py-1.5 rounded-lg transition">
             Sign In
           </button>
         `;
       }
+      updateWishlistCount();
     }
 
     function populateAuthForm() {
       if (currentUser) {
-        document.getElementById('authTitle').innerText = "Edit Details";
+        document.getElementById('authTitle').innerText = "Account Settings";
         document.getElementById('authName').value = currentUser.name || '';
         document.getElementById('authPhone').value = currentUser.phone || '';
         document.getElementById('authAddress').value = currentUser.address || '';
       } else {
-        document.getElementById('authTitle').innerText = "Customer Registration";
+        document.getElementById('authTitle').innerText = "Customer Sign In";
         document.getElementById('authForm').reset();
       }
+    }
+
+    // Wishlist Functions
+    window.toggleWishlist = function(productId) {
+      const index = wishlist.indexOf(productId);
+      if (index > -1) {
+        wishlist.splice(index, 1);
+        showToast("Removed from wishlist.");
+      } else {
+        wishlist.push(productId);
+        showToast("Added to wishlist!");
+      }
+      localStorage.setItem("qs_wishlist", JSON.stringify(wishlist));
+      updateWishlistCount();
+      renderStore();
+      if (!document.getElementById('wishlistView').classList.contains('hidden')) {
+        renderWishlist();
+      }
+    };
+
+    function updateWishlistCount() {
+      document.getElementById("wishlistCount").innerText = wishlist.length;
+    }
+
+    function renderWishlist() {
+      const grid = document.getElementById("wishlistGrid");
+      const savedItems = products.filter(p => wishlist.includes(p.id));
+
+      if (savedItems.length === 0) {
+        grid.innerHTML = `<p class="col-span-4 text-stone-500 text-center py-8 text-sm">Your wishlist is empty.</p>`;
+        return;
+      }
+
+      grid.innerHTML = savedItems.map(p => `
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-200 flex flex-col overflow-hidden transition">
+          <div class="relative h-44 w-full overflow-hidden bg-stone-100">
+            <img src="${p.image}" alt="${p.name}" class="h-full w-full object-cover" />
+            <button onclick="toggleWishlist('${p.id}')" class="absolute top-2 right-2 bg-white/80 p-2 rounded-full text-rose-600 hover:bg-white shadow">
+              <i class="fa-solid fa-heart"></i>
+            </button>
+          </div>
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-2">
+            <div>
+              <h3 class="font-bold text-stone-900 text-sm">${p.name}</h3>
+              <p class="text-xs font-bold text-stone-900 mt-1">₹${p.price}</p>
+            </div>
+            <button onclick="addToCart('${p.id}'); toggleWishlist('${p.id}');" class="w-full bg-stone-900 text-white text-xs font-semibold py-2 rounded-xl">
+              Move to Cart
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Previous Purchases
+    function renderUserPurchases() {
+      if (!currentUser) return;
+      document.getElementById('profileNameDisplay').innerText = currentUser.name;
+      document.getElementById('profilePhoneDisplay').innerText = `Phone: ${currentUser.phone} | Address: ${currentUser.address}`;
+
+      const userOrders = orders.filter(ord => ord.customer?.phone === currentUser.phone);
+      const listContainer = document.getElementById('userPurchasesList');
+
+      if (userOrders.length === 0) {
+        listContainer.innerHTML = `<div class="bg-white p-6 text-center rounded-xl border text-stone-500 text-xs">No previous purchases found.</div>`;
+        return;
+      }
+
+      listContainer.innerHTML = userOrders.map(ord => {
+        const itemsList = ord.items.map(i => `${i.name} (×${i.qty})`).join(', ');
+        return `
+          <div class="bg-white p-4 rounded-xl border border-stone-200 flex justify-between items-center text-xs">
+            <div class="space-y-1">
+              <p class="font-bold text-stone-900">Order #${ord.id.slice(-6).toUpperCase()} - ₹${ord.pricing.totalAmount}</p>
+              <p class="text-stone-600">Items: ${itemsList}</p>
+              <p class="text-stone-400">Placed on: ${new Date(ord.createdAt).toLocaleDateString()}</p>
+            </div>
+            <span class="font-bold px-3 py-1 rounded-full border ${ord.status === 'Delivered' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}">
+              ${ord.status}
+            </span>
+          </div>
+        `;
+      }).join('');
     }
 
     window.handleProductImageUpload = function(event) {
@@ -756,10 +888,14 @@
       }
       grid.innerHTML = products.map(p => {
         const isOutOfStock = (p.stock ?? 10) <= 0;
+        const isWishlisted = wishlist.includes(p.id);
         return `
           <div class="bg-white rounded-2xl shadow-sm border border-stone-200 flex flex-col overflow-hidden transition hover:shadow">
             <div class="relative h-44 w-full overflow-hidden bg-stone-100">
               <img src="${p.image}" alt="${p.name}" class="h-full w-full object-cover ${isOutOfStock ? 'grayscale opacity-60' : ''}" onerror="this.src='https://via.placeholder.com/300?text=Product'"/>
+              <button onclick="toggleWishlist('${p.id}')" class="absolute top-2 right-2 bg-white/80 p-2 rounded-full text-xs ${isWishlisted ? 'text-rose-600' : 'text-stone-400'} hover:bg-white shadow">
+                <i class="fa-solid fa-heart"></i>
+              </button>
               ${isOutOfStock ? '<span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Out of Stock</span>' : (p.stock <= 3 ? `<span class="absolute top-2 left-2 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Only ${p.stock} left!</span>` : '')}
             </div>
             <div class="p-4 flex-1 flex flex-col justify-between space-y-2">
@@ -879,7 +1015,7 @@
 
     window.placeOrder = async function() {
       if (!currentUser) {
-        showToast("Please save your delivery details first.");
+        showToast("Please sign in first to place your order.");
         showView('auth');
         return;
       }

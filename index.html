@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickShop Store - Cloud Powered</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+  <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <h1 class="text-2xl font-bold cursor-pointer flex items-center gap-2" onclick="showView('store')">
+        <i class="fa-solid fa-bag-shopping"></i> QuickShop
+      </h1>
+      
+      <div class="flex items-center gap-4">
+        <button onclick="showView('admin')" class="text-xs bg-indigo-800 hover:bg-indigo-900 px-3 py-1.5 rounded-md font-medium">
+          <i class="fa-solid fa-gear"></i> Admin Panel
+        </button>
+
+        <button onclick="showView('cart')" class="relative text-white hover:text-indigo-200">
+          <i class="fa-solid fa-cart-shopping text-xl"></i>
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-rose-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        </button>
+
+        <div id="userNavSection"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
+
+    <section id="authView" class="hidden max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+      <h2 id="authTitle" class="text-2xl font-bold text-gray-800 mb-4 text-center">User Registration / Login</h2>
+      <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Full Name</label>
+          <input type="text" id="authName" required class="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. John Doe" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Phone Number (Account ID)</label>
+          <input type="tel" id="authPhone" required class="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. 9876543210" />
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700">Delivery Address</label>
+          <textarea id="authAddress" rows="3" required class="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Full house address, landmark, pincode"></textarea>
+        </div>
+        <button type="submit" id="authSubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">Save & Continue</button>
+      </form>
+    </section>
+
+    <section id="storeView" class="space-y-6">
+      <div class="flex justify-between items-center">
+        <div>
+          <h2 class="text-3xl font-extrabold text-gray-900">Featured Products</h2>
+          <p class="text-gray-500 text-sm mt-1">Live cloud inventory synced across all devices.</p>
+        </div>
+      </div>
+      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <p class="text-gray-400">Loading products from database...</p>
+      </div>
+    </section>
+
+    <section id="cartView" class="hidden space-y-6">
+      <h2 class="text-3xl font-extrabold text-gray-900">Your Shopping Cart</h2>
+      <div id="cartContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-4" id="cartItemList"></div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 h-fit space-y-4">
+          <h3 class="text-xl font-bold border-b pb-3">Price Details</h3>
+          <div class="space-y-2 text-sm text-gray-600">
+            <div class="flex justify-between"><span>Subtotal:</span> <span id="summarySubtotal" class="font-semibold text-gray-800">₹0</span></div>
+            <div class="flex justify-between"><span>Delivery Charges:</span> <span id="summaryDelivery" class="font-semibold text-gray-800">₹0</span></div>
+            <div class="flex justify-between"><span>Handling & Packaging:</span> <span id="summaryPackaging" class="font-semibold text-gray-800">₹0</span></div>
+            <hr class="my-2" />
+            <div class="flex justify-between text-base font-bold text-gray-900"><span>Total Payable:</span> <span id="summaryTotal" class="text-indigo-600">₹0</span></div>
+          </div>
+
+          <div class="pt-4 border-t space-y-3">
+            <h4 class="font-semibold text-sm text-gray-700">Payment Option</h4>
+            <div class="space-y-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="payMethod" value="COD" checked onchange="toggleQRDisplay()" class="text-indigo-600 focus:ring-indigo-500">
+                <span class="text-sm font-medium">Cash on Delivery (COD)</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="payMethod" value="QR" onchange="toggleQRDisplay()" class="text-indigo-600 focus:ring-indigo-500">
+                <span class="text-sm font-medium">Pay using QR Code (UPI)</span>
+              </label>
+            </div>
+
+            <div id="qrCodeContainer" class="hidden p-4 bg-gray-50 border rounded-lg text-center space-y-2">
+              <p class="text-xs text-gray-500">Scan this merchant QR code to complete the payment:</p>
+              <img id="adminQrImage" src="" alt="Payment QR Code" class="w-44 h-44 mx-auto object-contain border rounded-md bg-white p-2" />
+              <p class="text-xs font-semibold text-indigo-600">Please pay the exact total amount shown above.</p>
+            </div>
+
+            <button id="orderSubmitBtn" onclick="placeOrder()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg transition shadow-md">
+              Confirm & Place Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="adminView" class="hidden space-y-8">
+      <div class="flex justify-between items-center border-b pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Admin Dashboard</h2>
+          <p class="text-gray-500 text-sm">Realtime cloud updates for products, pricing, and QR codes.</p>
+        </div>
+        <button onclick="showView('store')" class="text-indigo-600 hover:underline text-sm font-semibold">Back to Store</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded-xl shadow-md border space-y-4">
+          <h3 class="text-lg font-bold text-gray-800" id="formActionTitle">Add New Product</h3>
+          <form id="productForm" onsubmit="saveProduct(event)" class="space-y-3">
+            <input type="hidden" id="editProductId" />
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Product Name</label>
+              <input type="text" id="prodName" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. Leather Bag" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Price (₹)</label>
+              <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. 1499" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Image URL</label>
+              <input type="url" id="prodImage" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="https://..." />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Description</label>
+              <textarea id="prodDesc" rows="3" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="Details..."></textarea>
+            </div>
+            <div class="flex gap-2">
+              <button type="submit" id="saveProdBtn" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 rounded-md">Save Product</button>
+              <button type="button" onclick="resetProductForm()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold px-4 py-2 rounded-md">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md border space-y-4">
+          <h3 class="text-lg font-bold text-gray-800">Store Settings & QR Code</h3>
+          <form onsubmit="saveSettings(event)" class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Delivery Fee (₹)</label>
+              <input type="number" id="settingDelivery" required class="w-full mt-1 p-2 border rounded-md text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Making/Packaging Fee (₹)</label>
+              <input type="number" id="settingPackaging" required class="w-full mt-1 p-2 border rounded-md text-sm" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Payment QR Code Image URL</label>
+              <input type="url" id="settingQR" required class="w-full mt-1 p-2 border rounded-md text-sm" />
+            </div>
+            <button type="submit" id="saveSettingsBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2 rounded-md">Save Settings to Cloud</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md border overflow-hidden">
+        <div class="p-4 border-b font-bold text-gray-800">Inventory Items (Firestore Collection)</div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-gray-600">
+            <thead class="bg-gray-100 text-gray-700 font-semibold uppercase text-xs">
+              <tr>
+                <th class="p-3">Product</th>
+                <th class="p-3">Price</th>
+                <th class="p-3">Description</th>
+                <th class="p-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductTable" class="divide-y"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-xl hidden transition-all duration-300 z-50"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getFirestore, collection, doc, setDoc, getDoc, addDoc, 
+      deleteDoc, onSnapshot 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // ==========================================
+    // 1. REPLACE WITH YOUR FIREBASE CONFIG
+    // ==========================================
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "your-app.firebaseapp.com",
+      projectId: "your-app-id",
+      storageBucket: "your-app.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Global State
+    let products = [];
+    let settings = { deliveryFee: 40, packagingFee: 20, qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi" };
+    let currentUser = JSON.parse(localStorage.getItem("qs_active_user")) || null;
+    let cart = JSON.parse(localStorage.getItem("qs_cart")) || [];
+
+    // ==========================================
+    // 2. REALTIME LISTENERS (Firestore -> UI)
+    // ==========================================
+    
+    // Listen for products
+    onSnapshot(collection(db, "products"), (snapshot) => {
+      products = [];
+      snapshot.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
+      renderStore();
+      renderAdminTable();
+      renderCart();
+    });
+
+    // Listen for store settings
+    onSnapshot(doc(db, "config", "storeSettings"), (docSnap) => {
+      if (docSnap.exists()) {
+        settings = docSnap.data();
+        renderCart();
+        populateSettingsForm();
+      }
+    });
+
+    // ==========================================
+    // 3. EXPOSE FUNCTIONS TO WINDOW FOR HTML
+    // ==========================================
+    
+    window.showView = function(view) {
+      ['storeView', 'cartView', 'authView', 'adminView'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      if (view === 'store') document.getElementById('storeView').classList.remove('hidden');
+      if (view === 'cart') { renderCart(); document.getElementById('cartView').classList.remove('hidden'); }
+      if (view === 'auth') { populateAuthForm(); document.getElementById('authView').classList.remove('hidden'); }
+      if (view === 'admin') { populateSettingsForm(); renderAdminTable(); document.getElementById('adminView').classList.remove('hidden'); }
+    };
+
+    window.showToast = function(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 3000);
+    };
+
+    // User Operations
+    window.handleAuth = async function(e) {
+      e.preventDefault();
+      const phone = document.getElementById('authPhone').value.trim();
+      const name = document.getElementById('authName').value.trim();
+      const address = document.getElementById('authAddress').value.trim();
+
+      const userData = { phone, name, address, updatedAt: new Date().toISOString() };
+      
+      try {
+        // Save to Firestore users collection
+        await setDoc(doc(db, "users", phone), userData);
+        currentUser = userData;
+        localStorage.setItem("qs_active_user", JSON.stringify(currentUser));
+        renderNav();
+        showToast("Profile saved to database!");
+        showView('store');
+      } catch (err) {
+        alert("Firestore error: " + err.message);
+      }
+    };
+
+    window.logout = function() {
+      currentUser = null;
+      localStorage.removeItem("qs_active_user");
+      renderNav();
+      showToast("Logged out successfully");
+      showView('store');
+    };
+
+    function renderNav() {
+      const container = document.getElementById("userNavSection");
+      if (currentUser) {
+        container.innerHTML = `
+          <div class="flex items-center gap-2">
+            <button onclick="showView('auth')" class="text-xs bg-indigo-500 hover:bg-indigo-700 px-3 py-1.5 rounded-md font-medium text-white">
+              <i class="fa-solid fa-user"></i> ${currentUser.name.split(" ")[0]}
+            </button>
+            <button onclick="logout()" title="Logout" class="text-xs bg-rose-500 hover:bg-rose-600 px-2 py-1.5 rounded-md text-white">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <button onclick="showView('auth')" class="text-xs bg-white text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-md font-bold">
+            Login / Register
+          </button>
+        `;
+      }
+    }
+
+    function populateAuthForm() {
+      if (currentUser) {
+        document.getElementById('authTitle').innerText = "Edit Profile Info";
+        document.getElementById('authName').value = currentUser.name;
+        document.getElementById('authPhone').value = currentUser.phone;
+        document.getElementById('authAddress').value = currentUser.address;
+      } else {
+        document.getElementById('authTitle').innerText = "Login / Register";
+        document.getElementById('authForm').reset();
+      }
+    }
+
+    // Product Management (Firestore CRUD)
+    window.saveProduct = async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('editProductId').value;
+      const data = {
+        name: document.getElementById('prodName').value.trim(),
+        price: Number(document.getElementById('prodPrice').value),
+        image: document.getElementById('prodImage').value.trim(),
+        description: document.getElementById('prodDesc').value.trim()
+      };
+
+      try {
+        if (id) {
+          await setDoc(doc(db, "products", id), data);
+          showToast("Product updated!");
+        } else {
+          await addDoc(collection(db, "products"), data);
+          showToast("Product created!");
+        }
+        resetProductForm();
+      } catch (err) {
+        alert("Error saving product: " + err.message);
+      }
+    };
+
+    window.editProduct = function(id) {
+      const p = products.find(prod => prod.id === id);
+      if (!p) return;
+      document.getElementById('editProductId').value = p.id;
+      document.getElementById('prodName').value = p.name;
+      document.getElementById('prodPrice').value = p.price;
+      document.getElementById('prodImage').value = p.image;
+      document.getElementById('prodDesc').value = p.description;
+      document.getElementById('formActionTitle').innerText = "Edit Product";
+    };
+
+    window.resetProductForm = function() {
+      document.getElementById('editProductId').value = '';
+      document.getElementById('productForm').reset();
+      document.getElementById('formActionTitle').innerText = "Add New Product";
+    };
+
+    window.deleteProduct = async function(id) {
+      if (confirm("Delete this product from Firebase?")) {
+        await deleteDoc(doc(db, "products", id));
+        showToast("Product deleted.");
+      }
+    };
+
+    // Store Settings (Delivery, packaging, QR)
+    window.saveSettings = async function(e) {
+      e.preventDefault();
+      const newSettings = {
+        deliveryFee: Number(document.getElementById('settingDelivery').value),
+        packagingFee: Number(document.getElementById('settingPackaging').value),
+        qrUrl: document.getElementById('settingQR').value.trim()
+      };
+
+      try {
+        await setDoc(doc(db, "config", "storeSettings"), newSettings);
+        showToast("Store settings saved in Firebase!");
+      } catch (err) {
+        alert("Error saving settings: " + err.message);
+      }
+    };
+
+    function populateSettingsForm() {
+      document.getElementById("settingDelivery").value = settings.deliveryFee || 0;
+      document.getElementById("settingPackaging").value = settings.packagingFee || 0;
+      document.getElementById("settingQR").value = settings.qrUrl || "";
+    }
+
+    // Rendering Store & Inventory
+    function renderStore() {
+      const grid = document.getElementById("productGrid");
+      if (products.length === 0) {
+        grid.innerHTML = `<p class="col-span-4 text-gray-500 text-center py-8">No products found. Add items from the Admin Panel.</p>`;
+        return;
+      }
+      grid.innerHTML = products.map(p => `
+        <div class="bg-white rounded-xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col overflow-hidden transition">
+          <img src="${p.image}" alt="${p.name}" class="h-48 w-full object-cover bg-gray-100" onerror="this.src='https://via.placeholder.com/300?text=No+Image'"/>
+          <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-gray-800 text-lg leading-snug">${p.name}</h3>
+              <p class="text-xs text-gray-500 line-clamp-2 mt-1">${p.description}</p>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t">
+              <span class="text-lg font-extrabold text-indigo-600">₹${p.price}</span>
+              <button onclick="addToCart('${p.id}')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
+                <i class="fa-solid fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById("adminProductTable");
+      tbody.innerHTML = products.map(p => `
+        <tr class="hover:bg-gray-50 border-t">
+          <td class="p-3 flex items-center gap-3">
+            <img src="${p.image}" class="w-10 h-10 rounded object-cover" />
+            <span class="font-semibold text-gray-800">${p.name}</span>
+          </td>
+          <td class="p-3 font-medium">₹${p.price}</td>
+          <td class="p-3 text-xs text-gray-500 max-w-xs truncate">${p.description}</td>
+          <td class="p-3 text-right space-x-2">
+            <button onclick="editProduct('${p.id}')" class="text-indigo-600 hover:text-indigo-800 text-xs font-semibold">Edit</button>
+            <button onclick="deleteProduct('${p.id}')" class="text-rose-600 hover:text-rose-800 text-xs font-semibold">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Cart and Order Logic
+    window.addToCart = function(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+      const cartItem = cart.find(item => item.id === productId);
+      if (cartItem) {
+        cartItem.qty += 1;
+      } else {
+        cart.push({ id: prod.id, name: prod.name, price: prod.price, image: prod.image, qty: 1 });
+      }
+      localStorage.setItem("qs_cart", JSON.stringify(cart));
+      updateCartCount();
+      showToast(`${prod.name} added to cart!`);
+    };
+
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById("cartCount").innerText = count;
+    }
+
+    window.updateQty = function(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      }
+      localStorage.setItem("qs_cart", JSON.stringify(cart));
+      updateCartCount();
+      renderCart();
+    };
+
+    window.removeFromCart = function(id) {
+      cart = cart.filter(i => i.id !== id);
+      localStorage.setItem("qs_cart", JSON.stringify(cart));
+      updateCartCount();
+      renderCart();
+    };
+
+    function renderCart() {
+      const list = document.getElementById("cartItemList");
+      if (cart.length === 0) {
+        list.innerHTML = `<div class="bg-white p-8 text-center rounded-xl border"><p class="text-gray-500 mb-4">Your cart is empty.</p><button onclick="showView('store')" class="bg-indigo-600 text-white text-sm px-4 py-2 rounded-lg">Browse Products</button></div>`;
+      } else {
+        list.innerHTML = cart.map(item => `
+          <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+            <img src="${item.image}" class="w-16 h-16 object-cover rounded-md" />
+            <div class="flex-1">
+              <h4 class="font-bold text-gray-800">${item.name}</h4>
+              <p class="text-xs text-indigo-600 font-semibold">₹${item.price} each</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="updateQty('${item.id}', -1)" class="w-7 h-7 bg-gray-100 rounded font-bold">-</button>
+              <span class="text-sm font-semibold">${item.qty}</span>
+              <button onclick="updateQty('${item.id}', 1)" class="w-7 h-7 bg-gray-100 rounded font-bold">+</button>
+            </div>
+            <span class="font-bold text-gray-800 text-sm">₹${item.price * item.qty}</span>
+            <button onclick="removeFromCart('${item.id}')" class="text-rose-500 ml-2"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        `).join('');
+      }
+
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const delivery = cart.length > 0 ? Number(settings.deliveryFee || 0) : 0;
+      const packaging = cart.length > 0 ? Number(settings.packagingFee || 0) : 0;
+      const total = subtotal + delivery + packaging;
+
+      document.getElementById('summarySubtotal').innerText = `₹${subtotal}`;
+      document.getElementById('summaryDelivery').innerText = `₹${delivery}`;
+      document.getElementById('summaryPackaging').innerText = `₹${packaging}`;
+      document.getElementById('summaryTotal').innerText = `₹${total}`;
+      document.getElementById('adminQrImage').src = settings.qrUrl || "";
+    }
+
+    window.toggleQRDisplay = function() {
+      const isQR = document.querySelector('input[name="payMethod"]:checked').value === 'QR';
+      document.getElementById("qrCodeContainer").classList.toggle("hidden", !isQR);
+    };
+
+    window.placeOrder = async function() {
+      if (!currentUser) {
+        showToast("Please log in / save your details first.");
+        showView('auth');
+        return;
+      }
+      if (cart.length === 0) {
+        showToast("Your cart is empty!");
+        return;
+      }
+
+      const method = document.querySelector('input[name="payMethod"]:checked').value;
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const total = subtotal + Number(settings.deliveryFee || 0) + Number(settings.packagingFee || 0);
+
+      const orderPayload = {
+        customer: currentUser,
+        items: cart,
+        pricing: {
+          subtotal,
+          deliveryFee: settings.deliveryFee,
+          packagingFee: settings.packagingFee,
+          totalAmount: total
+        },
+        paymentMethod: method,
+        status: "Pending",
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        const orderRef = await addDoc(collection(db, "orders"), orderPayload);
+        alert(`🎉 Order Placed Successfully!\n\nOrder ID: ${orderRef.id}\nDeliver to: ${currentUser.name}\nTotal Paid/Due: ₹${total}`);
+        cart = [];
+        localStorage.removeItem("qs_cart");
+        updateCartCount();
+        showView('store');
+      } catch (err) {
+        alert("Failed to submit order: " + err.message);
+      }
+    };
+
+    // Initial setup
+    renderNav();
+    updateCartCount();
+  </script>
+</body>
+</html>

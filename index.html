@@ -9,6 +9,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
+  <!-- Navbar -->
   <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
       <h1 class="text-2xl font-bold cursor-pointer flex items-center gap-2" onclick="showView('store')">
@@ -16,8 +17,9 @@
       </h1>
       
       <div class="flex items-center gap-4">
-        <button onclick="promptAdminAccess()" class="text-xs bg-indigo-800 hover:bg-indigo-900 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-lock"></i> Admin Panel
+        <!-- Admin Entry Channel Button -->
+        <button onclick="openAdminChannel()" class="text-xs bg-indigo-800 hover:bg-indigo-900 px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-user-shield"></i> Admin Portal
         </button>
 
         <button onclick="showView('cart')" class="relative text-white hover:text-indigo-200">
@@ -30,8 +32,34 @@
     </div>
   </header>
 
+  <!-- Main View Container -->
   <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
 
+    <!-- 1. Dedicated Admin Login Channel (Standalone Page) -->
+    <section id="adminLoginView" class="hidden max-w-sm mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-100 my-12">
+      <div class="text-center space-y-2 mb-6">
+        <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-xl">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h2 class="text-2xl font-extrabold text-gray-900">Admin Portal</h2>
+        <p class="text-xs text-gray-500">Sign in to manage catalog, orders, and fees</p>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Admin Password</label>
+          <input type="password" id="adminPortalPass" required class="w-full p-2.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-indigo-500" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-md">
+          Authenticate & Enter
+        </button>
+      </form>
+      <div class="text-center mt-4">
+        <button onclick="showView('store')" class="text-xs text-gray-500 hover:underline">Cancel and return to store</button>
+      </div>
+    </section>
+
+    <!-- 2. Customer Auth View -->
     <section id="authView" class="hidden max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg border border-gray-100">
       <h2 id="authTitle" class="text-2xl font-bold text-gray-800 mb-4 text-center">User Registration / Login</h2>
       <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
@@ -47,25 +75,26 @@
           <label class="block text-sm font-semibold text-gray-700">Delivery Address</label>
           <textarea id="authAddress" rows="3" required class="w-full mt-1 p-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Full house address, landmark, pin code"></textarea>
         </div>
-        <button type="submit" id="authSubmitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition flex items-center justify-center gap-2">
-          <span>Save & Continue</span>
-        </button>
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">Save & Continue</button>
       </form>
     </section>
 
+    <!-- 3. Store View -->
     <section id="storeView" class="space-y-6">
       <div>
         <h2 class="text-3xl font-extrabold text-gray-900">Featured Products</h2>
-        <p class="text-gray-500 text-sm mt-1">Browse products and add items to your cart.</p>
+        <p class="text-gray-500 text-sm mt-1">Browse catalog items and add to cart.</p>
       </div>
       <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </section>
 
+    <!-- 4. Cart & Checkout View -->
     <section id="cartView" class="hidden space-y-6">
       <h2 class="text-3xl font-extrabold text-gray-900">Your Shopping Cart</h2>
       <div id="cartContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="lg:col-span-2 space-y-4" id="cartItemList"></div>
 
+        <!-- Checkout Card -->
         <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100 h-fit space-y-4">
           <h3 class="text-xl font-bold border-b pb-3">Price Breakdown</h3>
           <div class="space-y-2 text-sm text-gray-600">
@@ -89,12 +118,13 @@
               </label>
             </div>
 
+            <!-- Dynamic QR Code Container -->
             <div id="qrCodeContainer" class="hidden p-4 bg-indigo-50 border border-indigo-100 rounded-lg text-center space-y-3">
               <p class="text-xs font-semibold text-indigo-900">Scan QR Code using PhonePe, GPay, Paytm, or BHIM:</p>
               <div class="bg-white p-2 border rounded-lg inline-block shadow-sm">
                 <img id="adminQrImage" src="" alt="Payment QR" class="w-48 h-48 object-contain mx-auto" />
               </div>
-              <p class="text-xs text-rose-600 font-bold">Please pay the exact amount: <span id="qrPayableAmount">₹0</span></p>
+              <p class="text-xs text-rose-600 font-bold">Please pay exact amount: <span id="qrPayableAmount">₹0</span></p>
               
               <div class="text-left space-y-1 pt-2">
                 <label class="block text-xs font-semibold text-gray-700">UPI Ref / UTR / Transaction ID (Required):</label>
@@ -102,7 +132,7 @@
               </div>
             </div>
 
-            <button onclick="placeOrder()" id="orderBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-md transition">
+            <button onclick="placeOrder()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-md transition">
               Confirm & Place Order
             </button>
           </div>
@@ -110,22 +140,26 @@
       </div>
     </section>
 
-    <section id="adminView" class="hidden space-y-10">
+    <!-- 5. Admin Dashboard (Protected Area) -->
+    <section id="adminDashboardView" class="hidden space-y-10">
       <div class="flex flex-wrap justify-between items-center border-b pb-4 gap-4">
         <div>
           <h2 class="text-2xl font-bold text-gray-900">Admin Control Center</h2>
           <p class="text-gray-500 text-sm">Review orders, verify payments, and manage store catalog.</p>
         </div>
         <div class="flex items-center gap-3">
-          <button onclick="logoutAdmin()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs px-3 py-2 rounded-md font-semibold">Exit Admin</button>
-          <button onclick="showView('store')" class="text-indigo-600 font-semibold hover:underline text-sm"><i class="fa-solid fa-arrow-left"></i> Back to Store</button>
+          <button onclick="logoutAdmin()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-2 rounded-md font-semibold transition">
+            <i class="fa-solid fa-right-from-bracket"></i> Exit Admin
+          </button>
+          <button onclick="showView('store')" class="text-indigo-600 font-semibold hover:underline text-sm"><i class="fa-solid fa-arrow-left"></i> View Store</button>
         </div>
       </div>
 
+      <!-- Orders Board -->
       <div class="space-y-4">
         <div class="flex justify-between items-center">
           <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <i class="fa-solid fa-clipboard-list text-indigo-600"></i> Incoming Orders
+            <i class="fa-solid fa-clipboard-list text-indigo-600"></i> Incoming Customer Orders
             <span id="orderCountBadge" class="bg-indigo-100 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full font-bold">0</span>
           </h3>
         </div>
@@ -134,41 +168,44 @@
 
       <hr class="border-gray-200" />
 
+      <!-- Inventory & Static Memory Management -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
+        <!-- Add/Edit Product -->
         <div class="bg-white p-6 rounded-xl shadow-sm border space-y-4">
           <h3 class="text-lg font-bold text-gray-800" id="formActionTitle">Add / Edit Product</h3>
           <form id="productForm" onsubmit="saveProduct(event)" class="space-y-3">
             <input type="hidden" id="editProductId" />
             <div>
               <label class="block text-xs font-semibold text-gray-600">Product Name</label>
-              <input type="text" id="prodName" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. Leather Bag" />
+              <input type="text" id="prodName" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. Leather Wallet" />
             </div>
             <div>
               <label class="block text-xs font-semibold text-gray-600">Price (₹)</label>
-              <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. 999" />
+              <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="e.g. 899" />
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Product Image (Upload file or URL)</label>
+              <label class="block text-xs font-semibold text-gray-600">Product Image (File or URL)</label>
               <input type="file" id="prodImageFile" accept="image/*" onchange="handleProductImageUpload(event)" class="w-full mt-1 text-xs text-gray-500" />
-              <input type="url" id="prodImageUrl" class="w-full mt-1.5 p-2 border rounded-md text-xs" placeholder="Or paste image URL" />
+              <input type="url" id="prodImageUrl" class="w-full mt-1.5 p-2 border rounded-md text-xs" placeholder="Or enter image URL" />
               <input type="hidden" id="finalProdImage" />
             </div>
             <div>
               <label class="block text-xs font-semibold text-gray-600">Description</label>
-              <textarea id="prodDesc" rows="3" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="Product details..."></textarea>
+              <textarea id="prodDesc" rows="3" required class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="Description..."></textarea>
             </div>
             <div class="flex gap-2 pt-2">
-              <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 rounded-md">Save Product</button>
+              <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 rounded-md">Save to Static Catalog</button>
               <button type="button" onclick="resetProductForm()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold px-4 py-2 rounded-md">Clear</button>
             </div>
           </form>
         </div>
 
+        <!-- Inventory List Table (Static Memory View) -->
         <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border flex flex-col">
           <div class="p-4 border-b font-bold text-gray-800 flex justify-between items-center">
-            <span>Inventory Items</span>
-            <span id="productCountBadge" class="text-xs text-gray-500 font-normal">0 items</span>
+            <span>Static Memory Inventory</span>
+            <span id="productCountBadge" class="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-semibold">0 items</span>
           </div>
           <div class="overflow-x-auto flex-1">
             <table class="w-full text-left text-sm text-gray-600">
@@ -185,7 +222,9 @@
         </div>
       </div>
 
+      <!-- Fees, QR, and Password Management -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Fees & QR -->
         <div class="bg-white p-6 rounded-xl shadow-sm border space-y-4">
           <h3 class="text-lg font-bold text-gray-800">Store Fees & Payment QR</h3>
           <form onsubmit="saveSettings(event)" class="space-y-3">
@@ -200,20 +239,21 @@
               </div>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Upload Your Own QR Code Image</label>
+              <label class="block text-xs font-semibold text-gray-600">Upload QR Code Image</label>
               <input type="file" id="qrFileInput" accept="image/*" onchange="handleQRUpload(event)" class="w-full mt-1 text-xs text-gray-500" />
               <input type="url" id="settingQR" class="w-full mt-1.5 p-2 border rounded-md text-xs" placeholder="Or enter QR Image URL" />
               <input type="hidden" id="finalQRImage" />
             </div>
-            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2.5 rounded-md">Save Settings</button>
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold py-2.5 rounded-md">Save Store Config</button>
           </form>
         </div>
 
+        <!-- Password Change Form -->
         <div class="bg-white p-6 rounded-xl shadow-sm border space-y-4">
           <h3 class="text-lg font-bold text-gray-800">Change Admin Password</h3>
           <form onsubmit="changeAdminPassword(event)" class="space-y-3">
             <div>
-              <label class="block text-xs font-semibold text-gray-600">New Admin Password</label>
+              <label class="block text-xs font-semibold text-gray-600">New Password</label>
               <input type="password" id="newAdminPassword" required minlength="4" class="w-full mt-1 p-2 border rounded-md text-sm" placeholder="Enter new password" />
             </div>
             <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded-md">Update Password</button>
@@ -224,24 +264,9 @@
     </section>
   </main>
 
-  <div id="adminPassModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm border space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-indigo-600"></i> Admin Access</h3>
-        <button onclick="closeAdminPassModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <form onsubmit="verifyAdminPassword(event)" class="space-y-3">
-        <div>
-          <label class="block text-xs font-semibold text-gray-600">Enter Password</label>
-          <input type="password" id="adminPasswordInput" required class="w-full mt-1 p-2.5 border rounded-md text-sm outline-none focus:ring-2 focus:ring-indigo-500" placeholder="••••••••" />
-        </div>
-        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-md text-sm">Unlock Dashboard</button>
-      </form>
-    </div>
-  </div>
-
   <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-xl hidden transition-all duration-300 z-50"></div>
 
+  <!-- Application Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
@@ -250,7 +275,7 @@
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // =======================================================
-    // FIREBASE CONFIG (Paste your keys here)
+    // 1. FIREBASE CONFIG
     // =======================================================
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
@@ -264,31 +289,47 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // App State
-    let products = [];
+    // Initial static fallback products
+    const defaultStaticProducts = [
+      {
+        id: "p_1",
+        name: "Minimalist Leather Strap Watch",
+        price: 1899,
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80",
+        description: "Classic quartz wristwatch with genuine leather band."
+      },
+      {
+        id: "p_2",
+        name: "True Wireless Earbuds",
+        price: 2499,
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80",
+        description: "Noise cancelling Bluetooth earphones with charging case."
+      }
+    ];
+
+    // =======================================================
+    // 2. STATE (Products in Static Memory / LocalStorage)
+    // =======================================================
+    let products = JSON.parse(localStorage.getItem("qs_static_products")) || defaultStaticProducts;
     let orders = [];
     let settings = { deliveryFee: 40, packagingFee: 20, qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi" };
     let adminPass = "ABC123";
-    let isAdminLoggedIn = false;
+    let isAdminAuthenticated = sessionStorage.getItem("qs_admin_auth") === "true";
     let currentUser = JSON.parse(localStorage.getItem("qs_active_user")) || null;
     let cart = JSON.parse(localStorage.getItem("qs_cart")) || [];
 
-    // =======================================================
-    // REALTIME LISTENERS
-    // =======================================================
-    onSnapshot(collection(db, "products"), (snapshot) => {
-      products = [];
-      snapshot.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
-      renderStore();
-      renderAdminProductTable();
-      renderCart();
-    });
+    function saveProductsToStaticMemory() {
+      localStorage.setItem("qs_static_products", JSON.stringify(products));
+    }
 
+    // =======================================================
+    // 3. CLOUD LISTENERS (Orders & Settings)
+    // =======================================================
     onSnapshot(collection(db, "orders"), (snapshot) => {
       orders = [];
       snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
       orders.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-      if (isAdminLoggedIn) renderOrdersBoard();
+      if (isAdminAuthenticated) renderOrdersBoard();
     });
 
     onSnapshot(doc(db, "config", "storeSettings"), (docSnap) => {
@@ -306,54 +347,60 @@
     });
 
     // =======================================================
-    // ROUTING & ADMIN AUTH
+    // 4. ROUTING & VIEWS
     // =======================================================
     window.showView = function(view) {
-      ['storeView', 'cartView', 'authView', 'adminView'].forEach(id => document.getElementById(id).classList.add('hidden'));
-      if (view === 'store') document.getElementById('storeView').classList.remove('hidden');
-      if (view === 'cart') { renderCart(); document.getElementById('cartView').classList.remove('hidden'); }
-      if (view === 'auth') { populateAuthForm(); document.getElementById('authView').classList.remove('hidden'); }
-      if (view === 'admin') {
-        if (!isAdminLoggedIn) {
-          promptAdminAccess();
+      ['storeView', 'cartView', 'authView', 'adminLoginView', 'adminDashboardView'].forEach(id => document.getElementById(id).classList.add('hidden'));
+
+      if (view === 'store') {
+        renderStore();
+        document.getElementById('storeView').classList.remove('hidden');
+      } else if (view === 'cart') {
+        renderCart();
+        document.getElementById('cartView').classList.remove('hidden');
+      } else if (view === 'auth') {
+        populateAuthForm();
+        document.getElementById('authView').classList.remove('hidden');
+      } else if (view === 'adminLogin') {
+        document.getElementById('adminPortalPass').value = '';
+        document.getElementById('adminLoginView').classList.remove('hidden');
+      } else if (view === 'adminDashboard') {
+        if (!isAdminAuthenticated) {
+          showView('adminLogin');
           return;
         }
         populateSettingsForm(); 
         renderAdminProductTable(); 
         renderOrdersBoard();
-        document.getElementById('adminView').classList.remove('hidden'); 
+        document.getElementById('adminDashboardView').classList.remove('hidden'); 
       }
     };
 
-    window.promptAdminAccess = function() {
-      if (isAdminLoggedIn) {
-        showView('admin');
+    window.openAdminChannel = function() {
+      if (isAdminAuthenticated) {
+        showView('adminDashboard');
       } else {
-        document.getElementById("adminPasswordInput").value = "";
-        document.getElementById("adminPassModal").classList.remove("hidden");
+        showView('adminLogin');
       }
     };
 
-    window.closeAdminPassModal = function() {
-      document.getElementById("adminPassModal").classList.add("hidden");
-    };
-
-    window.verifyAdminPassword = function(e) {
+    window.handleAdminLogin = function(e) {
       e.preventDefault();
-      const entered = document.getElementById("adminPasswordInput").value;
+      const entered = document.getElementById("adminPortalPass").value;
       if (entered === adminPass) {
-        isAdminLoggedIn = true;
-        closeAdminPassModal();
-        showToast("Admin access granted!");
-        showView('admin');
+        isAdminAuthenticated = true;
+        sessionStorage.setItem("qs_admin_auth", "true");
+        showToast("Admin session unlocked!");
+        showView('adminDashboard');
       } else {
-        alert("Incorrect password!");
+        alert("Invalid admin credentials.");
       }
     };
 
     window.logoutAdmin = function() {
-      isAdminLoggedIn = false;
-      showToast("Logged out of Admin");
+      isAdminAuthenticated = false;
+      sessionStorage.removeItem("qs_admin_auth");
+      showToast("Signed out of Admin Portal");
       showView('store');
     };
 
@@ -364,7 +411,7 @@
         await setDoc(doc(db, "config", "security"), { password: newP }, { merge: true });
         adminPass = newP;
         document.getElementById("newAdminPassword").value = "";
-        showToast("Admin password updated in database!");
+        showToast("Admin password updated!");
       } catch (err) {
         alert("Error changing password: " + err.message);
       }
@@ -378,7 +425,7 @@
     };
 
     // =======================================================
-    // USER AUTH / LOGIN
+    // 5. CUSTOMER AUTH
     // =======================================================
     window.handleAuth = async function(e) {
       e.preventDefault();
@@ -386,30 +433,19 @@
       const name = document.getElementById('authName').value.trim();
       const address = document.getElementById('authAddress').value.trim();
 
-      if (!phone || !name || !address) {
-        alert("Please fill all fields.");
-        return;
-      }
-
       const userData = { phone, name, address, updatedAt: new Date().toISOString() };
-
-      // Update locally immediately so user is unblocked
       currentUser = userData;
       localStorage.setItem("qs_active_user", JSON.stringify(currentUser));
       renderNav();
       showToast(`Welcome, ${name}!`);
 
-      if (cart.length > 0) {
-        showView('cart');
-      } else {
-        showView('store');
-      }
+      if (cart.length > 0) showView('cart');
+      else showView('store');
 
-      // Sync to Firestore in background
       try {
         await setDoc(doc(db, "users", phone), userData);
       } catch (err) {
-        console.warn("Firestore user sync warning:", err);
+        console.warn("Cloud user sync notice:", err);
       }
     };
 
@@ -456,21 +492,8 @@
     }
 
     // =======================================================
-    // IMAGE UPLOAD CONVERTER (BASE64)
+    // 6. STATIC MEMORY PRODUCT OPERATIONS
     // =======================================================
-    window.handleQRUpload = function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          document.getElementById('finalQRImage').value = e.target.result;
-          document.getElementById('settingQR').value = "";
-          showToast("QR Code image loaded!");
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-
     window.handleProductImageUpload = function(event) {
       const file = event.target.files[0];
       if (file) {
@@ -478,40 +501,39 @@
         reader.onload = (e) => {
           document.getElementById('finalProdImage').value = e.target.result;
           document.getElementById('prodImageUrl').value = "";
-          showToast("Product image loaded!");
+          showToast("Image ready");
         };
         reader.readAsDataURL(file);
       }
     };
 
-    // =======================================================
-    // PRODUCT CRUD
-    // =======================================================
-    window.saveProduct = async function(e) {
+    window.saveProduct = function(e) {
       e.preventDefault();
-      const id = document.getElementById('editProductId').value;
+      const id = document.getElementById('editProductId').value || ('p_' + Date.now());
       const uploadedImg = document.getElementById('finalProdImage').value;
       const urlImg = document.getElementById('prodImageUrl').value.trim();
 
-      const data = {
+      const prodData = {
+        id,
         name: document.getElementById('prodName').value.trim(),
         price: Number(document.getElementById('prodPrice').value),
         image: uploadedImg || urlImg || 'https://via.placeholder.com/300?text=No+Image',
         description: document.getElementById('prodDesc').value.trim()
       };
 
-      try {
-        if (id) {
-          await setDoc(doc(db, "products", id), data);
-          showToast("Product updated!");
-        } else {
-          await addDoc(collection(db, "products"), data);
-          showToast("Product added to store!");
-        }
-        resetProductForm();
-      } catch (err) {
-        alert("Error saving product: " + err.message);
+      const existingIndex = products.findIndex(p => p.id === id);
+      if (existingIndex > -1) {
+        products[existingIndex] = prodData;
+        showToast("Product updated in static memory!");
+      } else {
+        products.push(prodData);
+        showToast("Product added to static catalog!");
       }
+
+      saveProductsToStaticMemory();
+      resetProductForm();
+      renderAdminProductTable();
+      renderStore();
     };
 
     window.editProduct = function(id) {
@@ -533,41 +555,18 @@
       document.getElementById('formActionTitle').innerText = "Add / Edit Product";
     };
 
-    window.deleteProduct = async function(id) {
-      if (confirm("Delete this product?")) {
-        await deleteDoc(doc(db, "products", id));
-        showToast("Product removed.");
+    window.deleteProduct = function(id) {
+      if (confirm("Remove this product from static memory?")) {
+        products = products.filter(p => p.id !== id);
+        cart = cart.filter(p => p.id !== id);
+        saveProductsToStaticMemory();
+        localStorage.setItem("qs_cart", JSON.stringify(cart));
+        renderAdminProductTable();
+        renderStore();
+        updateCartCount();
+        showToast("Product deleted.");
       }
     };
-
-    // =======================================================
-    // STORE SETTINGS
-    // =======================================================
-    window.saveSettings = async function(e) {
-      e.preventDefault();
-      const uploadedQR = document.getElementById('finalQRImage').value;
-      const urlQR = document.getElementById('settingQR').value.trim();
-
-      const newSettings = {
-        deliveryFee: Number(document.getElementById('settingDelivery').value),
-        packagingFee: Number(document.getElementById('settingPackaging').value),
-        qrUrl: uploadedQR || urlQR || settings.qrUrl
-      };
-
-      try {
-        await setDoc(doc(db, "config", "storeSettings"), newSettings);
-        showToast("Settings & QR updated!");
-      } catch (err) {
-        alert("Error saving settings: " + err.message);
-      }
-    };
-
-    function populateSettingsForm() {
-      document.getElementById("settingDelivery").value = settings.deliveryFee || 0;
-      document.getElementById("settingPackaging").value = settings.packagingFee || 0;
-      document.getElementById("settingQR").value = settings.qrUrl?.startsWith('data:') ? '' : (settings.qrUrl || "");
-      document.getElementById("finalQRImage").value = settings.qrUrl || "";
-    }
 
     function renderAdminProductTable() {
       const tbody = document.getElementById("adminProductTable");
@@ -588,7 +587,49 @@
     }
 
     // =======================================================
-    // ORDERS BOARD & VERIFICATION
+    // 7. SETTINGS & QR (Cloud Sync)
+    // =======================================================
+    window.handleQRUpload = function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById('finalQRImage').value = e.target.result;
+          document.getElementById('settingQR').value = "";
+          showToast("QR code image ready!");
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    window.saveSettings = async function(e) {
+      e.preventDefault();
+      const uploadedQR = document.getElementById('finalQRImage').value;
+      const urlQR = document.getElementById('settingQR').value.trim();
+
+      const newSettings = {
+        deliveryFee: Number(document.getElementById('settingDelivery').value),
+        packagingFee: Number(document.getElementById('settingPackaging').value),
+        qrUrl: uploadedQR || urlQR || settings.qrUrl
+      };
+
+      try {
+        await setDoc(doc(db, "config", "storeSettings"), newSettings);
+        showToast("Store settings saved!");
+      } catch (err) {
+        alert("Error saving settings: " + err.message);
+      }
+    };
+
+    function populateSettingsForm() {
+      document.getElementById("settingDelivery").value = settings.deliveryFee || 0;
+      document.getElementById("settingPackaging").value = settings.packagingFee || 0;
+      document.getElementById("settingQR").value = settings.qrUrl?.startsWith('data:') ? '' : (settings.qrUrl || "");
+      document.getElementById("finalQRImage").value = settings.qrUrl || "";
+    }
+
+    // =======================================================
+    // 8. ORDERS MANAGEMENT
     // =======================================================
     function renderOrdersBoard() {
       const board = document.getElementById("ordersBoard");
@@ -622,9 +663,9 @@
                 <p><i class="fa-solid fa-credit-card text-gray-400 mr-1"></i> <strong>Method:</strong> <span class="font-bold ${isQR ? 'text-indigo-600' : 'text-gray-700'}">${isQR ? 'QR Code (UPI)' : 'Cash on Delivery'}</span></p>
                 ${isQR ? `
                   <div class="mt-2 pt-2 border-t border-indigo-100 bg-indigo-50/50 p-2 rounded">
-                    <p class="font-bold text-indigo-900">UPI Transaction / UTR ID:</p>
+                    <p class="font-bold text-indigo-900">UPI Ref / Transaction ID:</p>
                     <p class="font-mono text-indigo-700 text-xs">${ord.transactionId || 'Not provided'}</p>
-                    <p class="mt-1 text-gray-500 text-[11px]">Payment Status: <strong class="${ord.paymentReceived ? 'text-emerald-600' : 'text-rose-600'}">${ord.paymentReceived ? 'Payment Verified & Received' : 'Pending Verification'}</strong></p>
+                    <p class="mt-1 text-gray-500 text-[11px]">Verification: <strong class="${ord.paymentReceived ? 'text-emerald-600' : 'text-rose-600'}">${ord.paymentReceived ? 'Payment Received' : 'Pending Verification'}</strong></p>
                   </div>
                 ` : ''}
               </div>
@@ -637,7 +678,7 @@
 
             <div class="pt-3 border-t space-y-2">
               <div class="flex justify-between items-center text-sm font-bold">
-                <span class="text-gray-500 font-medium">Total Bill:</span>
+                <span class="text-gray-500 font-medium">Total:</span>
                 <span class="text-indigo-600 text-base">₹${ord.pricing?.totalAmount || 0}</span>
               </div>
 
@@ -649,12 +690,12 @@
 
               <div class="flex gap-2 items-center">
                 <select onchange="updateOrderStatus('${ord.id}', this.value)" class="text-xs border rounded p-1.5 flex-1 bg-white font-medium">
-                  <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Status: Pending</option>
-                  <option value="Dispatched" ${ord.status === 'Dispatched' ? 'selected' : ''}>Status: Dispatched</option>
-                  <option value="Delivered" ${ord.status === 'Delivered' ? 'selected' : ''}>Status: Delivered</option>
-                  <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Status: Cancelled</option>
+                  <option value="Pending" ${ord.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                  <option value="Dispatched" ${ord.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
+                  <option value="Delivered" ${ord.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                  <option value="Cancelled" ${ord.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
                 </select>
-                <button onclick="deleteOrder('${ord.id}')" title="Delete" class="text-rose-500 hover:text-rose-700 p-1.5 text-xs"><i class="fa-solid fa-trash"></i></button>
+                <button onclick="deleteOrder('${ord.id}')" class="text-rose-500 hover:text-rose-700 p-1.5 text-xs"><i class="fa-solid fa-trash"></i></button>
               </div>
             </div>
           </div>
@@ -663,34 +704,34 @@
     }
 
     window.confirmPaymentReceived = async function(orderId) {
-      if (confirm("Confirm that you verified and received this payment?")) {
+      if (confirm("Confirm payment received for this order?")) {
         await updateDoc(doc(db, "orders", orderId), { 
           paymentReceived: true,
           status: "Dispatched"
         });
-        showToast("Payment verified & status updated to Dispatched!");
+        showToast("Payment confirmed & order marked Dispatched!");
       }
     };
 
     window.updateOrderStatus = async function(orderId, newStatus) {
       await updateDoc(doc(db, "orders", orderId), { status: newStatus });
-      showToast("Order status: " + newStatus);
+      showToast("Status: " + newStatus);
     };
 
     window.deleteOrder = async function(orderId) {
-      if (confirm("Delete this order record?")) {
+      if (confirm("Permanently delete this order?")) {
         await deleteDoc(doc(db, "orders", orderId));
-        showToast("Order deleted");
+        showToast("Order deleted.");
       }
     };
 
     // =======================================================
-    // STOREFRONT & CART
+    // 9. STOREFRONT & CHECKOUT
     // =======================================================
     function renderStore() {
       const grid = document.getElementById("productGrid");
       if (products.length === 0) {
-        grid.innerHTML = `<p class="col-span-4 text-gray-500 text-center py-8">No products found. Add items from the Admin Panel.</p>`;
+        grid.innerHTML = `<p class="col-span-4 text-gray-500 text-center py-8">Static memory catalog is empty. Add products from the Admin Portal.</p>`;
         return;
       }
       grid.innerHTML = products.map(p => `
@@ -801,7 +842,7 @@
       const txnId = document.getElementById("upiTxnId").value.trim();
 
       if (method === 'QR' && !txnId) {
-        alert("⚠️ Please enter the UPI Reference / Transaction ID after scanning the QR code.");
+        alert("Please enter the 12-digit UPI Reference / UTR Number after scanning the QR code.");
         return;
       }
 
@@ -826,7 +867,7 @@
 
       try {
         const docRef = await addDoc(collection(db, "orders"), orderPayload);
-        alert(`🎉 Order Placed Successfully!\n\nOrder #${docRef.id.slice(-6).toUpperCase()}\nAmount Due: ₹${total}\n\nThe store admin will verify your order!`);
+        alert(`Order placed successfully!\n\nOrder #${docRef.id.slice(-6).toUpperCase()}\nTotal: ₹${total}\n\nThe admin will verify your order.`);
         cart = [];
         localStorage.removeItem("qs_cart");
         document.getElementById("upiTxnId").value = "";
@@ -837,7 +878,7 @@
       }
     };
 
-    // Initial Startup
+    // Initialize View
     renderNav();
     updateCartCount();
     showView('store');

@@ -20,9 +20,6 @@
     .font-heritage {
       font-family: 'Marcellus', serif;
     }
-    .border-ornament {
-      border-image: linear-gradient(to right, #B45309, #D97706, #B45309) 1;
-    }
     .shadow-clay {
       box-shadow: 0 10px 25px -5px rgba(180, 83, 9, 0.12), 0 8px 10px -6px rgba(180, 83, 9, 0.08);
     }
@@ -30,7 +27,7 @@
 </head>
 <body class="text-stone-900 min-h-screen flex flex-col">
 
-  <!-- Royal Saffron & Gold Header -->
+  <!-- Royal Saffron Header -->
   <header class="bg-gradient-to-r from-amber-900 via-amber-800 to-orange-900 text-amber-50 shadow-lg sticky top-0 z-40 border-b-2 border-amber-600/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex justify-between items-center">
       
@@ -46,9 +43,9 @@
       </div>
       
       <div class="flex items-center gap-3 sm:gap-5">
-        <!-- Admin Portal Trigger -->
+        <!-- Admin Entry: Triggers Authentication Every Single Time -->
         <button onclick="requestAdminAccess()" class="text-xs bg-amber-950/80 hover:bg-amber-950 border border-amber-500/40 text-amber-200 px-3 py-1.5 rounded-full font-medium flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-key text-amber-400"></i> Admin Kaksh
+          <i class="fa-solid fa-lock text-amber-400"></i> Admin Kaksh
         </button>
 
         <!-- Cart Button -->
@@ -65,23 +62,23 @@
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
 
-    <!-- 1. Mandatory Admin Login Channel (Zero Persistent Session) -->
+    <!-- 1. Mandatory Admin Login Screen (Always Forces Password) -->
     <section id="adminLoginView" class="hidden max-w-md mx-auto my-12 bg-[#FFFDF7] p-8 rounded-2xl shadow-clay border border-amber-900/15">
       <div class="text-center space-y-2 mb-6">
         <div class="w-14 h-14 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto text-2xl border-2 border-amber-300">
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         <h2 class="text-2xl font-heritage font-bold text-amber-950">प्रबंधक प्रवेश (Admin Login)</h2>
-        <p class="text-xs text-stone-600">Enter your passcode. Requires verification on every access.</p>
+        <p class="text-xs text-stone-600">Enter your passcode. Password is required every single time you enter.</p>
       </div>
 
       <form onsubmit="handleAdminLogin(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-bold uppercase tracking-wider text-amber-900 mb-1">Gupt Chabi (Admin Password)</label>
-          <input type="password" id="adminPortalPass" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" placeholder="••••••••" />
+          <input type="password" id="adminPortalPass" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent" placeholder="••••••••" autocomplete="off" />
         </div>
         <button type="submit" class="w-full bg-gradient-to-r from-amber-700 to-orange-700 hover:from-amber-800 hover:to-orange-800 text-amber-50 font-semibold py-2.5 rounded-lg text-sm transition shadow-md">
-          Verify & Enter
+          Verify & Enter Admin
         </button>
       </form>
       <div class="text-center mt-5">
@@ -94,7 +91,7 @@
       <div class="text-center mb-6">
         <span class="text-amber-700 text-sm font-semibold tracking-wider uppercase">नमस्ते</span>
         <h2 id="authTitle" class="text-2xl font-heritage font-bold text-amber-950">Grahak Panjikaran (Details)</h2>
-        <p class="text-xs text-stone-600 mt-1">Please enter your delivery information</p>
+        <p class="text-xs text-stone-600 mt-1">Please enter your delivery details</p>
       </div>
       
       <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
@@ -139,10 +136,10 @@
           <h3 class="text-lg font-heritage font-bold border-b border-amber-200 pb-2 text-amber-950">Kharidari Vivaran (Bill Details)</h3>
           <div class="space-y-2 text-sm text-stone-700">
             <div class="flex justify-between"><span>Subtotal:</span> <span id="summarySubtotal" class="font-bold text-stone-900">₹0</span></div>
-            <div class="flex justify-between"><span>Delivery Shulk (Delivery Fee):</span> <span id="summaryDelivery" class="font-bold text-stone-900">₹0</span></div>
-            <div class="flex justify-between"><span>Packaging / Nirman Shulk:</span> <span id="summaryPackaging" class="font-bold text-stone-900">₹0</span></div>
+            <div class="flex justify-between"><span>Delivery Shulk:</span> <span id="summaryDelivery" class="font-bold text-stone-900">₹0</span></div>
+            <div class="flex justify-between"><span>Packaging / Nirman:</span> <span id="summaryPackaging" class="font-bold text-stone-900">₹0</span></div>
             <hr class="border-amber-200 my-2" />
-            <div class="flex justify-between text-base font-bold text-amber-950"><span>Kul Rashi (Total Payable):</span> <span id="summaryTotal" class="text-orange-700 text-lg">₹0</span></div>
+            <div class="flex justify-between text-base font-bold text-amber-950"><span>Kul Rashi (Total):</span> <span id="summaryTotal" class="text-orange-700 text-lg">₹0</span></div>
           </div>
 
           <div class="pt-4 border-t border-amber-200 space-y-3">
@@ -160,7 +157,7 @@
 
             <!-- Dynamic QR Code Container -->
             <div id="qrCodeContainer" class="hidden p-4 bg-amber-50/70 border border-amber-300 rounded-xl text-center space-y-3">
-              <p class="text-xs font-semibold text-amber-950">GPay, PhonePe, Paytm ya Kisi bhi UPI App se Scan Karein:</p>
+              <p class="text-xs font-semibold text-amber-950">GPay, PhonePe, Paytm ya UPI App se Scan Karein:</p>
               <div class="bg-white p-2.5 border-2 border-amber-300 rounded-xl inline-block shadow-sm">
                 <img id="adminQrImage" src="" alt="Dukaan QR Code" class="w-48 h-48 object-contain mx-auto" />
               </div>
@@ -180,7 +177,7 @@
       </div>
     </section>
 
-    <!-- 5. Admin Dashboard (Locked Instantly When Navigating Away) -->
+    <!-- 5. Admin Dashboard (Locks Instantly Upon Leaving) -->
     <section id="adminDashboardView" class="hidden space-y-10">
       <div class="flex flex-wrap justify-between items-center border-b border-amber-900/15 pb-4 gap-4">
         <div>
@@ -258,7 +255,7 @@
         </div>
       </div>
 
-      <!-- Store Configuration & Password Update -->
+      <!-- Fees & Password Configuration -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Fees & Merchant QR -->
         <div class="bg-[#FFFDF7] p-6 rounded-2xl shadow-clay border border-amber-900/15 space-y-4">
@@ -284,15 +281,15 @@
           </form>
         </div>
 
-        <!-- Password Change -->
+        <!-- Password Change Box -->
         <div class="bg-[#FFFDF7] p-6 rounded-2xl shadow-clay border border-amber-900/15 space-y-4">
           <h3 class="text-lg font-heritage font-bold text-amber-950">Gupt Chabi Badlein (Change Password)</h3>
           <form onsubmit="changeAdminPassword(event)" class="space-y-3">
             <div>
               <label class="block text-xs font-bold text-amber-900">Naya Gupt Passcode</label>
-              <input type="password" id="newAdminPassword" required minlength="4" class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" placeholder="Enter new password" />
+              <input type="password" id="newAdminPassword" required minlength="4" class="w-full mt-1 p-2 bg-amber-50/30 border border-amber-300 rounded-md text-sm outline-none" placeholder="Naya password daalein" />
             </div>
-            <button type="submit" class="w-full bg-stone-800 hover:bg-stone-900 text-amber-100 text-sm font-semibold py-2.5 rounded-md transition">Surakshit Karein (Update)</button>
+            <button type="submit" class="w-full bg-stone-800 hover:bg-stone-900 text-amber-100 text-sm font-semibold py-2.5 rounded-md transition">Surakshit Karein (Update Password)</button>
           </form>
         </div>
       </div>
@@ -300,9 +297,10 @@
     </section>
   </main>
 
+  <!-- Notification Toast -->
   <div id="toast" class="fixed bottom-5 right-5 bg-amber-950 text-amber-100 border border-amber-600 px-5 py-3 rounded-xl shadow-2xl hidden transition-all duration-300 z-50 text-sm"></div>
 
-  <!-- Application Logic -->
+  <!-- Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
@@ -311,7 +309,7 @@
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // =======================================================
-    // 1. FIREBASE CONFIG
+    // 1. FIREBASE CONFIG (Paste your keys here)
     // =======================================================
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
@@ -344,31 +342,28 @@
     ];
 
     // =======================================================
-    // 2. STATE (Static Catalog & Zero-Admin-Memory)
+    // 2. APP STATE (Zero Persistent Admin Session)
     // =======================================================
     let products = JSON.parse(localStorage.getItem("qs_static_products")) || defaultStaticProducts;
     let orders = [];
     let settings = { deliveryFee: 40, packagingFee: 20, qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi" };
     let adminPass = "ABC123";
+    let isAdminUnlocked = false; // Strictly in-memory flag; resets on every departure
     let currentUser = JSON.parse(localStorage.getItem("qs_active_user")) || null;
     let cart = JSON.parse(localStorage.getItem("qs_cart")) || [];
 
-    // Save strictly to local static storage
     function saveProductsToStaticMemory() {
       localStorage.setItem("qs_static_products", JSON.stringify(products));
     }
 
     // =======================================================
-    // 3. FIRESTORE LISTENERS
+    // 3. CLOUD LISTENERS
     // =======================================================
     onSnapshot(collection(db, "orders"), (snapshot) => {
       orders = [];
       snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
       orders.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-      // Only render if admin view is currently open on screen
-      if (!document.getElementById('adminDashboardView').classList.contains('hidden')) {
-        renderOrdersBoard();
-      }
+      if (isAdminUnlocked) renderOrdersBoard();
     });
 
     onSnapshot(doc(db, "config", "storeSettings"), (docSnap) => {
@@ -386,11 +381,12 @@
     });
 
     // =======================================================
-    // 4. NAVIGATION & MANDATORY LOGIN ON EVERY ENTRY
+    // 4. ROUTING & MANDATORY PASSCODE ENTRY EVERY TIME
     // =======================================================
     window.showView = function(view) {
-      // Whenever navigating away from admin, immediately lock and hide it
+      // Leaving the admin dashboard locks it instantly
       if (view !== 'adminDashboard') {
+        isAdminUnlocked = false;
         document.getElementById('adminDashboardView').classList.add('hidden');
       }
 
@@ -409,6 +405,10 @@
         document.getElementById('adminPortalPass').value = '';
         document.getElementById('adminLoginView').classList.remove('hidden');
       } else if (view === 'adminDashboard') {
+        if (!isAdminUnlocked) {
+          showView('adminLogin');
+          return;
+        }
         populateSettingsForm(); 
         renderAdminProductTable(); 
         renderOrdersBoard();
@@ -416,8 +416,9 @@
       }
     };
 
-    // User clicked Admin Kaksh - Always force authentication screen
+    // User clicks Admin Kaksh - Always route to Password entry
     window.requestAdminAccess = function() {
+      isAdminUnlocked = false;
       showView('adminLogin');
     };
 
@@ -425,26 +426,37 @@
       e.preventDefault();
       const entered = document.getElementById("adminPortalPass").value;
       if (entered === adminPass) {
-        showToast("Swagatam! Admin kaksh khul chuka hai.");
+        isAdminUnlocked = true;
+        showToast("Swagatam! Admin Kaksh khul chuka hai.");
         showView('adminDashboard');
       } else {
-        alert("Kripya sahi Gupt Passcode dalein.");
+        alert("Galat Passcode! Kripya sahi Gupt Passcode dalein.");
+        document.getElementById("adminPortalPass").value = "";
       }
     };
 
     window.exitAdminImmediately = function() {
-      showToast("Admin kaksh band ho gaya.");
+      isAdminUnlocked = false;
+      showToast("Admin Kaksh surakshit band ho gaya.");
       showView('store');
     };
 
+    // Password Update with Prominent Feedback
     window.changeAdminPassword = async function(e) {
       e.preventDefault();
-      const newP = document.getElementById("newAdminPassword").value;
+      const newP = document.getElementById("newAdminPassword").value.trim();
+      if (!newP) return;
+
       try {
         await setDoc(doc(db, "config", "security"), { password: newP }, { merge: true });
         adminPass = newP;
         document.getElementById("newAdminPassword").value = "";
-        showToast("Gupt Passcode safalta-purvak badla gaya!");
+        
+        alert("✅ Success!\n\nGupt Passcode safalta-purvak badla gaya!\n(Admin Password Updated Successfully!)\n\nSuraksha hetu aapko dobara login karna hoga.");
+        
+        // Lock and require logging in with the newly configured password
+        isAdminUnlocked = false;
+        showView('adminLogin');
       } catch (err) {
         alert("Error changing password: " + err.message);
       }
@@ -454,11 +466,11 @@
       const toast = document.getElementById("toast");
       toast.innerText = msg;
       toast.classList.remove("hidden");
-      setTimeout(() => toast.classList.add("hidden"), 3000);
+      setTimeout(() => toast.classList.add("hidden"), 3500);
     };
 
     // =======================================================
-    // 5. CUSTOMER PROFILE (GRAHAK)
+    // 5. CUSTOMER AUTH
     // =======================================================
     window.handleAuth = async function(e) {
       e.preventDefault();
@@ -478,7 +490,7 @@
       try {
         await setDoc(doc(db, "users", phone), userData);
       } catch (err) {
-        console.warn("User sync warning:", err);
+        console.warn("User sync notice:", err);
       }
     };
 
@@ -486,7 +498,7 @@
       currentUser = null;
       localStorage.removeItem("qs_active_user");
       renderNav();
-      showToast("Grahak account logout kiya gaya");
+      showToast("Grahak account logout ho gaya");
       showView('store');
     };
 
@@ -525,7 +537,7 @@
     }
 
     // =======================================================
-    // 6. STATIC MEMORY CATALOG (ADD / EDIT / DELETE)
+    // 6. STATIC MEMORY PRODUCT OPERATIONS
     // =======================================================
     window.handleProductImageUpload = function(event) {
       const file = event.target.files[0];
@@ -534,7 +546,7 @@
         reader.onload = (e) => {
           document.getElementById('finalProdImage').value = e.target.result;
           document.getElementById('prodImageUrl').value = "";
-          showToast("Utpad ki tasveer tayar hai.");
+          showToast("Utpad tasveer tayar hai.");
         };
         reader.readAsDataURL(file);
       }
@@ -550,7 +562,7 @@
         id,
         name: document.getElementById('prodName').value.trim(),
         price: Number(document.getElementById('prodPrice').value),
-        image: uploadedImg || urlImg || 'https://via.placeholder.com/300?text=Swadeshi+Product',
+        image: uploadedImg || urlImg || 'https://via.placeholder.com/300?text=Desi+Product',
         description: document.getElementById('prodDesc').value.trim()
       };
 
@@ -560,7 +572,7 @@
         showToast("Utpad update ho gaya!");
       } else {
         products.push(prodData);
-        showToast("Naya utpad static catalog mein shamil hua!");
+        showToast("Naya utpad static catalog mein jud gaya!");
       }
 
       saveProductsToStaticMemory();
@@ -620,7 +632,7 @@
     }
 
     // =======================================================
-    // 7. STORE SETTINGS & MERCHANT QR
+    // 7. SETTINGS & QR (Cloud Sync)
     // =======================================================
     window.handleQRUpload = function(event) {
       const file = event.target.files[0];
@@ -629,7 +641,7 @@
         reader.onload = (e) => {
           document.getElementById('finalQRImage').value = e.target.result;
           document.getElementById('settingQR').value = "";
-          showToast("Naya QR code chuna gaya.");
+          showToast("Naya QR Code tasveer tayar hai.");
         };
         reader.readAsDataURL(file);
       }
@@ -690,7 +702,7 @@
                 </span>
               </div>
 
-              <!-- Customer details -->
+              <!-- Customer Details -->
               <div class="text-xs text-stone-700 space-y-1 bg-amber-50/40 p-3 rounded-xl border border-amber-200/60">
                 <p><i class="fa-solid fa-phone text-amber-700 mr-1"></i> <strong>Phone:</strong> ${ord.customer?.phone || 'N/A'}</p>
                 <p><i class="fa-solid fa-location-dot text-amber-700 mr-1"></i> <strong>Pata:</strong> ${ord.customer?.address || 'N/A'}</p>
@@ -710,7 +722,7 @@
               </div>
             </div>
 
-            <!-- Pricing & Action -->
+            <!-- Pricing & Status -->
             <div class="pt-3 border-t border-amber-100 space-y-2">
               <div class="flex justify-between items-center text-sm font-bold">
                 <span class="text-stone-600 font-medium">Kul Rashi:</span>
@@ -744,13 +756,13 @@
           paymentReceived: true,
           status: "Dispatched"
         });
-        showToast("Bhugtan confirm ho gaya!");
+        showToast("Bhugtan verify ho gaya!");
       }
     };
 
     window.updateOrderStatus = async function(orderId, newStatus) {
       await updateDoc(doc(db, "orders", orderId), { status: newStatus });
-      showToast("Order status badla gaya: " + newStatus);
+      showToast("Order status badla: " + newStatus);
     };
 
     window.deleteOrder = async function(orderId) {
@@ -918,7 +930,7 @@
       }
     };
 
-    // App Init
+    // Initial Mount
     renderNav();
     updateCartCount();
     showView('store');

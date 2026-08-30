@@ -116,7 +116,13 @@
             <div class="flex justify-between text-base font-bold text-stone-900"><span>Total Payable:</span> <span id="summaryTotal" class="text-amber-600">₹0</span></div>
           </div>
 
-          <div class="pt-4 border-t space-y-3">
+          <!-- Dynamic Delivery Availability Estimation Box -->
+          <div class="bg-stone-50 p-3 rounded-xl border border-stone-200 text-xs space-y-1">
+            <p class="font-bold text-stone-800 flex items-center gap-1.5"><i class="fa-solid fa-truck-fast text-amber-600"></i> Express Availability:</p>
+            <p id="deliveryEstimateText" class="text-stone-600 font-medium">Calculating estimated delivery...</p>
+          </div>
+
+          <div class="pt-2 border-t space-y-3">
             <h4 class="font-semibold text-xs uppercase text-stone-700">Payment Option</h4>
             <div class="space-y-2 text-sm">
               <label class="flex items-center gap-2 cursor-pointer">
@@ -129,21 +135,26 @@
               </label>
             </div>
 
-            <!-- Dynamic QR Code Container -->
-            <div id="qrCodeContainer" class="hidden p-4 bg-amber-50 border border-amber-200 rounded-xl text-center space-y-2">
+            <!-- Dynamic QR Code Container with Payment Screenshot Upload -->
+            <div id="qrCodeContainer" class="hidden p-4 bg-amber-50 border border-amber-200 rounded-xl text-center space-y-3">
               <p class="text-xs text-stone-600 font-medium">Scan QR Code using any UPI App:</p>
               <div class="bg-white p-2 border rounded-lg inline-block shadow-sm">
                 <img id="adminQrImage" src="" alt="Merchant QR" class="w-40 h-40 object-contain mx-auto" />
               </div>
               <div class="bg-amber-100/80 p-2 rounded-lg border border-amber-300">
-                <p class="text-[11px] text-amber-900 uppercase font-bold">Exact Amount to Pay:</p>
+                <p class="text-[11px] text-amber-900 uppercase font-bold">Exact Amount Required:</p>
                 <p class="text-sm font-extrabold text-red-600"><span id="qrPayableAmount">₹0</span></p>
-                <p class="text-[10px] text-stone-600 mt-0.5">Orders with incorrect amounts will not be dispatched.</p>
               </div>
               
-              <div class="text-left space-y-1 pt-2">
-                <label class="block text-xs font-semibold text-stone-700">12-Digit UPI Ref / UTR Number:</label>
+              <div class="text-left space-y-1">
+                <label class="block text-xs font-semibold text-stone-700">12-Digit UPI UTR / Ref Number:</label>
                 <input type="text" id="upiTxnId" placeholder="e.g. 4082XXXXXXXX" class="w-full text-xs p-2 border rounded bg-white outline-none focus:ring-1 focus:ring-stone-900 font-mono" />
+              </div>
+
+              <div class="text-left space-y-1">
+                <label class="block text-xs font-semibold text-stone-700">Upload Payment Screenshot Proof:</label>
+                <input type="file" id="paymentProofFile" accept="image/*" onchange="handlePaymentProofUpload(event)" class="w-full text-xs text-stone-500 bg-white p-1 border rounded" required />
+                <input type="hidden" id="finalPaymentProof" />
               </div>
             </div>
 
@@ -160,7 +171,7 @@
       <div class="flex flex-wrap justify-between items-center border-b border-stone-200 pb-4 gap-4">
         <div>
           <h2 class="text-xl font-bold text-stone-900">Admin Dashboard</h2>
-          <p class="text-xs text-stone-500">Manage products, pricing, and live customer orders.</p>
+          <p class="text-xs text-stone-500">Manage products, stock shortage alerts, and live customer orders.</p>
         </div>
         <button onclick="exitAdminImmediately()" class="bg-stone-900 hover:bg-stone-800 text-white text-xs px-3.5 py-2 rounded-lg font-semibold transition">
           <i class="fa-solid fa-lock"></i> Exit & Lock Admin
@@ -178,7 +189,7 @@
 
       <hr class="border-stone-200" />
 
-      <!-- Inventory Management -->
+      <!-- Inventory & Stock Management -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 space-y-4">
           <h3 class="text-base font-bold text-stone-900" id="formActionTitle">Add Product</h3>
@@ -191,6 +202,10 @@
             <div>
               <label class="block text-xs font-semibold text-stone-600">Price (₹)</label>
               <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2 border rounded-lg text-sm outline-none" placeholder="e.g. 499" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-stone-600">Available Stock Quantity</label>
+              <input type="number" id="prodStock" min="0" value="10" required class="w-full mt-1 p-2 border rounded-lg text-sm outline-none" placeholder="e.g. 15" />
             </div>
             <div>
               <label class="block text-xs font-semibold text-stone-600">Image (Upload or URL)</label>
@@ -211,7 +226,7 @@
 
         <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-stone-200 flex flex-col overflow-hidden">
           <div class="p-4 border-b border-stone-200 font-bold text-stone-900 flex justify-between items-center bg-stone-50 text-sm">
-            <span>Product Inventory</span>
+            <span>Product Inventory & Stock Status</span>
             <span id="productCountBadge" class="text-xs bg-stone-200 text-stone-800 px-2.5 py-0.5 rounded font-semibold">0 items</span>
           </div>
           <div class="overflow-x-auto flex-1">
@@ -220,6 +235,7 @@
                 <tr>
                   <th class="p-3">Product</th>
                   <th class="p-3">Price</th>
+                  <th class="p-3">Stock</th>
                   <th class="p-3 text-right">Actions</th>
                 </tr>
               </thead>
@@ -296,6 +312,7 @@
         id: "p_1",
         name: "Wireless Bluetooth Earbuds",
         price: 1299,
+        stock: 12,
         image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80",
         description: "High fidelity audio with ergonomic fit and 24-hour battery case."
       },
@@ -303,6 +320,7 @@
         id: "p_2",
         name: "Minimalist Leather Watch",
         price: 1899,
+        stock: 3,
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80",
         description: "Classic quartz movement timepiece with genuine leather strap."
       }
@@ -369,7 +387,6 @@
         populateSettingsForm(); 
         renderAdminProductTable(); 
         renderOrdersBoard();
-        document.getElementById('adminDashboardView').classList.add('hidden') === false; // ensure visible
         document.getElementById('adminDashboardView').classList.remove('hidden');
       }
     };
@@ -499,6 +516,18 @@
       }
     };
 
+    window.handlePaymentProofUpload = function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById('finalPaymentProof').value = e.target.result;
+          showToast("Payment screenshot uploaded successfully!");
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
     window.saveProduct = function(e) {
       e.preventDefault();
       const id = document.getElementById('editProductId').value || ('p_' + Date.now());
@@ -509,6 +538,7 @@
         id,
         name: document.getElementById('prodName').value.trim(),
         price: Number(document.getElementById('prodPrice').value),
+        stock: Number(document.getElementById('prodStock').value),
         image: uploadedImg || urlImg || 'https://via.placeholder.com/300?text=Product',
         description: document.getElementById('prodDesc').value.trim()
       };
@@ -534,6 +564,7 @@
       document.getElementById('editProductId').value = p.id;
       document.getElementById('prodName').value = p.name;
       document.getElementById('prodPrice').value = p.price;
+      document.getElementById('prodStock').value = p.stock ?? 10;
       document.getElementById('prodImageUrl').value = p.image.startsWith('data:') ? '' : p.image;
       document.getElementById('finalProdImage').value = p.image;
       document.getElementById('prodDesc').value = p.description;
@@ -570,6 +601,11 @@
             <span class="font-semibold text-stone-800">${p.name}</span>
           </td>
           <td class="p-3 font-semibold text-stone-900">₹${p.price}</td>
+          <td class="p-3">
+            <span class="px-2 py-0.5 rounded-full text-xs font-bold ${p.stock > 5 ? 'bg-emerald-50 text-emerald-700' : p.stock > 0 ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-700'}">
+              ${p.stock > 0 ? p.stock + ' in stock' : 'Out of Stock'}
+            </span>
+          </td>
           <td class="p-3 text-right space-x-2">
             <button onclick="editProduct('${p.id}')" class="text-stone-900 text-xs font-bold hover:underline">Edit</button>
             <button onclick="deleteProduct('${p.id}')" class="text-red-600 text-xs font-bold hover:underline">Delete</button>
@@ -648,10 +684,14 @@
                 <p><strong>Address:</strong> ${ord.customer?.address || 'N/A'}</p>
                 <p><strong>Payment Method:</strong> <span class="font-semibold">${isQR ? 'UPI QR Code' : 'COD'}</span></p>
                 ${isQR ? `
-                  <div class="mt-2 pt-2 border-t text-[11px] space-y-1 bg-amber-50/60 p-2 rounded border border-amber-200">
+                  <div class="mt-2 pt-2 border-t text-[11px] space-y-1.5 bg-amber-50/60 p-2.5 rounded-lg border border-amber-200">
                     <p class="text-amber-900 font-bold">Expected Exact Amount: ₹${ord.pricing?.totalAmount}</p>
                     <p>UTR / Txn ID: <strong class="font-mono">${ord.transactionId || 'None'}</strong></p>
-                    <p>Verification Check: <strong class="${ord.paymentReceived ? 'text-emerald-700' : 'text-red-700'}">${ord.paymentReceived ? 'Exact Payment Received & Verified' : 'Amount Check Pending'}</strong></p>
+                    <div>
+                      <p class="font-semibold text-stone-700 mb-1">Payment Screenshot Proof:</p>
+                      ${ord.paymentProof ? `<a href="${ord.paymentProof}" target="_blank"><img src="${ord.paymentProof}" class="w-full h-28 object-cover rounded-lg border shadow-sm hover:opacity-95" title="Click to view full screenshot"/></a>` : '<span class="text-red-500 italic">No proof uploaded</span>'}
+                    </div>
+                    <p class="mt-1">Status: <strong class="${ord.paymentReceived ? 'text-emerald-700' : 'text-red-700'}">${ord.paymentReceived ? 'Exact Payment Verified' : 'Pending Verification'}</strong></p>
                   </div>
                 ` : ''}
               </div>
@@ -670,7 +710,7 @@
 
               ${isQR && !ord.paymentReceived ? `
                 <button onclick="confirmPaymentReceived('${ord.id}', ${ord.pricing?.totalAmount})" class="w-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold py-2 rounded-lg transition shadow-sm">
-                  <i class="fa-solid fa-circle-check text-amber-400 mr-1"></i> Verify Exact Amount Received (₹${ord.pricing?.totalAmount})
+                  <i class="fa-solid fa-circle-check text-amber-400 mr-1"></i> Verify Exact Amount (₹${ord.pricing?.totalAmount})
                 </button>
               ` : ''}
 
@@ -690,7 +730,7 @@
     }
 
     window.confirmPaymentReceived = async function(orderId, expectedAmount) {
-      if (confirm(`Did you confirm that the exact amount of ₹${expectedAmount} has been credited to your merchant account?`)) {
+      if (confirm(`Did you visually verify the screenshot proof and confirm that the exact amount of ₹${expectedAmount} arrived in your account?`)) {
         await updateDoc(doc(db, "orders", orderId), { paymentReceived: true, status: "Dispatched" });
         showToast("Payment verified successfully!");
       }
@@ -714,33 +754,50 @@
         grid.innerHTML = `<p class="col-span-4 text-stone-500 text-center py-8 text-sm">No products available.</p>`;
         return;
       }
-      grid.innerHTML = products.map(p => `
-        <div class="bg-white rounded-2xl shadow-sm border border-stone-200 flex flex-col overflow-hidden transition hover:shadow">
-          <div class="h-44 w-full overflow-hidden bg-stone-100">
-            <img src="${p.image}" alt="${p.name}" class="h-full w-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Product'"/>
-          </div>
-          <div class="p-4 flex-1 flex flex-col justify-between space-y-2">
-            <div>
-              <h3 class="font-bold text-stone-900 text-sm leading-snug">${p.name}</h3>
-              <p class="text-xs text-stone-500 line-clamp-2 mt-1">${p.description}</p>
+      grid.innerHTML = products.map(p => {
+        const isOutOfStock = (p.stock ?? 10) <= 0;
+        return `
+          <div class="bg-white rounded-2xl shadow-sm border border-stone-200 flex flex-col overflow-hidden transition hover:shadow">
+            <div class="relative h-44 w-full overflow-hidden bg-stone-100">
+              <img src="${p.image}" alt="${p.name}" class="h-full w-full object-cover ${isOutOfStock ? 'grayscale opacity-60' : ''}" onerror="this.src='https://via.placeholder.com/300?text=Product'"/>
+              ${isOutOfStock ? '<span class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Out of Stock</span>' : (p.stock <= 3 ? `<span class="absolute top-2 left-2 bg-amber-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Only ${p.stock} left!</span>` : '')}
             </div>
-            <div class="flex justify-between items-center pt-2 border-t">
-              <span class="text-base font-bold text-stone-900">₹${p.price}</span>
-              <button onclick="addToCart('${p.id}')" class="bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold px-3 py-2 rounded-xl transition">
-                Add to Cart
-              </button>
+            <div class="p-4 flex-1 flex flex-col justify-between space-y-2">
+              <div>
+                <h3 class="font-bold text-stone-900 text-sm leading-snug">${p.name}</h3>
+                <p class="text-xs text-stone-500 line-clamp-2 mt-1">${p.description}</p>
+              </div>
+              <div class="flex justify-between items-center pt-2 border-t">
+                <span class="text-base font-bold text-stone-900">₹${p.price}</span>
+                <button onclick="${isOutOfStock ? '' : `addToCart('${p.id}')`}" class="${isOutOfStock ? 'bg-stone-300 text-stone-500 cursor-not-allowed' : 'bg-stone-900 hover:bg-stone-800 text-white'} text-xs font-semibold px-3 py-2 rounded-xl transition">
+                  ${isOutOfStock ? 'Sold Out' : 'Add to Cart'}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     window.addToCart = function(productId) {
       const prod = products.find(p => p.id === productId);
-      if (!prod) return;
+      if (!prod || (prod.stock ?? 10) <= 0) {
+        showToast("Sorry, this item is out of stock / shortage.");
+        return;
+      }
       const item = cart.find(i => i.id === productId);
-      if (item) item.qty += 1;
-      else cart.push({ id: prod.id, name: prod.name, price: prod.price, image: prod.image, qty: 1 });
+      const currentQty = item ? item.qty : 0;
+      
+      if (currentQty + 1 > prod.stock) {
+        showToast(`Stock shortage! Only ${prod.stock} units available.`);
+        return;
+      }
+
+      if (item) {
+        item.qty += 1;
+      } else {
+        cart.push({ id: prod.id, name: prod.name, price: prod.price, image: prod.image, qty: 1, stock: prod.stock });
+      }
       localStorage.setItem("qs_cart", JSON.stringify(cart));
       updateCartCount();
       showToast(`${prod.name} added to cart!`);
@@ -751,9 +808,15 @@
     }
 
     window.updateQty = function(id, delta) {
+      const prod = products.find(p => p.id === id);
       const item = cart.find(i => i.id === id);
       if (item) {
-        item.qty += delta;
+        const newQty = item.qty + delta;
+        if (delta > 0 && prod && newQty > prod.stock) {
+          showToast(`Stock shortage! Max available is ${prod.stock}.`);
+          return;
+        }
+        item.qty = newQty;
         if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
       }
       localStorage.setItem("qs_cart", JSON.stringify(cart));
@@ -802,6 +865,12 @@
       document.getElementById('summaryTotal').innerText = `₹${total}`;
       document.getElementById('qrPayableAmount').innerText = `₹${total}`;
       document.getElementById('adminQrImage').src = settings.qrUrl || "";
+
+      // Dynamic Delivery Estimation calculation
+      const estDate = new Date();
+      estDate.setDate(estDate.getDate() + 3);
+      const options = { weekday: 'long', month: 'short', day: 'numeric' };
+      document.getElementById('deliveryEstimateText').innerText = cart.length > 0 ? `Estimated Delivery by ${estDate.toLocaleDateString('en-US', options)}` : 'Add items to estimate delivery';
     }
 
     window.toggleQRDisplay = function() {
@@ -822,13 +891,20 @@
 
       const method = document.querySelector('input[name="payMethod"]:checked').value;
       const txnId = document.getElementById("upiTxnId").value.trim();
+      const proofBase64 = document.getElementById("finalPaymentProof").value;
 
       const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       const total = subtotal + Number(settings.deliveryFee || 0) + Number(settings.packagingFee || 0);
 
-      if (method === 'QR' && !txnId) {
-        alert(`⚠️ Please pay the exact total amount of ₹${total} via QR code and enter your 12-digit UPI / UTR transaction ID.`);
-        return;
+      if (method === 'QR') {
+        if (!txnId) {
+          alert("⚠️ Please enter your 12-digit UPI / UTR transaction reference number.");
+          return;
+        }
+        if (!proofBase64) {
+          alert("⚠️ Please upload a screenshot proof of your payment success screen.");
+          return;
+        }
       }
 
       const orderPayload = {
@@ -837,6 +913,7 @@
         pricing: { subtotal, deliveryFee: settings.deliveryFee, packagingFee: settings.packagingFee, totalAmount: total },
         paymentMethod: method,
         transactionId: method === 'QR' ? txnId : null,
+        paymentProof: method === 'QR' ? proofBase64 : null,
         paymentReceived: false,
         status: "Pending",
         createdAt: new Date().toISOString()
@@ -844,10 +921,12 @@
 
       try {
         const docRef = await addDoc(collection(db, "orders"), orderPayload);
-        alert(`Order Placed Successfully!\n\nOrder ID: #${docRef.id.slice(-6).toUpperCase()}\nTotal Amount: ₹${total}\n\n${method === 'QR' ? 'The admin will verify your exact payment of ₹' + total + ' against UTR: ' + txnId : 'Cash on Delivery selected.'}`);
+        alert(`Order Placed Successfully!\n\nOrder ID: #${docRef.id.slice(-6).toUpperCase()}\nTotal Amount: ₹${total}\n\n${method === 'QR' ? 'Your payment screenshot & UTR have been submitted for verification.' : 'Cash on Delivery selected.'}`);
         cart = [];
         localStorage.removeItem("qs_cart");
         document.getElementById("upiTxnId").value = "";
+        document.getElementById("paymentProofFile").value = "";
+        document.getElementById("finalPaymentProof").value = "";
         updateCartCount();
         showView('store');
       } catch (err) {

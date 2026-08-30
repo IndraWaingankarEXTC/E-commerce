@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visionary Express - Heritage & Artisanal Store</title>
+  <title>Visionary Express - Indian Heritage Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,19 +26,22 @@
     .shadow-terracotta {
       box-shadow: 0 12px 30px -6px rgba(180, 83, 9, 0.16), 0 8px 12px -6px rgba(180, 83, 9, 0.08);
     }
-    .doodle-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg' opacity='0.035'%3E%3Cpath d='M30 20c-5 0-10 6-10 12 0 8 10 14 10 14s10-6 10-14c0-6-5-12-10-12zm60 50c-6 0-12 8-12 16 0 10 12 18 12 18s12-8 12-18c0-8-6-16-12-16zM25 85c-4 0-8 4-8 9 0 6 8 11 8 11s8-5 8-11c0-5-4-9-8-9zm65-65c-4 0-8 5-8 10 0 7 8 12 8 12s8-5 8-12c0-5-4-10-8-10z' fill='%2378350F' fill-rule='evenodd'/%3E%3C/svg%3E");
+    /* Traditional Indian Fort & Floral Murals Watermark */
+    .heritage-border {
+      border: 2px solid #D97706;
+      position: relative;
     }
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    .heritage-border::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1px dashed #B45309;
+      pointer-events: none;
+      opacity: 0.4;
     }
   </style>
 </head>
-<body class="text-stone-900 min-h-screen flex flex-col doodle-pattern">
+<body class="text-stone-900 min-h-screen flex flex-col">
 
   <!-- Royal Saffron Header -->
   <header class="bg-gradient-to-r from-amber-950 via-amber-900 to-orange-950 text-amber-50 shadow-xl sticky top-0 z-40 border-b-2 border-amber-600/60">
@@ -56,204 +59,136 @@
         <div>
           <h1 class="text-2xl font-brand tracking-wider text-amber-200 font-bold leading-none">Visionary Express</h1>
           <p class="text-[10px] tracking-widest uppercase text-amber-300/80 font-heritage font-medium mt-1">
-            Indian Folk Arts & Regional Heritage
+            Indian Heritage & Artisanal Goods
           </p>
         </div>
       </div>
       
-      <!-- Navigation Links -->
-      <div class="flex items-center gap-2 sm:gap-4">
-        <button onclick="showView('store')" class="text-xs text-amber-200 hover:text-white font-medium px-2 py-1 transition hidden sm:inline-block">
-          Store
+      <!-- Action Controls -->
+      <div class="flex items-center gap-3 sm:gap-5">
+        <button onclick="requestAdminAccess()" class="text-xs bg-amber-950/80 hover:bg-black border border-amber-500/50 text-amber-200 px-3.5 py-1.5 rounded-full font-medium flex items-center gap-1.5 transition shadow-sm">
+          <i class="fa-solid fa-lock text-amber-400"></i> Admin Panel
         </button>
-        <button onclick="showView('heritage')" class="text-xs bg-amber-900/60 hover:bg-amber-800 text-amber-200 border border-amber-600/40 font-medium px-3 py-1.5 rounded-full transition flex items-center gap-1.5">
-          <i class="fa-solid fa-palette text-amber-400"></i> Folk Arts & Heritage
-        </button>
-        <button onclick="requestAdminAccess()" class="text-xs bg-amber-950/90 hover:bg-black border border-amber-500/50 text-amber-200 px-3.5 py-1.5 rounded-full font-medium flex items-center gap-1.5 transition shadow-sm">
-          <i class="fa-solid fa-lock text-amber-400"></i> Admin
-        </button>
+
         <button onclick="showView('cart')" class="relative p-2 text-amber-200 hover:text-amber-100 transition">
           <i class="fa-solid fa-basket-shopping text-xl"></i>
           <span id="cartCount" class="absolute -top-1 -right-1 bg-red-700 text-amber-100 text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border border-amber-200">0</span>
         </button>
+
         <div id="userNavSection"></div>
       </div>
     </div>
   </header>
 
-  <!-- Cultural Heritage Quick Banner -->
-  <section class="bg-gradient-to-r from-amber-100/90 via-orange-50/90 to-amber-100/90 border-b border-amber-300/70 py-2.5 shadow-inner overflow-x-auto hide-scrollbar">
-    <div class="max-w-7xl mx-auto px-4 flex items-center gap-6 min-w-max">
-      <div class="flex items-center gap-2 border-r border-amber-300/80 pr-4">
-        <span class="text-amber-900 font-heritage text-xs font-bold uppercase tracking-widest flex items-center gap-1.5">
-          <i class="fa-solid fa-feather-pointed text-amber-700"></i> Regional Motifs:
-        </span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1 rounded-full border border-amber-200/80">
-        <span><strong>Peacock (Mayura)</strong> • Rajasthan Pichwai</span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1 rounded-full border border-amber-200/80">
-        <span><strong>Elephant (Gaja)</strong> • Kerala & Karnataka Temple Art</span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1 rounded-full border border-amber-200/80">
-        <span><strong>Tiger (Vyaghra)</strong> • Madhya Pradesh Gond & Bengal</span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1 rounded-full border border-amber-200/80">
-        <span><strong>One-Horned Rhino</strong> • Assam Kaziranga Motif</span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-950 text-xs bg-white/70 px-3 py-1 rounded-full border border-amber-200/80">
-        <span><strong>Sacred Cow (Kamadhenu)</strong> • Vedic Folk Tradition</span>
-      </div>
-    </div>
-  </section>
+  <!-- Main Content Area -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-8">
 
-  <!-- Main Views Container -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
+    <!-- Cultural Heritage Banner with Animal Drawings (Tiger, Elephant, Forts) -->
+    <section class="bg-gradient-to-r from-amber-900 via-amber-800 to-orange-900 rounded-3xl p-6 sm:p-8 text-amber-100 shadow-terracotta heritage-border relative overflow-hidden">
+      <!-- Decorative Background Fort/Animal SVG Watermarks -->
+      <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none transform translate-x-10 translate-y-6">
+        <svg class="w-96 h-96 fill-amber-200" viewBox="0 0 200 200">
+          <!-- Royal Elephant & Fort Motif -->
+          <path d="M30 140c0-20 15-35 35-35h20c10 0 20 5 25 12l15-12c8-6 18-9 28-9h17c15 0 25 10 25 25v30H30v-11zM60 80c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18zm110 0c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18z"/>
+        </svg>
+      </div>
 
-    <!-- 1. Dedicated Folk Arts & Culture Webpage -->
-    <section id="heritageView" class="hidden space-y-12">
-      <div class="text-center max-w-3xl mx-auto space-y-3">
-        <span class="text-xs font-bold uppercase tracking-widest text-amber-800 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
-          Cultural Legacy of India
+      <div class="max-w-2xl space-y-3 relative z-10">
+        <span class="bg-amber-500/30 border border-amber-300/40 text-amber-200 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+          <i class="fa-solid fa-landmark text-amber-400 mr-1"></i> Pan-India Heritage Showcase
         </span>
-        <h2 class="text-4xl font-heritage font-bold text-amber-950">A Tribute to Indian Folk Arts & Animal Motifs</h2>
-        <p class="text-sm text-stone-600 leading-relaxed">
-          For thousands of years, Indian indigenous art traditions have honored biodiversity through natural dyes, geometric storytelling, and revered animal archetypes across diverse regions.
+        <h2 class="text-3xl sm:text-4xl font-heritage font-bold text-amber-100">
+          Celebrating India's State Artistry & Wildlife
+        </h2>
+        <p class="text-sm text-amber-200/90 leading-relaxed">
+          From the majestic Royal Tigers of Madhya Pradesh and Bengal, the ceremonial Temple Elephants of Kerala, to the royal Forts of Rajasthan and Warli murals of Maharashtra—discover authentic creations inspired by our timeless heritage.
         </p>
       </div>
 
-      <!-- Grid of Folk Traditions -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <!-- Madhubani -->
-        <div class="bg-[#FFFDF8] rounded-3xl p-6 shadow-terracotta border-2 border-amber-700/20 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex justify-between items-start border-b border-amber-200 pb-2 mb-3">
-              <div>
-                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Bihar • Mithila</span>
-                <h3 class="font-heritage text-xl font-bold text-amber-950">Madhubani Art</h3>
-              </div>
-              <span class="text-xs bg-amber-100 px-2.5 py-1 rounded-full text-amber-900 font-semibold">Tigers & Fish</span>
-            </div>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Characterized by intricate double-line borders, floral fillers, and eye-catching natural pigments derived from turmeric, indigo, and soot. Animals such as fish symbolize fertility, while peacocks and tigers embody romance, majesty, and divine protection.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-amber-100 text-xs text-amber-900 font-medium">
-            <strong>Key Colors:</strong> Turmeric yellow, deep indigo, lampblack, terracotta ochre.
-          </div>
+      <!-- State Animal & Art Badges Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 relative z-10">
+        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
+          <i class="fa-solid fa-paw text-amber-400 text-lg mb-1"></i>
+          <h4 class="text-xs font-bold text-amber-100">Bengal Tiger</h4>
+          <p class="text-[10px] text-amber-300/80">Madhubani & Forest Motifs</p>
         </div>
-
-        <!-- Warli -->
-        <div class="bg-[#FFFDF8] rounded-3xl p-6 shadow-terracotta border-2 border-amber-700/20 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex justify-between items-start border-b border-amber-200 pb-2 mb-3">
-              <div>
-                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Maharashtra • Sahyadri</span>
-                <h3 class="font-heritage text-xl font-bold text-amber-950">Warli Tribal Art</h3>
-              </div>
-              <span class="text-xs bg-amber-100 px-2.5 py-1 rounded-full text-amber-900 font-semibold">Bulls & Horses</span>
-            </div>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Created on mud-plastered hut walls using white rice paste, Warli art uses fundamental shapes—triangles, circles, and lines—to illustrate harmonious tribal life alongside animals, forest deer, and rhythmic ceremonial dances like the Tarpa.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-amber-100 text-xs text-amber-900 font-medium">
-            <strong>Key Colors:</strong> Rice white on natural red clay or cow-dung wash backgrounds.
-          </div>
+        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
+          <i class="fa-solid fa-crown text-amber-400 text-lg mb-1"></i>
+          <h4 class="text-xs font-bold text-amber-100">Royal Elephant</h4>
+          <p class="text-[10px] text-amber-300/80">Kerala & Karnataka Craft</p>
         </div>
-
-        <!-- Pichwai -->
-        <div class="bg-[#FFFDF8] rounded-3xl p-6 shadow-terracotta border-2 border-amber-700/20 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex justify-between items-start border-b border-amber-200 pb-2 mb-3">
-              <div>
-                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Rajasthan • Nathdwara</span>
-                <h3 class="font-heritage text-xl font-bold text-amber-950">Pichwai Painting</h3>
-              </div>
-              <span class="text-xs bg-amber-100 px-2.5 py-1 rounded-full text-amber-900 font-semibold">Cows & Peacocks</span>
-            </div>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Originated as intricate cloth hangings behind deities in Rajasthan temples. Known for gold leaf embellishments, lotus motifs, dancing peacocks herald of monsoon rains, and gentle cows adorned with ornamental headgears and bell necklaces.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-amber-100 text-xs text-amber-900 font-medium">
-            <strong>Key Colors:</strong> Real gold leaf, mineral greens, vermilion, and ultramarine.
-          </div>
+        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
+          <i class="fa-solid fa-feather text-amber-400 text-lg mb-1"></i>
+          <h4 class="text-xs font-bold text-amber-100">Peacock & Deer</h4>
+          <p class="text-[10px] text-amber-300/80">Rajasthan & Gond Tradition</p>
         </div>
-
-        <!-- Pattachitra -->
-        <div class="bg-[#FFFDF8] rounded-3xl p-6 shadow-terracotta border-2 border-amber-700/20 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex justify-between items-start border-b border-amber-200 pb-2 mb-3">
-              <div>
-                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Odisha • Raghurajpur</span>
-                <h3 class="font-heritage text-xl font-bold text-amber-950">Pattachitra Scrolls</h3>
-              </div>
-              <span class="text-xs bg-amber-100 px-2.5 py-1 rounded-full text-amber-900 font-semibold">Elephants & Swans</span>
-            </div>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Painted on specially treated cloth canvas or palm leaves with conch shell white and stone powders. Celebrates temple elephants draped in embroidered tapestries alongside mythological lore, lush jungle flora, and geometric decorative borders.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-amber-100 text-xs text-amber-900 font-medium">
-            <strong>Key Colors:</strong> Conch shell white, hingula red, haritala yellow, and leaf green.
-          </div>
+        <div class="bg-amber-950/60 border border-amber-500/30 p-3 rounded-2xl text-center backdrop-blur-sm">
+          <i class="fa-solid fa-mountain-sun text-amber-400 text-lg mb-1"></i>
+          <h4 class="text-xs font-bold text-amber-100">Heritage Forts</h4>
+          <p class="text-[10px] text-amber-300/80">Architectural Lineage</p>
         </div>
-
-        <!-- Gond Art -->
-        <div class="bg-[#FFFDF8] rounded-3xl p-6 shadow-terracotta border-2 border-amber-700/20 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex justify-between items-start border-b border-amber-200 pb-2 mb-3">
-              <div>
-                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Madhya Pradesh • Narmada Valley</span>
-                <h3 class="font-heritage text-xl font-bold text-amber-950">Gond Art</h3>
-              </div>
-              <span class="text-xs bg-amber-100 px-2.5 py-1 rounded-full text-amber-900 font-semibold">Forest Deer & Birds</span>
-            </div>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Drawn by the indigenous Gond tribe, this art uses meticulous dots and fine lines to give motion to animals, sacred mahua trees, tigers, and flying cranes, embodying the philosophy that seeing a sacred image brings auspicious fortune.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-amber-100 text-xs text-amber-900 font-medium">
-            <strong>Key Colors:</strong> Colored soils, charcoal, plant saps, and vibrant mineral shades.
-          </div>
-        </div>
-
-        <!-- Kalamkari -->
-        <div class="bg-[#FFFDF8] rounded-3xl p-6 shadow-terracotta border-2 border-amber-700/20 flex flex-col justify-between space-y-4">
-          <div>
-            <div class="flex justify-between items-start border-b border-amber-200 pb-2 mb-3">
-              <div>
-                <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Andhra Pradesh • Srikalahasti</span>
-                <h3 class="font-heritage text-xl font-bold text-amber-950">Kalamkari Craft</h3>
-              </div>
-              <span class="text-xs bg-amber-100 px-2.5 py-1 rounded-full text-amber-900 font-semibold">Lions & Deer</span>
-            </div>
-            <p class="text-xs text-stone-600 leading-relaxed">
-              Hand-painted or block-printed cotton textiles created using sharp bamboo pens and natural vegetable dyes. Showcases graceful peacocks, majestic royal lions, and flowing creepers depicting classic regional epics and nature.
-            </p>
-          </div>
-          <div class="pt-3 border-t border-amber-100 text-xs text-amber-900 font-medium">
-            <strong>Key Colors:</strong> Pomegranate rind yellow, iron rust black, and madder root red.
-          </div>
-        </div>
-
-      </div>
-
-      <div class="text-center pt-6">
-        <button onclick="showView('store')" class="bg-amber-800 hover:bg-amber-900 text-amber-50 font-semibold px-8 py-3 rounded-xl shadow-terracotta transition">
-          Return to Store Catalog
-        </button>
       </div>
     </section>
 
-    <!-- 2. Store View -->
+    <!-- 1. Mandatory Admin Login Screen -->
+    <section id="adminLoginView" class="hidden max-w-md mx-auto my-10 bg-[#FFFDF8] p-8 rounded-3xl shadow-terracotta border-2 border-amber-700/20 relative">
+      <div class="text-center space-y-2 mb-6">
+        <div class="w-16 h-16 bg-gradient-to-tr from-amber-200 to-orange-100 text-amber-900 rounded-full flex items-center justify-center mx-auto text-2xl border-2 border-amber-400 shadow-sm">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h2 class="text-2xl font-heritage font-bold text-amber-950">Visionary Express Admin</h2>
+        <p class="text-xs text-stone-600">Enter your secure passcode. Authentication required on every visit.</p>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-amber-900 mb-1">Admin Password</label>
+          <input type="password" id="adminPortalPass" required class="w-full p-3 bg-amber-50/50 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600 font-mono" placeholder="••••••••" autocomplete="off" />
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-amber-800 to-orange-800 hover:from-amber-900 hover:to-orange-900 text-amber-50 font-semibold py-3 rounded-xl text-sm transition shadow-md">
+          Verify & Enter Admin Panel
+        </button>
+      </form>
+      <div class="text-center mt-5">
+        <button onclick="showView('store')" class="text-xs text-amber-800 hover:underline">Cancel and Return to Store</button>
+      </div>
+    </section>
+
+    <!-- 2. Customer Profile Details View -->
+    <section id="authView" class="hidden max-w-lg mx-auto bg-[#FFFDF8] p-8 rounded-3xl shadow-terracotta border-2 border-amber-700/20">
+      <div class="text-center mb-6">
+        <div class="inline-flex items-center gap-2 bg-amber-100 px-3 py-1 rounded-full text-amber-900 text-xs font-bold mb-2">
+          <i class="fa-solid fa-hand-holding-heart"></i> Welcome
+        </div>
+        <h2 id="authTitle" class="text-2xl font-heritage font-bold text-amber-950">Customer Registration</h2>
+        <p class="text-xs text-stone-600 mt-1">Please provide your contact and shipping information.</p>
+      </div>
+      
+      <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Full Name</label>
+          <input type="text" id="authName" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. John Doe" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Phone Number</label>
+          <input type="tel" id="authPhone" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. 9876543210" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Delivery Address</label>
+          <textarea id="authAddress" rows="3" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="House/Flat number, landmark, street, postal code"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-gradient-to-r from-amber-800 to-orange-800 hover:from-amber-900 hover:to-orange-900 text-amber-50 font-semibold py-3 rounded-xl transition shadow-md">
+          Save & Continue
+        </button>
+      </form>
+    </section>
+
+    <!-- 3. Store View -->
     <section id="storeView" class="space-y-6">
       <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-amber-900/15 pb-4 gap-2">
         <div>
           <span class="text-xs font-bold uppercase tracking-widest text-amber-800 bg-amber-100/80 px-2.5 py-0.5 rounded-full border border-amber-300">
-            Visionary Express Store
+            Visionary Express Catalog
           </span>
           <h2 class="text-3xl font-heritage font-bold text-amber-950 mt-1">Featured Regional Products</h2>
         </div>
@@ -262,7 +197,7 @@
       <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </section>
 
-    <!-- 3. Cart & Checkout View -->
+    <!-- 4. Cart & Checkout View -->
     <section id="cartView" class="hidden space-y-6">
       <h2 class="text-3xl font-heritage font-bold text-amber-950 border-b border-amber-900/15 pb-3">Your Shopping Cart</h2>
       <div id="cartContent" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -314,31 +249,7 @@
       </div>
     </section>
 
-    <!-- 4. Mandatory Admin Login Screen (Always Forces Password) -->
-    <section id="adminLoginView" class="hidden max-w-md mx-auto my-10 bg-[#FFFDF8] p-8 rounded-3xl shadow-terracotta border-2 border-amber-700/20 relative overflow-hidden">
-      <div class="text-center space-y-2 mb-6">
-        <div class="w-16 h-16 bg-gradient-to-tr from-amber-200 to-orange-100 text-amber-900 rounded-full flex items-center justify-center mx-auto text-2xl border-2 border-amber-400 shadow-sm">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        <h2 class="text-2xl font-heritage font-bold text-amber-950">Visionary Express Admin</h2>
-        <p class="text-xs text-stone-600">Enter your passcode. Authentication is required on every visit.</p>
-      </div>
-
-      <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-amber-900 mb-1">Admin Password</label>
-          <input type="password" id="adminPortalPass" required class="w-full p-3 bg-amber-50/50 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent font-mono" placeholder="••••••••" autocomplete="off" />
-        </div>
-        <button type="submit" class="w-full bg-gradient-to-r from-amber-800 to-orange-800 hover:from-amber-900 hover:to-orange-900 text-amber-50 font-semibold py-3 rounded-xl text-sm transition shadow-md">
-          Verify & Enter Admin Panel
-        </button>
-      </form>
-      <div class="text-center mt-5">
-        <button onclick="showView('store')" class="text-xs text-amber-800 hover:underline">Cancel and Return to Store</button>
-      </div>
-    </section>
-
-    <!-- 5. Admin Dashboard (Strict Zero-Persistence: Locks on Departure) -->
+    <!-- 5. Admin Dashboard -->
     <section id="adminDashboardView" class="hidden space-y-10">
       <div class="flex flex-wrap justify-between items-center border-b border-amber-900/15 pb-4 gap-4">
         <div>
@@ -371,11 +282,11 @@
             <input type="hidden" id="editProductId" />
             <div>
               <label class="block text-xs font-bold text-amber-900">Product Name</label>
-              <input type="text" id="prodName" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="e.g. Pure Kashmiri Saffron" />
+              <input type="text" id="prodName" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="e.g. Madhubani Tiger Canvas" />
             </div>
             <div>
               <label class="block text-xs font-bold text-amber-900">Price (₹)</label>
-              <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="e.g. 599" />
+              <input type="number" id="prodPrice" min="1" required class="w-full mt-1 p-2.5 bg-amber-50/40 border border-amber-300 rounded-lg text-sm outline-none" placeholder="e.g. 899" />
             </div>
             <div>
               <label class="block text-xs font-bold text-amber-900">Product Image (Upload or URL)</label>
@@ -452,32 +363,6 @@
       </div>
     </section>
 
-    <!-- 6. Customer Details View -->
-    <section id="authView" class="hidden max-w-lg mx-auto bg-[#FFFDF8] p-8 rounded-3xl shadow-terracotta border-2 border-amber-700/20">
-      <div class="text-center mb-6">
-        <h2 id="authTitle" class="text-2xl font-heritage font-bold text-amber-950">Customer Details</h2>
-        <p class="text-xs text-stone-600 mt-1">Please provide your contact and shipping information.</p>
-      </div>
-      
-      <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Full Name</label>
-          <input type="text" id="authName" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. John Doe" />
-        </div>
-        <div>
-          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Phone Number</label>
-          <input type="tel" id="authPhone" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="e.g. 9876543210" />
-        </div>
-        <div>
-          <label class="block text-xs font-bold uppercase text-amber-900 mb-1">Delivery Address</label>
-          <textarea id="authAddress" rows="3" required class="w-full p-2.5 bg-amber-50/40 border border-amber-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-amber-600" placeholder="House/Flat number, landmark, street, postal code"></textarea>
-        </div>
-        <button type="submit" class="w-full bg-gradient-to-r from-amber-800 to-orange-800 hover:from-amber-900 hover:to-orange-900 text-amber-50 font-semibold py-3 rounded-xl transition shadow-md">
-          Save & Continue
-        </button>
-      </form>
-    </section>
-
   </main>
 
   <div id="toast" class="fixed bottom-5 right-5 bg-amber-950 text-amber-100 border border-amber-600 px-5 py-3 rounded-2xl shadow-2xl hidden transition-all duration-300 z-50 text-sm"></div>
@@ -505,46 +390,39 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Initial traditional sample products
+    // Initial sample products featuring Indian heritage art & wildlife
     const defaultStaticProducts = [
       {
         id: "p_1",
-        name: "Handmade Madhubani Painted Plate",
-        price: 850,
-        image: "image_agent_tag_14330037771200855375",
-        description: "Intricately hand-painted traditional Mithila artwork depicting animal kingdom totems on seasoned wood."
+        name: "Madhubani Royal Bengal Tiger Canvas",
+        price: 990,
+        image: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?w=500&q=80",
+        description: "Intricate Mithila folk art painting depicting the majestic Bengal tiger surrounded by floral borders."
       },
       {
         id: "p_2",
-        name: "Warli Village Life Canvas Art",
-        price: 699,
-        image: "image_agent_tag_14330037771200855210",
-        description: "Handcrafted white rice paste motif painting on natural terracotta canvas celebrating tribal harmony."
+        name: "Ceremonial Temple Elephant Brass Figurine",
+        price: 1450,
+        image: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=500&q=80",
+        description: "Handcrafted brass sculpture inspired by the decorated temple elephants of Kerala and Karnataka."
       },
       {
         id: "p_3",
-        name: "Pichwai Royal Peacock Wall Hanging",
+        name: "Pichwai Peacock & Lotus Wall Hanging",
         price: 1250,
-        image: "image_agent_tag_14330037771200854880",
-        description: "Ornate Rajasthani cloth art with gold leaf detailing, dancing peacocks, and blooming lotus ponds."
-      },
-      {
-        id: "p_4",
-        name: "Traditional Odisha Pattachitra Scroll",
-        price: 1499,
-        image: "image_agent_tag_14330037771200855045",
-        description: "Classical scroll painting prepared with natural stone colors on treated cotton canvas."
+        image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80",
+        description: "Rajasthani textile art featuring dancing peacocks and sacred lotus ponds with gold leaf details."
       }
     ];
 
     // =======================================================
-    // 2. STATE (Strict Zero-Persistence for Admin)
+    // 2. STATE
     // =======================================================
     let products = JSON.parse(localStorage.getItem("qs_static_products")) || defaultStaticProducts;
     let orders = [];
     let settings = { deliveryFee: 50, packagingFee: 20, qrUrl: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi" };
     let adminPass = "ABC123";
-    let isAdminUnlocked = false; // Strictly in-memory flag; resets on every departure
+    let isAdminUnlocked = false;
     let currentUser = JSON.parse(localStorage.getItem("qs_active_user")) || null;
     let cart = JSON.parse(localStorage.getItem("qs_cart")) || [];
 
@@ -585,13 +463,11 @@
         document.getElementById('adminDashboardView').classList.add('hidden');
       }
 
-      ['storeView', 'cartView', 'authView', 'heritageView', 'adminLoginView', 'adminDashboardView'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      ['storeView', 'cartView', 'authView', 'adminLoginView', 'adminDashboardView'].forEach(id => document.getElementById(id).classList.add('hidden'));
 
       if (view === 'store') {
         renderStore();
         document.getElementById('storeView').classList.remove('hidden');
-      } else if (view === 'heritage') {
-        document.getElementById('heritageView').classList.remove('hidden');
       } else if (view === 'cart') {
         renderCart();
         document.getElementById('cartView').classList.remove('hidden');
@@ -825,7 +701,7 @@
     }
 
     // =======================================================
-    // 7. STORE SETTINGS & QR
+    // 7. SETTINGS & QR
     // =======================================================
     window.handleQRUpload = function(event) {
       const file = event.target.files[0];
@@ -902,7 +778,7 @@
                 <p><i class="fa-solid fa-credit-card text-amber-700 mr-1"></i> <strong>Payment:</strong> <span class="font-bold ${isQR ? 'text-amber-900' : 'text-stone-800'}">${isQR ? 'UPI / QR Code' : 'Cash on Delivery (COD)'}</span></p>
                 ${isQR ? `
                   <div class="mt-2 pt-2 border-t border-amber-200 bg-amber-100/50 p-2.5 rounded-xl">
-                    <p class="font-bold text-amber-950">UPI Reference / UTR Number:</p>
+                    <p class="font-bold text-amber-950">UPI Ref / UTR / Txn Number:</p>
                     <p class="font-mono text-amber-900 text-xs font-bold">${ord.transactionId || 'Not provided'}</p>
                     <p class="mt-1 text-[11px]">Verification: <strong class="${ord.paymentReceived ? 'text-emerald-700' : 'text-red-700'}">${ord.paymentReceived ? 'Payment Received & Verified' : 'Pending Verification'}</strong></p>
                   </div>
